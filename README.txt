@@ -1,7 +1,7 @@
 EAMENA Database Project Repository
 ==================================
 
-This is a project, intended to be used with Arches 7.2.
+This is a project, intended to be used with Arches 7.3.
 
 Arches
 ------
