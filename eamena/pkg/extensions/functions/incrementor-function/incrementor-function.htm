@@ -1,0 +1,54 @@
+{% load i18n %}
+
+<div style="height: 100%;">
+  <div class="row widget-container">
+    <div class="form-group">
+      <div class="increment-function">
+          <div>
+            <label class="control-label widget-input-label"> {% trans "Card Name" %}</label>
+              <div class="widget-input" style="display:inline-block;"
+              data-bind="select2Query: {
+                  select2Config: {
+                      clickBubble: false,
+                      disabled: false,
+                      data: cards(),
+                      value: selected_nodegroup,
+                      allowClear: false,
+                      multiple: false,
+                      placeholder: 'Select Node'}}">
+              </div>
+          </div>
+          <!--ko if: rerender() === true -->
+          <div class="widget-input">
+            <label class="control-label widget-input-label"> {% trans "Node to update" %}</label>
+              <div style="display:inline-block;"
+              data-bind="select2Query: {
+                  select2Config: {
+                      clickBubble: false,
+                      disabled: false,
+                      data: nodes(),
+                      value: target_node,
+                      allowClear: false,
+                      multiple: false,
+                      placeholder: 'Select Node'}}">
+              </div>
+          </div>
+          <!--/ko-->
+          
+          <label class="control-label widget-input-label">Prefix</label>
+          <input class="form-control widget-input" data-bind="textInput: prefix" />
+
+          <label class="control-label widget-input-label">Suffix</label>
+          <input class="form-control widget-input" data-bind="textInput: suffix" />
+
+          <label class="control-label widget-input-label">Start Value</label>
+          <input class="form-control widget-input" type="number" data-bind="textInput: starting_value" />
+
+          <label class="control-label widget-input-label">Last Value</label>
+          <input disabled class="form-control widget-input" type="number" data-bind="textInput: last_value" />
+
+      </div>
+    </div>
+
+  </div>
+</div>

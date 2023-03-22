@@ -1,0 +1,10 @@
+{
+    "component": "views/components/widgets/immutable-text",
+    "datatype": "string",
+    "defaultconfig": {
+        "disabled": "true"
+    },
+    "helptext": null,
+    "name": "immutable-text-widget",
+    "widgetid": "cb320b2c-ff0e-44f2-9767-dc7567bcb6d5"
+}
