@@ -852,18 +852,24 @@ class Command(BaseCommand):
 					if 'rdmCollection' in node.config:
 						conceptid = node.config['rdmCollection']
 						if not(conceptid is None):
-							values = Concept().get_e55_domain(conceptid)
-							value['values'] = []
-							for item in values:
-								valueobj = get_preflabel_from_valueid(item['id'], 'en')
-								valueid = valueobj['id']
-								label = get_preflabel_from_valueid(valueid, 'en')
-								value['values'].append({'valueid': valueid, 'conceptid': item['conceptid'], 'label': label['value']})
-								for child in Concept().get_child_concepts(item['conceptid']):
-									value['values'].append({'valueid': child[2], 'conceptid': child[0], 'label': child[1]})
+							value['values'] = self.__get_concept_values(conceptid)
 				data.append(value)
 
 		return data
+
+	def __get_concept_values(self, conceptid):
+
+		values = Concept().get_e55_domain(conceptid)
+		ret = []
+		for item in values:
+			valueobj = get_preflabel_from_valueid(item['id'], 'en')
+			valueid = valueobj['id']
+			label = get_preflabel_from_valueid(valueid, 'en')
+			ret.append({'valueid': valueid, 'conceptid': item['conceptid'], 'label': label['value']})
+			for child in item['children']:
+				label = get_preflabel_from_valueid(child['id'], 'en')
+				ret.append({'valueid': child['id'], 'conceptid': child['conceptid'], 'label': label['value']})
+		return ret
 
 	def __unflatten(self, options):
 
