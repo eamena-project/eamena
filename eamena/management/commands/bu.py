@@ -3,7 +3,7 @@ from django.contrib.gis.geos import GEOSGeometry
 from django.http import HttpRequest
 from django.core.exceptions import ValidationError, ObjectDoesNotExist
 from django.conf import settings
-from arches.app.models.models import GraphModel, Node, ResourceInstance, TileModel
+from arches.app.models.models import GraphModel, Node, ResourceInstance, TileModel, Language
 from arches.app.models.concept import Concept, get_preflabel_from_valueid, get_valueids_from_concept_label
 from arches.app.views import search
 from django.core.management.base import BaseCommand
@@ -153,6 +153,10 @@ class Command(BaseCommand):
 	def __map_resources(self, data, options, uid=''):
 
 		passed_uid = uid
+#		try:
+		language = Language.objects.get(code=options['bus_language'])
+#		except:
+#			language = Language.objects.first()
 
 		if isinstance(data, (dict)):
 
@@ -182,6 +186,9 @@ class Command(BaseCommand):
 
 								if tile['data'][key] is None:
 									continue
+
+								if nodes[key]['datatype'] == 'string':
+									tile['data'][key] = {language.code: {'value': tile['data'][key]}, 'direction': language.default_direction}
 
 								if nodes[key]['datatype'] == 'date':
 									date_object = parse_date(tile['data'][key])
@@ -258,6 +265,12 @@ class Command(BaseCommand):
 
 	def add_arguments(self, parser):
 
+		languages = []
+		for l in settings.LANGUAGES:
+			languages.append(l[0])
+		if len(languages) == 0:
+			languages = ['en'] # Make sure there's at least one language.
+
 		parser.add_argument(
 			"-o",
 			"--operation",
@@ -286,6 +299,16 @@ class Command(BaseCommand):
 			default="warn",
 			choices=["warn", "ignore", "strict"],
 			help="Warn mode; 'warn'=Write warnings to STDERR, but ultimately ignore them. 'ignore'=Silently ignore warnings altogether. 'strict'=Treat warnings as errors, and stop if any are encountered."
+		)
+
+		parser.add_argument(
+			"-l",
+			"--language",
+			action="store",
+			dest="bus_language",
+			default=languages[0],
+			choices=languages,
+			help="Language of BUS file."
 		)
 
 		parser.add_argument(
@@ -852,22 +875,22 @@ class Command(BaseCommand):
 					if 'rdmCollection' in node.config:
 						conceptid = node.config['rdmCollection']
 						if not(conceptid is None):
-							value['values'] = self.__get_concept_values(conceptid)
+							value['values'] = self.__get_concept_values(conceptid, options['bus_language'])
 				data.append(value)
 
 		return data
 
-	def __get_concept_values(self, conceptid):
+	def __get_concept_values(self, conceptid, language):
 
 		values = Concept().get_e55_domain(conceptid)
 		ret = []
 		for item in values:
-			valueobj = get_preflabel_from_valueid(item['id'], 'en')
+			valueobj = get_preflabel_from_valueid(item['id'], language)
 			valueid = valueobj['id']
-			label = get_preflabel_from_valueid(valueid, 'en')
+			label = get_preflabel_from_valueid(valueid, language)
 			ret.append({'valueid': valueid, 'conceptid': item['conceptid'], 'label': label['value']})
 			for child in item['children']:
-				label = get_preflabel_from_valueid(child['id'], 'en')
+				label = get_preflabel_from_valueid(child['id'], language)
 				ret.append({'valueid': child['id'], 'conceptid': child['conceptid'], 'label': label['value']})
 		return ret
 
