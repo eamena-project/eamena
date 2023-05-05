@@ -188,7 +188,7 @@ class Command(BaseCommand):
 									continue
 
 								if nodes[key]['datatype'] == 'string':
-									tile['data'][key] = {language.code: {'value': tile['data'][key]}, 'direction': language.default_direction}
+									tile['data'][key] = {language.code: {'value': tile['data'][key], 'direction': language.default_direction}}
 
 								if nodes[key]['datatype'] == 'date':
 									date_object = parse_date(tile['data'][key])
