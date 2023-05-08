@@ -51,7 +51,6 @@ class Command(BaseCommand):
 	Commands for managing the import of EAMENA BUS files
 
 	"""
-
 	def __init__(self):
 
 		self.__idcache = {}
@@ -153,10 +152,10 @@ class Command(BaseCommand):
 	def __map_resources(self, data, options, uid=''):
 
 		passed_uid = uid
-#		try:
-		language = Language.objects.get(code=options['bus_language'])
-#		except:
-#			language = Language.objects.first()
+		try:
+			language = Language.objects.get(code=options['bus_language'])
+		except:
+			language = Language.objects.first()
 
 		if isinstance(data, (dict)):
 
