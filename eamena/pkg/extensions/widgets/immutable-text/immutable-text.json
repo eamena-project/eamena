@@ -2,7 +2,8 @@
     "component": "views/components/widgets/immutable-text",
     "datatype": "string",
     "defaultconfig": {
-        "disabled": "true"
+        "disabled": "true",
+        "defaultValue": ""
     },
     "helptext": null,
     "name": "immutable-text-widget",
