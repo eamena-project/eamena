@@ -1,0 +1,10 @@
+{
+	"pluginid": "1c6a27db-b81c-446f-8faf-3ee078ab6240",
+	"name": "Bulk Uploader",
+	"icon": "fa fa-upload",
+	"component": "views/components/plugins/bulk-upload",
+	"componentname": "bulk-upload",
+	"config": {"show": false},
+	"slug": "bulk-upload",
+	"sortorder": 0
+}

@@ -1,0 +1,95 @@
+{% load i18n %}
+
+{% block content %}
+
+<div style="width: 100%; height: 100%; max-height: 100vh; box-sizing: border-box; overflow-y: scroll;">
+
+<div class="block-description arches-secondary-header" style="padding-top:20px;">
+    <div class="container content padding-top-0">
+
+        <div class="row">
+            <div class="col-xs-4" style="padding-left: 15px; padding-right: 15px;">
+
+		<div class="panel">
+			<div class="panel-body">
+			<div class="panel-heading">
+			Upload
+			</div>
+<form name="file-uploader" id="file-uploader">
+                        <input id="excelfileupload" type="file" class="file" name="files[]" data-url='/bulk-upload/excel-upload'/>
+                        {% csrf_token %}
+</form>
+			</div>
+		</div>
+
+		<div class="panel">
+			<div class="panel-body">
+			<table><tr><td>
+			<form action="/bulk-upload/validate" method="POST" id="validate-form">
+			<input type="hidden" id="upload-uuid" name="upload-uuid" value=""/>
+			<input type="hidden" id="upload-filename" name="upload-filename" value=""/>
+			<input type="button" id="upload-validate" name="upload-validate" value="Validate"/>
+			</form>
+			</td><td>
+			<form action="/bulk-upload/convert" method="POST" id="convert-form">
+			<input type="button" id="upload-convert" name="upload-convert" value="Upload"/>
+			</form>
+			</td></tr></table>
+			</div>
+		</div>
+
+		<div class="panel">
+			<div class="panel-body">
+				<div class="panel-heading">
+				Configuration
+				</div>
+				<div class="form-group">
+					<label for="upload-graphid">Resource Type</label>
+					<select name="upload-graphid" id="upload-graphid" class="form-control">
+						<option value="34cfe98e-c2c0-11ea-9026-02e7594ce0a0">Heritage Place</option>
+						<option value="5297fa9e-8e16-11ea-a6a6-02e7594ce0a0" disabled="">Geoarchaeology</option>
+					</select>
+				</div>
+			</div>
+		</div>
+
+            </div>
+            <div class="col-xs-8 card-component-wrapper-editor" style="padding-left: 15px; background-color: transparent;">
+
+		<div class="panel">
+			<div class="panel-body">
+			<div class="panel-heading">
+			Upload Status
+			<span class="pull-right" id="bu-loading" style="visibility: hidden;"><i class="fa fa-spinner fa-spin"></i></span>
+			</div>
+			<div class="uploader-output">
+
+				<p>This form is for uploading spreadsheets containing multiple sites to the database. All files
+				uploaded through this interface must conform to the template files which are available below.</p>
+
+				<ul>
+					<li> <a target="_new" style="color: #2986b8; text-decoration: underline;" href="../bulk-upload/templates/34cfe98e-c2c0-11ea-9026-02e7594ce0a0.xlsx">HERITAGE PLACE</a></li>
+					<li> <a target="_new" style="color: #2986b8; text-decoration: underline;" href="../bulk-upload/templates/5297fa9e-8e16-11ea-a6a6-02e7594ce0a0.xlsx">GEOARCHAEOLOGY</a></li>
+				</ul>
+
+				<p>Uploading is a two-step process. First, please click the 'Browse' button above and select the
+				spreadsheet file you wish to upload. Once uploaded, select the configuration options and click the
+				'Validate' button. If the file validates OK, you may then click 'Upload' to add the file to the
+				queue to be converted and uploaded. You will receive an automated notification when the upload is complete.</p>
+
+			</div>
+			</div>
+		</div>
+
+            </div>
+	</div>
+
+    </div>
+</div>
+
+</div>
+
+{% endblock %}
+
+
+

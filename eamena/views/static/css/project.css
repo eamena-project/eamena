@@ -1,0 +1,12 @@
+.increment-function {
+    padding-left: 10px;
+    display: flex;
+    flex-direction: column;
+    min-height: 350px;
+    justify-content: space-between;
+    position: relative;
+}
+
+.increment-function .widget-input {
+    margin-bottom: 10px;
+}
