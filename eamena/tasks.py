@@ -63,7 +63,7 @@ def import_processed_bulk_upload_and_notify(notify_address=None, upload_path=Non
 
 		data = []
 		for item in summary:
-			data.append({"url": "https://database.eamena.org/en/report/" + item['uuid'], "uuid": item['uuid'], "eamenaid": item['eamenaid']})
+			data.append({"url": "https://database.eamena.org/report/" + item['uuid'], "uuid": item['uuid'], "eamenaid": item['eamenaid']})
 
 		email_context = {"greeting": "Your bulk upload was successful.", "closing": "", "resources": data}
 

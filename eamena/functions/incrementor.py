@@ -1,5 +1,6 @@
 import uuid
 from django.core.exceptions import ValidationError
+from django.conf import settings
 from arches.app.functions.base import BaseFunction
 from arches.app.models import models
 from arches.app.models.tile import Tile
@@ -35,7 +36,11 @@ class IncrementorFunction(BaseFunction):
                 fn = models.FunctionXGraph.objects.get(Q(function_id="2cc07b0a-adbd-4721-86ce-dad1699caa86"), Q(graph_id=tile.resourceinstance.graph_id))
                 fn.config['last_value'] = new_number
                 fn.save()
-                new_value = {'en': {'value': new_value, 'direction': 'ltr'}} # Convert string to an i18n value, required for Arches 7.x
+                value_fragment = {'value': new_value, 'direction': 'ltr'}
+                new_value = {}
+                for lang in settings.LANGUAGES:
+                    lang_code = lang[0]
+                    new_value[lang_code] = value_fragment
                 nodegroup_id = self.config["selected_nodegroup"]
                 target_node = self.config['target_node']
                 nodegroup = models.NodeGroup.objects.get(pk = nodegroup_id)

@@ -10,11 +10,8 @@ uuid_regex = settings.UUID_REGEX
 #    url(r'^', include('arches.urls')),
 #] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
-# if settings.SHOW_LANGUAGE_SWITCH is True:
-#     urlpatterns = i18n_patterns(*urlpatterns)
-
 urlpatterns = [
-    url(r"^resource/(?P<resourceid>%s)$" % uuid_regex, ResourceEditorView.as_view(), name="resource_editor"),
+#    url(r"^resource/(?P<resourceid>%s)$" % uuid_regex, ResourceEditorView.as_view(), name="resource_editor"),
     url(r"^bulk-upload$", bulk_uploader.index),
     url(r"^bulk-upload/excel-upload$", bulk_uploader.upload_spreadsheet, name="bulk_upload"),
     url(r"^bulk-upload/validate$", bulk_uploader.validate, name="bulk_upload_validate"),
@@ -22,3 +19,6 @@ urlpatterns = [
     url(r"^bulk-upload/templates/(?P<graphid>%s)\.xlsx$" % uuid_regex, bulk_uploader.download_template, name="download_template"),
     url(r'^', include('arches.urls')),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+
+#if settings.SHOW_LANGUAGE_SWITCH is True:
+#    urlpatterns = i18n_patterns(*urlpatterns)
