@@ -18,7 +18,7 @@ eamena/media/node_modules
 eamena/media/packages
 eamena/node_modules
 eamena/ontologies/*.xml
-eamena/settings*.py
+eamena/settings_local.py
 eamena/static
 eamena/staticfiles
 eamena/system_settings
