@@ -6,7 +6,7 @@
                 {
                     "active": true,
                     "cardid": "e723b692-c38f-11ea-9026-02e7594ce0a0",
-                    "component_id": "f05e4d3a-53c1-11e8-b0ea-784f435179ea",
+                    "component_id": "60e4e022-e2ba-40a0-948d-0538e27fbe1c",
                     "config": null,
                     "constraints": [
                         {
@@ -37,16 +37,16 @@
                     },
                     "is_editable": false,
                     "name": {
-                        "en": "Actor Role Type / \u0646\u0648\u0639 \u0627\u0644\u062f\u0648\u0631 \u0627\u0644\u0630\u064a \u0642\u0627\u0645 \u0628\u0647 \u0627\u0644\u0641\u0627\u062d\u0635"
+                        "en": "Actor Role Type"
                     },
                     "nodegroup_id": "e98e1d0d-c38b-11ea-9026-02e7594ce0a0",
-                    "sortorder": null,
+                    "sortorder": 0,
                     "visible": true
                 },
                 {
                     "active": true,
                     "cardid": "e98e1cf1-c38b-11ea-9026-02e7594ce0a0",
-                    "component_id": "f05e4d3a-53c1-11e8-b0ea-784f435179ea",
+                    "component_id": "60e4e022-e2ba-40a0-948d-0538e27fbe1c",
                     "config": null,
                     "constraints": [],
                     "cssclass": null,
@@ -75,7 +75,7 @@
                 {
                     "active": true,
                     "cardid": "e98e1cf4-c38b-11ea-9026-02e7594ce0a0",
-                    "component_id": "f05e4d3a-53c1-11e8-b0ea-784f435179ea",
+                    "component_id": "60e4e022-e2ba-40a0-948d-0538e27fbe1c",
                     "config": null,
                     "constraints": [
                         {
@@ -100,7 +100,7 @@
                     },
                     "is_editable": false,
                     "name": {
-                        "en": "Related Information Resource / \u0645\u0635\u062f\u0631 \u0627\u0644\u0645\u0639\u0644\u0648\u0645\u0627\u062a \u0627\u0644\u0648\u062b\u064a\u0642 \u0627\u0644\u0635\u0644\u0629"
+                        "en": "Related Information Resource"
                     },
                     "nodegroup_id": "e98e1cf2-c38b-11ea-9026-02e7594ce0a0",
                     "sortorder": 6,
@@ -109,7 +109,7 @@
                 {
                     "active": true,
                     "cardid": "e98e1cf7-c38b-11ea-9026-02e7594ce0a0",
-                    "component_id": "f05e4d3a-53c1-11e8-b0ea-784f435179ea",
+                    "component_id": "60e4e022-e2ba-40a0-948d-0538e27fbe1c",
                     "config": null,
                     "constraints": [
                         {
@@ -136,7 +136,8 @@
                     },
                     "is_editable": false,
                     "name": {
-                        "en": "Lifespan / \u0645\u062f\u0649 \u0627\u0644\u0639\u0645\u0631"
+                        "ar": "\u0645\u062f\u0649 \u0627\u0644\u0639\u0645\u0631",
+                        "en": "Lifespan"
                     },
                     "nodegroup_id": "e98e1cf5-c38b-11ea-9026-02e7594ce0a0",
                     "sortorder": 2,
@@ -145,7 +146,7 @@
                 {
                     "active": true,
                     "cardid": "e98e1cfa-c38b-11ea-9026-02e7594ce0a0",
-                    "component_id": "f05e4d3a-53c1-11e8-b0ea-784f435179ea",
+                    "component_id": "60e4e022-e2ba-40a0-948d-0538e27fbe1c",
                     "config": null,
                     "constraints": [
                         {
@@ -172,7 +173,8 @@
                     },
                     "is_editable": false,
                     "name": {
-                        "en": "Description / \u0627\u0644\u0648\u0635\u0641"
+                        "ar": "\u0627\u0644\u0648\u0635\u0641",
+                        "en": "Description"
                     },
                     "nodegroup_id": "e98e1cf8-c38b-11ea-9026-02e7594ce0a0",
                     "sortorder": 1,
@@ -206,7 +208,8 @@
                     },
                     "is_editable": false,
                     "name": {
-                        "en": "Person/Organization Photo / \u0635\u0648\u0631\u0629 \u0627\u0644\u0634\u062e\u0635/\u0627\u0644\u0645\u0624\u0633\u0633\u0629"
+                        "ar": "\u0635\u0648\u0631\u0629 \u0627\u0644\u0634\u062e\u0635/\u0627\u0644\u0645\u0624\u0633\u0633\u0629",
+                        "en": "Person/Organization Photo"
                     },
                     "nodegroup_id": "e98e1cfb-c38b-11ea-9026-02e7594ce0a0",
                     "sortorder": 5,
@@ -215,7 +218,7 @@
                 {
                     "active": true,
                     "cardid": "e98e1d00-c38b-11ea-9026-02e7594ce0a0",
-                    "component_id": "f05e4d3a-53c1-11e8-b0ea-784f435179ea",
+                    "component_id": "60e4e022-e2ba-40a0-948d-0538e27fbe1c",
                     "config": null,
                     "constraints": [
                         {
@@ -242,7 +245,8 @@
                     },
                     "is_editable": false,
                     "name": {
-                        "en": "Appellation / \u0627\u0644\u0643\u0646\u064a\u0629/\u0627\u0644\u0644\u0642\u0628"
+                        "ar": "\u0627\u0644\u0643\u0646\u064a\u0629/\u0627\u0644\u0644\u0642\u0628",
+                        "en": "Appellation"
                     },
                     "nodegroup_id": "e98e1cfe-c38b-11ea-9026-02e7594ce0a0",
                     "sortorder": 0,
@@ -285,7 +289,8 @@
                     },
                     "is_editable": false,
                     "name": {
-                        "en": "Location / \u0627\u0644\u0645\u0648\u0642\u0639"
+                        "ar": "\u0627\u0644\u0645\u0648\u0642\u0639",
+                        "en": "Location"
                     },
                     "nodegroup_id": "e98e1d01-c38b-11ea-9026-02e7594ce0a0",
                     "sortorder": 4,
@@ -294,7 +299,7 @@
                 {
                     "active": true,
                     "cardid": "e98e1d06-c38b-11ea-9026-02e7594ce0a0",
-                    "component_id": "f05e4d3a-53c1-11e8-b0ea-784f435179ea",
+                    "component_id": "60e4e022-e2ba-40a0-948d-0538e27fbe1c",
                     "config": null,
                     "constraints": [
                         {
@@ -586,7 +591,7 @@
                         "en": "Person/Organization Photo / \u0635\u0648\u0631\u0629 \u0627\u0644\u0634\u062e\u0635/\u0627\u0644\u0645\u0624\u0633\u0633\u0629"
                     },
                     "node_id": "e98e1cfb-c38b-11ea-9026-02e7594ce0a0",
-                    "sortorder": null,
+                    "sortorder": 0,
                     "visible": true,
                     "widget_id": "10000000-0000-0000-0000-000000000019"
                 },
@@ -607,7 +612,7 @@
                         "en": "Related Information Resource / \u0645\u0635\u062f\u0631 \u0627\u0644\u0645\u0639\u0644\u0648\u0645\u0627\u062a \u0627\u0644\u0648\u062b\u064a\u0642 \u0627\u0644\u0635\u0644\u0629"
                     },
                     "node_id": "e98e1cf2-c38b-11ea-9026-02e7594ce0a0",
-                    "sortorder": null,
+                    "sortorder": 0,
                     "visible": true,
                     "widget_id": "31f3728c-7613-11e7-a139-784f435179ea"
                 },
@@ -631,7 +636,7 @@
                         "en": "ACTOR ID"
                     },
                     "node_id": "e98e1d04-c38b-11ea-9026-02e7594ce0a0",
-                    "sortorder": null,
+                    "sortorder": 0,
                     "visible": true,
                     "widget_id": "10000000-0000-0000-0000-000000000001"
                 },
@@ -1271,6 +1276,20 @@
                 }
             ],
             "functions_x_graphs": [
+                {
+                    "config": {
+                        "last_value": "10106",
+                        "prefix": "ACTOR-",
+                        "selected_nodegroup": "e98e1d04-c38b-11ea-9026-02e7594ce0a0",
+                        "starting_value": "10000",
+                        "suffix": "",
+                        "target_node": "e98e1d04-c38b-11ea-9026-02e7594ce0a0",
+                        "triggering_nodegroups": []
+                    },
+                    "function_id": "2cc07b0a-adbd-4721-86ce-dad1699caa86",
+                    "graph_id": "e98e1cee-c38b-11ea-9026-02e7594ce0a0",
+                    "id": "95f21ce5-42d6-4cdd-af4d-a06d44952d5c"
+                },
                 {
                     "config": {
                         "description": {
@@ -2129,9 +2148,12 @@
                 "notes": null,
                 "publicationid": "a9519372-6497-11ed-9618-08002727641f",
                 "published_time": "2022-11-14T21:43:26.188",
-                "user_id": 4
+                "user_id": 1
             },
-            "relatable_resource_model_ids": [],
+            "relatable_resource_model_ids": [
+                "34cfe98e-c2c0-11ea-9026-02e7594ce0a0",
+                "35b99cb7-379a-11ea-9989-06f597a7d5ce"
+            ],
             "resource_2_resource_constraints": [],
             "root": {
                 "alias": "person-organization",
@@ -2161,9 +2183,9 @@
         }
     ],
     "metadata": {
-        "db": "PostgreSQL 14.7 (Ubuntu 14.7-1.pgdg20.04+1) on x86_64-pc-linux-gnu, compiled by gcc (Ubuntu 9.4.0-1ubuntu1~20.04.1) 9.4.0, 64-bit",
+        "db": "PostgreSQL 14.7 (Ubuntu 14.7-1.pgdg20.04+1) on aarch64-unknown-linux-gnu, compiled by gcc (Ubuntu 9.4.0-1ubuntu1~20.04.1) 9.4.0, 64-bit",
         "git hash": "fatal: not a git repository (or any of the parent directories): .git",
         "os": "Linux",
-        "os version": "5.15.0-1031-aws"
+        "os version": "5.15.0-1037-aws"
     }
 }

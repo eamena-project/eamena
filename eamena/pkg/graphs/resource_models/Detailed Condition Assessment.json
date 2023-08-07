@@ -6,7 +6,7 @@
                 {
                     "active": true,
                     "cardid": "030911f0-fa4f-11e9-b345-06f597a7d5ce",
-                    "component_id": "f05e4d3a-53c1-11e8-b0ea-784f435179ea",
+                    "component_id": "60e4e022-e2ba-40a0-948d-0538e27fbe1c",
                     "config": null,
                     "constraints": [],
                     "cssclass": null,
@@ -24,7 +24,8 @@
                     },
                     "is_editable": false,
                     "name": {
-                        "en": "Threat Event / \u0646\u062a\u062c\u0629 \u0627\u0644\u062a\u0647\u062f\u064a\u062f"
+                        "ar": "\u0646\u062a\u062c\u0629 \u0627\u0644\u062a\u0647\u062f\u064a\u062f",
+                        "en": "Threat Event"
                     },
                     "nodegroup_id": "b23d365a-f995-11e9-b345-06f597a7d5ce",
                     "sortorder": 0,
@@ -33,7 +34,7 @@
                 {
                     "active": true,
                     "cardid": "1234f39c-c81c-11ea-a292-02e7594ce0a0",
-                    "component_id": "f05e4d3a-53c1-11e8-b0ea-784f435179ea",
+                    "component_id": "60e4e022-e2ba-40a0-948d-0538e27fbe1c",
                     "config": null,
                     "constraints": [],
                     "cssclass": null,
@@ -51,7 +52,8 @@
                     },
                     "is_editable": false,
                     "name": {
-                        "en": "Damage Assessor / \u0627\u0644\u0645\u062a\u062d\u0642\u0642 \u0645\u0646 \u0627\u0644\u0636\u0631\u0631"
+                        "ar": "\u0627\u0644\u0645\u062a\u062d\u0642\u0642 \u0645\u0646 \u0627\u0644\u0636\u0631\u0631",
+                        "en": "Damage Assessor"
                     },
                     "nodegroup_id": "b580a298-c81b-11ea-a292-02e7594ce0a0",
                     "sortorder": 2,
@@ -78,7 +80,8 @@
                     },
                     "is_editable": false,
                     "name": {
-                        "en": "Construction Technique Type / \u0646\u0648\u0639 \u062a\u0642\u0646\u064a\u0629 \u0627\u0644\u0628\u0646\u0627\u0621"
+                        "ar": "\u0646\u0648\u0639 \u062a\u0642\u0646\u064a\u0629 \u0627\u0644\u0628\u0646\u0627\u0621",
+                        "en": "Construction Technique Type"
                     },
                     "nodegroup_id": "d7636dab-f995-11e9-b345-06f597a7d5ce",
                     "sortorder": 1,
@@ -87,7 +90,7 @@
                 {
                     "active": true,
                     "cardid": "2280ed2a-cdba-11ea-a292-02e7594ce0a0",
-                    "component_id": "f05e4d3a-53c1-11e8-b0ea-784f435179ea",
+                    "component_id": "60e4e022-e2ba-40a0-948d-0538e27fbe1c",
                     "config": null,
                     "constraints": [],
                     "cssclass": null,
@@ -105,16 +108,17 @@
                     },
                     "is_editable": false,
                     "name": {
-                        "en": "Threat and Risk Assessor / \u0627\u0644\u0645\u062a\u062d\u0642\u0642 \u0645\u0646 \u062d\u0627\u0644\u062a\u064a \u0627\u0644\u062e\u0637\u0631 \u0648\u0627\u0644\u062a\u0647\u062f\u064a\u062f"
+                        "ar": "\u0627\u0644\u0645\u062a\u062d\u0642\u0642 \u0645\u0646 \u062d\u0627\u0644\u062a\u064a \u0627\u0644\u062e\u0637\u0631 \u0648\u0627\u0644\u062a\u0647\u062f\u064a\u062f",
+                        "en": "Threat and Risk Assessor"
                     },
                     "nodegroup_id": "300bdc74-cdb9-11ea-a292-02e7594ce0a0",
-                    "sortorder": null,
+                    "sortorder": 0,
                     "visible": true
                 },
                 {
                     "active": true,
                     "cardid": "3191b8ae-fa42-11e9-b345-06f597a7d5ce",
-                    "component_id": "f05e4d3a-53c1-11e8-b0ea-784f435179ea",
+                    "component_id": "60e4e022-e2ba-40a0-948d-0538e27fbe1c",
                     "config": null,
                     "constraints": [],
                     "cssclass": null,
@@ -132,7 +136,8 @@
                     },
                     "is_editable": false,
                     "name": {
-                        "en": "Recommendation Plan / \u062e\u0637\u0629 \u0645\u0642\u062a\u0631\u062d\u0629/\u062a\u0648\u0635\u064a\u0629"
+                        "ar": "\u062e\u0637\u0629 \u0645\u0642\u062a\u0631\u062d\u0629/\u062a\u0648\u0635\u064a\u0629",
+                        "en": "Recommendation Plan"
                     },
                     "nodegroup_id": "aea63583-f995-11e9-b345-06f597a7d5ce",
                     "sortorder": 1,
@@ -239,7 +244,7 @@
                 {
                     "active": true,
                     "cardid": "4204b5c7-cdb7-11ea-a292-02e7594ce0a0",
-                    "component_id": "f05e4d3a-53c1-11e8-b0ea-784f435179ea",
+                    "component_id": "60e4e022-e2ba-40a0-948d-0538e27fbe1c",
                     "config": null,
                     "constraints": [
                         {
@@ -264,16 +269,17 @@
                     },
                     "is_editable": false,
                     "name": {
-                        "en": "Risk Level Belief / \u0645\u0633\u062a\u0648\u0649 \u0627\u0644\u0645\u062e\u0627\u0637\u0631"
+                        "ar": "\u0645\u0633\u062a\u0648\u0649 \u0627\u0644\u0645\u062e\u0627\u0637\u0631",
+                        "en": "Risk Level Belief"
                     },
                     "nodegroup_id": "4204b5c5-cdb7-11ea-a292-02e7594ce0a0",
-                    "sortorder": null,
+                    "sortorder": 0,
                     "visible": true
                 },
                 {
                     "active": true,
                     "cardid": "52bb1e76-fbea-11e9-b345-06f597a7d5ce",
-                    "component_id": "f05e4d3a-53c1-11e8-b0ea-784f435179ea",
+                    "component_id": "60e4e022-e2ba-40a0-948d-0538e27fbe1c",
                     "config": null,
                     "constraints": [],
                     "cssclass": null,
@@ -300,7 +306,7 @@
                 {
                     "active": true,
                     "cardid": "64e9699a-596f-11ea-a3f7-02e7594ce0a0",
-                    "component_id": "f05e4d3a-53c1-11e8-b0ea-784f435179ea",
+                    "component_id": "60e4e022-e2ba-40a0-948d-0538e27fbe1c",
                     "config": null,
                     "constraints": [
                         {
@@ -325,16 +331,16 @@
                     },
                     "is_editable": false,
                     "name": {
-                        "en": "Potential Impact Type / \u0646\u0648\u0639 \u0627\u0644\u062a\u0623\u062b\u064a\u0631 \u0627\u0644\u062d\u062a\u0645\u0644"
+                        "en": "Potential Impact Type"
                     },
                     "nodegroup_id": "f1daeebb-fa4e-11e9-b345-06f597a7d5ce",
-                    "sortorder": null,
+                    "sortorder": 0,
                     "visible": true
                 },
                 {
                     "active": true,
                     "cardid": "7ef3aa76-fbf0-11e9-b345-06f597a7d5ce",
-                    "component_id": "f05e4d3a-53c1-11e8-b0ea-784f435179ea",
+                    "component_id": "60e4e022-e2ba-40a0-948d-0538e27fbe1c",
                     "config": null,
                     "constraints": [
                         {
@@ -359,7 +365,8 @@
                     },
                     "is_editable": false,
                     "name": {
-                        "en": "Assessment Summary / \u0645\u0644\u062e\u0635 \u0627\u0644\u062a\u0642\u064a\u064a\u0645"
+                        "ar": "\u0645\u0644\u062e\u0635 \u0627\u0644\u062a\u0642\u064a\u064a\u0645",
+                        "en": "Assessment Summary"
                     },
                     "nodegroup_id": "7ef3aa74-fbf0-11e9-b345-06f597a7d5ce",
                     "sortorder": 0,
@@ -368,7 +375,7 @@
                 {
                     "active": true,
                     "cardid": "8e322eaa-fa50-11e9-b345-06f597a7d5ce",
-                    "component_id": "f05e4d3a-53c1-11e8-b0ea-784f435179ea",
+                    "component_id": "60e4e022-e2ba-40a0-948d-0538e27fbe1c",
                     "config": null,
                     "constraints": [],
                     "cssclass": null,
@@ -386,16 +393,16 @@
                     },
                     "is_editable": false,
                     "name": {
-                        "en": "Secondary Threat Type / \u0646\u0648\u0639 \u0627\u0644\u062e\u0637\u0631 \u0627\u0644\u062b\u0627\u0646\u0648\u064a"
+                        "en": "Secondary Threat Type"
                     },
                     "nodegroup_id": "b23d364e-f995-11e9-b345-06f597a7d5ce",
-                    "sortorder": null,
+                    "sortorder": 0,
                     "visible": true
                 },
                 {
                     "active": true,
                     "cardid": "9da606a4-fa50-11e9-b345-06f597a7d5ce",
-                    "component_id": "f05e4d3a-53c1-11e8-b0ea-784f435179ea",
+                    "component_id": "60e4e022-e2ba-40a0-948d-0538e27fbe1c",
                     "config": null,
                     "constraints": [],
                     "cssclass": null,
@@ -413,7 +420,8 @@
                     },
                     "is_editable": false,
                     "name": {
-                        "en": "Overall Condition / \u062d\u0627\u0644\u0629 \u0627\u0644\u0645\u0648\u0642\u0639 \u0639\u0645\u0648\u0645\u064b\u0627"
+                        "ar": "\u062d\u0627\u0644\u0629 \u0627\u0644\u0645\u0648\u0642\u0639 \u0639\u0645\u0648\u0645\u064b\u0627",
+                        "en": "Overall Condition"
                     },
                     "nodegroup_id": "b5351ef4-f995-11e9-b345-06f597a7d5ce",
                     "sortorder": 0,
@@ -422,7 +430,7 @@
                 {
                     "active": true,
                     "cardid": "a5d61f80-fa50-11e9-b345-06f597a7d5ce",
-                    "component_id": "f05e4d3a-53c1-11e8-b0ea-784f435179ea",
+                    "component_id": "60e4e022-e2ba-40a0-948d-0538e27fbe1c",
                     "config": null,
                     "constraints": [],
                     "cssclass": null,
@@ -440,7 +448,8 @@
                     },
                     "is_editable": false,
                     "name": {
-                        "en": "Date of Next Assessment / \u0627\u0644\u062a\u0627\u0631\u064a\u062e \u0627\u0644\u0645\u0642\u062a\u0631\u062d \u0644\u0644\u062a\u0642\u064a\u064a\u0645 \u0627\u0644\u062a\u0627\u0644\u064a"
+                        "ar": "\u0627\u0644\u062a\u0627\u0631\u064a\u062e \u0627\u0644\u0645\u0642\u062a\u0631\u062d \u0644\u0644\u062a\u0642\u064a\u064a\u0645 \u0627\u0644\u062a\u0627\u0644\u064a",
+                        "en": "Date of Next Assessment"
                     },
                     "nodegroup_id": "b5351ef1-f995-11e9-b345-06f597a7d5ce",
                     "sortorder": 2,
@@ -449,7 +458,7 @@
                 {
                     "active": true,
                     "cardid": "aea6357b-f995-11e9-b345-06f597a7d5ce",
-                    "component_id": "f05e4d3a-53c1-11e8-b0ea-784f435179ea",
+                    "component_id": "60e4e022-e2ba-40a0-948d-0538e27fbe1c",
                     "config": null,
                     "constraints": [
                         {
@@ -483,7 +492,7 @@
                 {
                     "active": true,
                     "cardid": "b23d3649-f995-11e9-b345-06f597a7d5ce",
-                    "component_id": "f05e4d3a-53c1-11e8-b0ea-784f435179ea",
+                    "component_id": "60e4e022-e2ba-40a0-948d-0538e27fbe1c",
                     "config": null,
                     "constraints": [
                         {
@@ -508,7 +517,8 @@
                     },
                     "is_editable": false,
                     "name": {
-                        "en": "Threat and Risk Assessment / \u0627\u0644\u062a\u0647\u062f\u064a\u062f \u0648\u062a\u0642\u064a\u064a\u0645 \u0627\u0644\u062e\u0637\u0631"
+                        "ar": "\u0627\u0644\u062a\u0647\u062f\u064a\u062f \u0648\u062a\u0642\u064a\u064a\u0645 \u0627\u0644\u062e\u0637\u0631",
+                        "en": "Threat and Risk Assessment"
                     },
                     "nodegroup_id": "b23d3647-f995-11e9-b345-06f597a7d5ce",
                     "sortorder": 5,
@@ -517,7 +527,7 @@
                 {
                     "active": true,
                     "cardid": "b43d1722-fa50-11e9-b345-06f597a7d5ce",
-                    "component_id": "f05e4d3a-53c1-11e8-b0ea-784f435179ea",
+                    "component_id": "60e4e022-e2ba-40a0-948d-0538e27fbe1c",
                     "config": null,
                     "constraints": [],
                     "cssclass": null,
@@ -535,7 +545,8 @@
                     },
                     "is_editable": false,
                     "name": {
-                        "en": "Condition Remarks / \u0645\u0644\u0627\u062d\u0638\u0627\u062a \u0643\u0644\u064a\u0629 \u0639\u0646 \u062d\u0627\u0644\u0629 \u0627\u0644\u0645\u0648\u0642\u0639"
+                        "ar": "\u0645\u0644\u0627\u062d\u0638\u0627\u062a \u0643\u0644\u064a\u0629 \u0639\u0646 \u062d\u0627\u0644\u0629 \u0627\u0644\u0645\u0648\u0642\u0639",
+                        "en": "Condition Remarks"
                     },
                     "nodegroup_id": "b5351ef5-f995-11e9-b345-06f597a7d5ce",
                     "sortorder": 1,
@@ -544,7 +555,7 @@
                 {
                     "active": true,
                     "cardid": "b5351eed-f995-11e9-b345-06f597a7d5ce",
-                    "component_id": "f05e4d3a-53c1-11e8-b0ea-784f435179ea",
+                    "component_id": "60e4e022-e2ba-40a0-948d-0538e27fbe1c",
                     "config": null,
                     "constraints": [
                         {
@@ -569,7 +580,8 @@
                     },
                     "is_editable": false,
                     "name": {
-                        "en": "Overall Condition Assessment / \u062d\u0627\u0644\u0629 \u0627\u0644\u0645\u0648\u0642\u0639 \u0639\u0645\u0648\u0645\u064b\u0627"
+                        "ar": "\u062d\u0627\u0644\u0629 \u0627\u0644\u0645\u0648\u0642\u0639 \u0639\u0645\u0648\u0645\u064b\u0627",
+                        "en": "Overall Condition Assessment"
                     },
                     "nodegroup_id": "b5351eeb-f995-11e9-b345-06f597a7d5ce",
                     "sortorder": 6,
@@ -578,7 +590,7 @@
                 {
                     "active": true,
                     "cardid": "d583c0f5-f995-11e9-b345-06f597a7d5ce",
-                    "component_id": "f05e4d3a-53c1-11e8-b0ea-784f435179ea",
+                    "component_id": "60e4e022-e2ba-40a0-948d-0538e27fbe1c",
                     "config": null,
                     "constraints": [
                         {
@@ -603,7 +615,8 @@
                     },
                     "is_editable": false,
                     "name": {
-                        "en": "Measurements / \u0642\u064a\u0627\u0633\u0627\u062a"
+                        "ar": "\u0642\u064a\u0627\u0633\u0627\u062a",
+                        "en": "Measurements"
                     },
                     "nodegroup_id": "d583c0f3-f995-11e9-b345-06f597a7d5ce",
                     "sortorder": 1,
@@ -612,7 +625,7 @@
                 {
                     "active": true,
                     "cardid": "d7636da3-f995-11e9-b345-06f597a7d5ce",
-                    "component_id": "f05e4d3a-53c1-11e8-b0ea-784f435179ea",
+                    "component_id": "60e4e022-e2ba-40a0-948d-0538e27fbe1c",
                     "config": null,
                     "constraints": [
                         {
@@ -637,7 +650,8 @@
                     },
                     "is_editable": false,
                     "name": {
-                        "en": "Modification and Construction / \u0627\u0644\u062a\u0639\u062f\u064a\u0644 \u0648\u0627\u0644\u0628\u0646\u0627\u0621"
+                        "ar": "\u0627\u0644\u062a\u0639\u062f\u064a\u0644 \u0648\u0627\u0644\u0628\u0646\u0627\u0621",
+                        "en": "Modification and Construction"
                     },
                     "nodegroup_id": "d7636da1-f995-11e9-b345-06f597a7d5ce",
                     "sortorder": 3,
@@ -646,7 +660,7 @@
                 {
                     "active": true,
                     "cardid": "e9e04274-fa4f-11e9-b345-06f597a7d5ce",
-                    "component_id": "f05e4d3a-53c1-11e8-b0ea-784f435179ea",
+                    "component_id": "60e4e022-e2ba-40a0-948d-0538e27fbe1c",
                     "config": null,
                     "constraints": [],
                     "cssclass": null,
@@ -673,7 +687,7 @@
                 {
                     "active": true,
                     "cardid": "f070fcf2-0a19-11eb-a232-02e7594ce0a0",
-                    "component_id": "f05e4d3a-53c1-11e8-b0ea-784f435179ea",
+                    "component_id": "60e4e022-e2ba-40a0-948d-0538e27fbe1c",
                     "config": null,
                     "constraints": [
                         {
@@ -701,7 +715,7 @@
                         "en": "Damage Observation"
                     },
                     "nodegroup_id": "52bb1e71-fbea-11e9-b345-06f597a7d5ce",
-                    "sortorder": null,
+                    "sortorder": 0,
                     "visible": true
                 },
                 {
@@ -725,7 +739,8 @@
                     },
                     "is_editable": false,
                     "name": {
-                        "en": "Modification / \u0646\u0648\u0639 \u0627\u0644\u062a\u0639\u062f\u064a\u0644"
+                        "ar": "\u0646\u0648\u0639 \u0627\u0644\u062a\u0639\u062f\u064a\u0644",
+                        "en": "Modification"
                     },
                     "nodegroup_id": "b9f03aa2-fa3d-11e9-b345-06f597a7d5ce",
                     "sortorder": 0,
@@ -768,7 +783,8 @@
                     },
                     "is_editable": false,
                     "name": {
-                        "en": "Location / \u0627\u0644\u062c\u063a\u0631\u0627\u0641\u064a\u0627"
+                        "ar": "\u0627\u0644\u0645\u0648\u0642\u0639",
+                        "en": "Location"
                     },
                     "nodegroup_id": "f9587707-b0ae-11ea-9b1f-02e7594ce0a0",
                     "sortorder": 2,
@@ -808,7 +824,8 @@
                     },
                     "is_editable": false,
                     "name": {
-                        "en": "File Upload / \u062a\u062d\u0645\u064a\u0644 \u0627\u0644\u0645\u0644\u0641"
+                        "ar": "\u062a\u062d\u0645\u064a\u0644 \u0627\u0644\u0645\u0644\u0641",
+                        "en": "File Upload"
                     },
                     "nodegroup_id": "fe048bf0-80dc-11ea-a6a6-02e7594ce0a0",
                     "sortorder": 7,
@@ -834,7 +851,7 @@
                         "en": "Risk Level / \u0645\u0633\u062a\u0648\u0649 \u0627\u0644\u0645\u062e\u0627\u0637\u0631"
                     },
                     "node_id": "4204b5c8-cdb7-11ea-a292-02e7594ce0a0",
-                    "sortorder": null,
+                    "sortorder": 0,
                     "visible": true,
                     "widget_id": "10000000-0000-0000-0000-000000000002"
                 },
@@ -1344,7 +1361,7 @@
                         "en": "Mitigation Activity Type"
                     },
                     "node_id": "f1600708-07c3-11eb-a232-02e7594ce0a0",
-                    "sortorder": null,
+                    "sortorder": 0,
                     "visible": true,
                     "widget_id": "10000000-0000-0000-0000-000000000002"
                 },
@@ -1622,7 +1639,7 @@
                         "en": "Damage Assessment Assessor / \u0627\u0644\u0645\u062a\u062d\u0642\u0642 \u0645\u0646 \u0627\u0644\u0636\u0631\u0631"
                     },
                     "node_id": "b580a298-c81b-11ea-a292-02e7594ce0a0",
-                    "sortorder": null,
+                    "sortorder": 0,
                     "visible": true,
                     "widget_id": "10000000-0000-0000-0000-000000000001"
                 },
@@ -1972,7 +1989,7 @@
                         "en": "Secondary Threat Type"
                     },
                     "node_id": "b23d364e-f995-11e9-b345-06f597a7d5ce",
-                    "sortorder": null,
+                    "sortorder": 0,
                     "visible": true,
                     "widget_id": "10000000-0000-0000-0000-000000000002"
                 },
@@ -2082,7 +2099,7 @@
                         "en": "Overall Condition Type / \u062d\u0627\u0644\u0629 \u0627\u0644\u0645\u0648\u0642\u0639 \u0639\u0645\u0648\u0645\u064b\u0627"
                     },
                     "node_id": "b5351ef4-f995-11e9-b345-06f597a7d5ce",
-                    "sortorder": null,
+                    "sortorder": 0,
                     "visible": true,
                     "widget_id": "10000000-0000-0000-0000-000000000002"
                 },
@@ -2104,7 +2121,7 @@
                         "en": "Recommended Date of Next Assessment / \u0627\u0644\u062a\u0627\u0631\u064a\u062e \u0627\u0644\u0645\u0642\u062a\u0631\u062d \u0644\u0644\u062a\u0642\u064a\u064a\u0645 \u0627\u0644\u062a\u0627\u0644\u064a"
                     },
                     "node_id": "b5351ef1-f995-11e9-b345-06f597a7d5ce",
-                    "sortorder": null,
+                    "sortorder": 0,
                     "visible": true,
                     "widget_id": "10000000-0000-0000-0000-000000000002"
                 },
@@ -2126,7 +2143,7 @@
                         "en": "Overall Condition Remarks Type / \u0646\u0648\u0639 \u0627\u0644\u0645\u0644\u0627\u062d\u0638\u0627\u062a \u0627\u0644\u0645\u062f\u0648\u0646\u0629 \u0625\u062c\u0645\u0627\u0644\u064b\u0627"
                     },
                     "node_id": "b5351ef3-f995-11e9-b345-06f597a7d5ce",
-                    "sortorder": null,
+                    "sortorder": 0,
                     "visible": true,
                     "widget_id": "10000000-0000-0000-0000-000000000002"
                 },
@@ -2150,7 +2167,7 @@
                         "en": "Overall Condition Remarks / \u0645\u0644\u0627\u062d\u0638\u0627\u062a \u0643\u0644\u064a\u0629 \u0639\u0646 \u062d\u0627\u0644\u0629 \u0627\u0644\u0645\u0648\u0642\u0639"
                     },
                     "node_id": "b5351eee-f995-11e9-b345-06f597a7d5ce",
-                    "sortorder": null,
+                    "sortorder": 0,
                     "visible": true,
                     "widget_id": "10000000-0000-0000-0000-000000000001"
                 },
@@ -2276,7 +2293,7 @@
                         "en": "Priority to Undertake Mitigation / \u0627\u0644\u0623\u0648\u0644\u0648\u064a\u0629 \u0644\u0625\u062c\u0631\u0627\u0621 \u0627\u0644\u0643\u0628\u062d"
                     },
                     "node_id": "b23d3650-f995-11e9-b345-06f597a7d5ce",
-                    "sortorder": null,
+                    "sortorder": 0,
                     "visible": true,
                     "widget_id": "10000000-0000-0000-0000-000000000002"
                 },
@@ -2298,7 +2315,7 @@
                         "en": "Mitigation Strategy / \u0627\u0633\u062a\u0631\u0627\u062a\u064a\u062c\u064a\u0629 \u0643\u0628\u062d \u0627\u0644\u062e\u0637\u0631"
                     },
                     "node_id": "b23d3662-f995-11e9-b345-06f597a7d5ce",
-                    "sortorder": null,
+                    "sortorder": 0,
                     "visible": true,
                     "widget_id": "10000000-0000-0000-0000-000000000002"
                 },
@@ -3234,8 +3251,8 @@
                                 "string_template": "<Heritage Place>  <Assessment Activity Date>"
                             },
                             "map_popup": {
-                                "nodegroup_id": "",
-                                "string_template": ""
+                                "nodegroup_id": "34894dc2-8a3e-11ea-a6a6-02e7594ce0a0",
+                                "string_template": "<CONDITION ID>"
                             },
                             "name": {
                                 "nodegroup_id": "34894dc2-8a3e-11ea-a6a6-02e7594ce0a0",
@@ -3255,6 +3272,20 @@
                     "function_id": "60000000-0000-0000-0000-000000000001",
                     "graph_id": "f6235ff1-f992-11e9-b345-06f597a7d5ce",
                     "id": "1b41f683-3e7d-447f-929e-7e107db85330"
+                },
+                {
+                    "config": {
+                        "last_value": 0,
+                        "prefix": "CONDITION-",
+                        "selected_nodegroup": "34894dc2-8a3e-11ea-a6a6-02e7594ce0a0",
+                        "starting_value": "0000120",
+                        "suffix": "",
+                        "target_node": "34894dc2-8a3e-11ea-a6a6-02e7594ce0a0",
+                        "triggering_nodegroups": []
+                    },
+                    "function_id": "2cc07b0a-adbd-4721-86ce-dad1699caa86",
+                    "graph_id": "f6235ff1-f992-11e9-b345-06f597a7d5ce",
+                    "id": "96f39d69-626c-41dd-ba3e-d233b7265009"
                 }
             ],
             "graphid": "f6235ff1-f992-11e9-b345-06f597a7d5ce",
@@ -5745,7 +5776,7 @@
                 {
                     "alias": "geometric_place_expression",
                     "config": {
-                        "addToMap": true,
+                        "addToMap": false,
                         "advancedStyle": "",
                         "advancedStyling": false,
                         "autoManageCache": false,
@@ -5757,7 +5788,7 @@
                         "haloRadius": "3",
                         "haloWeight": 4,
                         "layerActivated": true,
-                        "layerIcon": "",
+                        "layerIcon": "fa fa-pencil-square-o",
                         "layerLegend": "",
                         "layerName": "",
                         "lineColor": "rgba(244,242,89,0.7)",
@@ -5838,9 +5869,12 @@
                 "notes": null,
                 "publicationid": "8c14d152-6497-11ed-9618-08002727641f",
                 "published_time": "2022-11-14T21:42:37.136",
-                "user_id": 4
+                "user_id": 1
             },
-            "relatable_resource_model_ids": [],
+            "relatable_resource_model_ids": [
+                "34cfe98e-c2c0-11ea-9026-02e7594ce0a0",
+                "35b99cb7-379a-11ea-9989-06f597a7d5ce"
+            ],
             "resource_2_resource_constraints": [],
             "root": {
                 "alias": "detailed_condition_assessment",
@@ -5870,9 +5904,9 @@
         }
     ],
     "metadata": {
-        "db": "PostgreSQL 14.7 (Ubuntu 14.7-1.pgdg20.04+1) on x86_64-pc-linux-gnu, compiled by gcc (Ubuntu 9.4.0-1ubuntu1~20.04.1) 9.4.0, 64-bit",
+        "db": "PostgreSQL 14.7 (Ubuntu 14.7-1.pgdg20.04+1) on aarch64-unknown-linux-gnu, compiled by gcc (Ubuntu 9.4.0-1ubuntu1~20.04.1) 9.4.0, 64-bit",
         "git hash": "fatal: not a git repository (or any of the parent directories): .git",
         "os": "Linux",
-        "os version": "5.15.0-1031-aws"
+        "os version": "5.15.0-1037-aws"
     }
 }

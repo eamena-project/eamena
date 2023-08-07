@@ -6,7 +6,7 @@
                 {
                     "active": true,
                     "cardid": "5b3489be-cb8f-11ea-a292-02e7594ce0a0",
-                    "component_id": "f05e4d3a-53c1-11e8-b0ea-784f435179ea",
+                    "component_id": "60e4e022-e2ba-40a0-948d-0538e27fbe1c",
                     "config": null,
                     "constraints": [
                         {
@@ -31,7 +31,8 @@
                     },
                     "is_editable": false,
                     "name": {
-                        "en": "Measurements / \u0642\u064a\u0627\u0633\u0627\u062a"
+                        "ar": "\u0642\u064a\u0627\u0633\u0627\u062a",
+                        "en": "Measurements"
                     },
                     "nodegroup_id": "5b3489bc-cb8f-11ea-a292-02e7594ce0a0",
                     "sortorder": 1,
@@ -74,7 +75,8 @@
                     },
                     "is_editable": false,
                     "name": {
-                        "en": "Geometry / \u0623\u0634\u0643\u0627\u0644 \u0647\u0646\u062f\u0633\u064a\u0629"
+                        "ar": "\u0623\u0634\u0643\u0627\u0644 \u0647\u0646\u062f\u0633\u064a\u0629",
+                        "en": "Geometry"
                     },
                     "nodegroup_id": "6bde253d-cb7e-11ea-a292-02e7594ce0a0",
                     "sortorder": 3,
@@ -83,7 +85,7 @@
                 {
                     "active": true,
                     "cardid": "8fc30f33-cb7e-11ea-a292-02e7594ce0a0",
-                    "component_id": "f05e4d3a-53c1-11e8-b0ea-784f435179ea",
+                    "component_id": "60e4e022-e2ba-40a0-948d-0538e27fbe1c",
                     "config": {
                         "defaultManifest": ""
                     },
@@ -110,7 +112,8 @@
                     },
                     "is_editable": false,
                     "name": {
-                        "en": "Built Component Observation / \u0627\u0644\u0645\u0644\u0627\u062d\u0638\u0627\u062a \u0639\u0644\u0649 \u0627\u0644\u0645\u0643\u0648\u0646 \u0627\u0644\u0628\u0646\u0627\u0626\u064a"
+                        "ar": "\u0627\u0644\u0645\u0644\u0627\u062d\u0638\u0627\u062a \u0639\u0644\u0649 \u0627\u0644\u0645\u0643\u0648\u0646 \u0627\u0644\u0628\u0646\u0627\u0626\u064a",
+                        "en": "Built Component Observation"
                     },
                     "nodegroup_id": "8fc30f31-cb7e-11ea-a292-02e7594ce0a0",
                     "sortorder": 0,
@@ -119,7 +122,7 @@
                 {
                     "active": true,
                     "cardid": "9a895011-cb8e-11ea-a292-02e7594ce0a0",
-                    "component_id": "f05e4d3a-53c1-11e8-b0ea-784f435179ea",
+                    "component_id": "60e4e022-e2ba-40a0-948d-0538e27fbe1c",
                     "config": {
                         "centerX": 3,
                         "centerY": 8.5,
@@ -158,7 +161,8 @@
                     },
                     "is_editable": false,
                     "name": {
-                        "en": "Assessment Summary / \u0645\u0644\u062e\u0635 \u0627\u0644\u062a\u0642\u064a\u064a\u0645"
+                        "ar": "\u0645\u0644\u062e\u0635 \u0627\u0644\u062a\u0642\u064a\u064a\u0645",
+                        "en": "Assessment Summary"
                     },
                     "nodegroup_id": "9a89500f-cb8e-11ea-a292-02e7594ce0a0",
                     "sortorder": 4,
@@ -167,7 +171,7 @@
                 {
                     "active": true,
                     "cardid": "c86fdfea-cb7e-11ea-a292-02e7594ce0a0",
-                    "component_id": "f05e4d3a-53c1-11e8-b0ea-784f435179ea",
+                    "component_id": "60e4e022-e2ba-40a0-948d-0538e27fbe1c",
                     "config": null,
                     "constraints": [
                         {
@@ -207,7 +211,7 @@
                 {
                     "active": true,
                     "cardid": "d502562d-cb90-11ea-a292-02e7594ce0a0",
-                    "component_id": "f05e4d3a-53c1-11e8-b0ea-784f435179ea",
+                    "component_id": "60e4e022-e2ba-40a0-948d-0538e27fbe1c",
                     "config": null,
                     "constraints": [
                         {
@@ -232,7 +236,8 @@
                     },
                     "is_editable": false,
                     "name": {
-                        "en": "Material / \u0645\u0627\u062f\u0629 \u0627\u0644\u0628\u0646\u0627\u0621"
+                        "ar": "\u0645\u0627\u062f\u0629 \u0627\u0644\u0628\u0646\u0627\u0621",
+                        "en": "Material"
                     },
                     "nodegroup_id": "d502562b-cb90-11ea-a292-02e7594ce0a0",
                     "sortorder": 2,
@@ -1120,6 +1125,20 @@
             "functions_x_graphs": [
                 {
                     "config": {
+                        "last_value": "105",
+                        "prefix": "COMPONENT-",
+                        "selected_nodegroup": "c86fdfe8-cb7e-11ea-a292-02e7594ce0a0",
+                        "starting_value": "0000100",
+                        "suffix": "",
+                        "target_node": "c86fdfe8-cb7e-11ea-a292-02e7594ce0a0",
+                        "triggering_nodegroups": []
+                    },
+                    "function_id": "2cc07b0a-adbd-4721-86ce-dad1699caa86",
+                    "graph_id": "6c4f0703-c381-11ea-9026-02e7594ce0a0",
+                    "id": "64dc0506-6bdc-49f1-aabf-5c96133b5a2e"
+                },
+                {
+                    "config": {
                         "description": {
                             "nodegroup_id": "8fc30f31-cb7e-11ea-a292-02e7594ce0a0",
                             "string_template": "<Component Type>"
@@ -1127,11 +1146,11 @@
                         "descriptor_types": {
                             "description": {
                                 "nodegroup_id": "8fc30f31-cb7e-11ea-a292-02e7594ce0a0",
-                                "string_template": "<Built Component Comments>, <Component Classification>, <Component Type>, <Detailed Condition Assessment>, <Component Orientation>, <Built Component Image>, <Built Component Observation>"
+                                "string_template": "<Component Type>"
                             },
                             "map_popup": {
-                                "nodegroup_id": "",
-                                "string_template": ""
+                                "nodegroup_id": "c86fdfe8-cb7e-11ea-a292-02e7594ce0a0",
+                                "string_template": "<COMPONENT ID>"
                             },
                             "name": {
                                 "nodegroup_id": "c86fdfe8-cb7e-11ea-a292-02e7594ce0a0",
@@ -1450,7 +1469,7 @@
                 {
                     "alias": "geometric_place_expression",
                     "config": {
-                        "addToMap": true,
+                        "addToMap": false,
                         "advancedStyle": "",
                         "advancedStyling": false,
                         "autoManageCache": false,
@@ -1462,7 +1481,7 @@
                         "haloRadius": 3,
                         "haloWeight": 3,
                         "layerActivated": true,
-                        "layerIcon": "",
+                        "layerIcon": "fa fa-cubes",
                         "layerLegend": "",
                         "layerName": "",
                         "lineColor": "rgba(200,79,236,0.7)",
@@ -2025,9 +2044,12 @@
                 "notes": null,
                 "publicationid": "846cd206-6497-11ed-9618-08002727641f",
                 "published_time": "2022-11-14T21:42:24.291",
-                "user_id": 4
+                "user_id": 1
             },
-            "relatable_resource_model_ids": [],
+            "relatable_resource_model_ids": [
+                "34cfe98e-c2c0-11ea-9026-02e7594ce0a0",
+                "35b99cb7-379a-11ea-9989-06f597a7d5ce"
+            ],
             "resource_2_resource_constraints": [],
             "root": {
                 "alias": "built_component",
@@ -2057,9 +2079,9 @@
         }
     ],
     "metadata": {
-        "db": "PostgreSQL 14.7 (Ubuntu 14.7-1.pgdg20.04+1) on x86_64-pc-linux-gnu, compiled by gcc (Ubuntu 9.4.0-1ubuntu1~20.04.1) 9.4.0, 64-bit",
+        "db": "PostgreSQL 14.7 (Ubuntu 14.7-1.pgdg20.04+1) on aarch64-unknown-linux-gnu, compiled by gcc (Ubuntu 9.4.0-1ubuntu1~20.04.1) 9.4.0, 64-bit",
         "git hash": "fatal: not a git repository (or any of the parent directories): .git",
         "os": "Linux",
-        "os version": "5.15.0-1031-aws"
+        "os version": "5.15.0-1037-aws"
     }
 }

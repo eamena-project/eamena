@@ -21,16 +21,17 @@
                     "graph_id": "35b99cb7-379a-11ea-9989-06f597a7d5ce",
                     "helpenabled": false,
                     "helptext": {
-                        "en": null
+                        "en": ""
                     },
                     "helptitle": {
-                        "en": null
+                        "en": ""
                     },
                     "instructions": {
-                        "en": null
+                        "en": ""
                     },
                     "is_editable": false,
                     "name": {
+                        "ar": "\u0645\u0643\u0627\u0646 (\u0623\u0645\u0643\u0646\u0629) \u0627\u0644\u0646\u0634\u0631",
                         "en": "Place(s) of publication / \u0645\u0643\u0627\u0646 (\u0623\u0645\u0643\u0646\u0629) \u0627\u0644\u0646\u0634\u0631"
                     },
                     "nodegroup_id": "14e4ffc3-5251-11ea-a3f7-02e7594ce0a0",
@@ -48,16 +49,17 @@
                     "graph_id": "35b99cb7-379a-11ea-9989-06f597a7d5ce",
                     "helpenabled": false,
                     "helptext": {
-                        "en": null
+                        "en": ""
                     },
                     "helptitle": {
-                        "en": null
+                        "en": ""
                     },
                     "instructions": {
-                        "en": null
+                        "en": ""
                     },
                     "is_editable": false,
                     "name": {
+                        "ar": "\u0627\u0644\u0625\u0635\u062f\u0627\u0631 - \u0627\u0644\u0637\u0628\u0639\u0629",
                         "en": "Edition / \u0627\u0644\u0625\u0635\u062f\u0627\u0631 - \u0627\u0644\u0637\u0628\u0639\u0629"
                     },
                     "nodegroup_id": "edecaffb-52f5-11ea-a3f7-02e7594ce0a0",
@@ -82,16 +84,17 @@
                     "graph_id": "35b99cb7-379a-11ea-9989-06f597a7d5ce",
                     "helpenabled": false,
                     "helptext": {
-                        "en": null
+                        "en": ""
                     },
                     "helptitle": {
-                        "en": null
+                        "en": ""
                     },
                     "instructions": {
-                        "en": null
+                        "en": ""
                     },
                     "is_editable": true,
                     "name": {
+                        "ar": "\u0645\u0648\u0642\u0639 \u0630\u064a \u0635\u0644\u0629",
                         "en": "Related Site / \u0645\u0648\u0642\u0639 \u0630\u064a \u0635\u0644\u0629"
                     },
                     "nodegroup_id": "11da5279-80a5-11ea-a6a6-02e7594ce0a0",
@@ -109,16 +112,17 @@
                     "graph_id": "35b99cb7-379a-11ea-9989-06f597a7d5ce",
                     "helpenabled": false,
                     "helptext": {
-                        "en": null
+                        "en": ""
                     },
                     "helptitle": {
-                        "en": null
+                        "en": ""
                     },
                     "instructions": {
-                        "en": null
+                        "en": ""
                     },
                     "is_editable": false,
                     "name": {
+                        "ar": "\u062a\u0627\u0631\u064a\u062e \u0627\u0644\u0646\u0634\u0631",
                         "en": "Publication Date / \u062a\u0627\u0631\u064a\u062e \u0627\u0644\u0646\u0634\u0631"
                     },
                     "nodegroup_id": "4eaf1700-5251-11ea-a3f7-02e7594ce0a0",
@@ -136,16 +140,17 @@
                     "graph_id": "35b99cb7-379a-11ea-9989-06f597a7d5ce",
                     "helpenabled": false,
                     "helptext": {
-                        "en": null
+                        "en": ""
                     },
                     "helptitle": {
-                        "en": null
+                        "en": ""
                     },
                     "instructions": {
-                        "en": null
+                        "en": ""
                     },
                     "is_editable": false,
                     "name": {
+                        "ar": "\u0627\u0644\u0645\u062d\u0631\u0631 (\u0627\u0644\u0645\u062d\u0631\u0631\u0648\u0646)",
                         "en": "Editor(s) / \u0627\u0644\u0645\u062d\u0631\u0631 (\u0627\u0644\u0645\u062d\u0631\u0631\u0648\u0646)"
                     },
                     "nodegroup_id": "eaad4114-c5ab-11ea-9026-02e7594ce0a0",
@@ -170,13 +175,13 @@
                     "graph_id": "35b99cb7-379a-11ea-9989-06f597a7d5ce",
                     "helpenabled": false,
                     "helptext": {
-                        "en": null
+                        "en": ""
                     },
                     "helptitle": {
-                        "en": null
+                        "en": ""
                     },
                     "instructions": {
-                        "en": null
+                        "en": ""
                     },
                     "is_editable": false,
                     "name": {
@@ -204,16 +209,17 @@
                     "graph_id": "35b99cb7-379a-11ea-9989-06f597a7d5ce",
                     "helpenabled": false,
                     "helptext": {
-                        "en": null
+                        "en": ""
                     },
                     "helptitle": {
-                        "en": null
+                        "en": ""
                     },
                     "instructions": {
-                        "en": null
+                        "en": ""
                     },
                     "is_editable": false,
                     "name": {
+                        "ar": "\u062a\u0641\u0627\u0635\u064a\u0644 \u0627\u0644\u0635\u0648\u0631\u0629",
                         "en": "Image Details / \u062a\u0641\u0627\u0635\u064a\u0644 \u0627\u0644\u0635\u0648\u0631\u0629"
                     },
                     "nodegroup_id": "3d7ddeb7-5253-11ea-a3f7-02e7594ce0a0",
@@ -238,13 +244,13 @@
                     "graph_id": "35b99cb7-379a-11ea-9989-06f597a7d5ce",
                     "helpenabled": false,
                     "helptext": {
-                        "en": null
+                        "en": ""
                     },
                     "helptitle": {
-                        "en": null
+                        "en": ""
                     },
                     "instructions": {
-                        "en": null
+                        "en": ""
                     },
                     "is_editable": false,
                     "name": {
@@ -265,16 +271,17 @@
                     "graph_id": "35b99cb7-379a-11ea-9989-06f597a7d5ce",
                     "helpenabled": false,
                     "helptext": {
-                        "en": null
+                        "en": ""
                     },
                     "helptitle": {
-                        "en": null
+                        "en": ""
                     },
                     "instructions": {
-                        "en": null
+                        "en": ""
                     },
                     "is_editable": false,
                     "name": {
+                        "ar": "\u0627\u0644\u0646\u0627\u0634\u0631",
                         "en": "Publisher / \u0627\u0644\u0646\u0627\u0634\u0631"
                     },
                     "nodegroup_id": "39bf3874-5252-11ea-a3f7-02e7594ce0a0",
@@ -299,16 +306,17 @@
                     "graph_id": "35b99cb7-379a-11ea-9989-06f597a7d5ce",
                     "helpenabled": false,
                     "helptext": {
-                        "en": null
+                        "en": ""
                     },
                     "helptitle": {
-                        "en": null
+                        "en": ""
                     },
                     "instructions": {
-                        "en": null
+                        "en": ""
                     },
                     "is_editable": false,
                     "name": {
+                        "ar": "\u0646\u0648\u0639 \u0627\u0644\u0633\u0644\u0633\u0644\u0629",
                         "en": "Series Type / \u0646\u0648\u0639 \u0627\u0644\u0633\u0644\u0633\u0644\u0629"
                     },
                     "nodegroup_id": "e48c6f2d-52f5-11ea-a3f7-02e7594ce0a0",
@@ -333,13 +341,13 @@
                     "graph_id": "35b99cb7-379a-11ea-9989-06f597a7d5ce",
                     "helpenabled": false,
                     "helptext": {
-                        "en": null
+                        "en": ""
                     },
                     "helptitle": {
-                        "en": null
+                        "en": ""
                     },
                     "instructions": {
-                        "en": null
+                        "en": ""
                     },
                     "is_editable": false,
                     "name": {
@@ -360,16 +368,17 @@
                     "graph_id": "35b99cb7-379a-11ea-9989-06f597a7d5ce",
                     "helpenabled": false,
                     "helptext": {
-                        "en": null
+                        "en": ""
                     },
                     "helptitle": {
-                        "en": null
+                        "en": ""
                     },
                     "instructions": {
-                        "en": null
+                        "en": ""
                     },
                     "is_editable": false,
                     "name": {
+                        "ar": "\u0631\u0642\u0645 (\u0623\u0631\u0642\u0627\u0645) \u0627\u0644\u0635\u0641\u062d\u0629",
                         "en": "Page(s) / \u0631\u0642\u0645 (\u0623\u0631\u0642\u0627\u0645) \u0627\u0644\u0635\u0641\u062d\u0629"
                     },
                     "nodegroup_id": "363f4abf-5252-11ea-a3f7-02e7594ce0a0",
@@ -394,16 +403,17 @@
                     "graph_id": "35b99cb7-379a-11ea-9989-06f597a7d5ce",
                     "helpenabled": false,
                     "helptext": {
-                        "en": null
+                        "en": ""
                     },
                     "helptitle": {
-                        "en": null
+                        "en": ""
                     },
                     "instructions": {
-                        "en": null
+                        "en": ""
                     },
                     "is_editable": false,
                     "name": {
+                        "ar": "\u062a\u0641\u0627\u0635\u064a\u0644 \u0627\u0644\u0645\u0631\u0628\u0639",
                         "en": "Tile Square Details / \u062a\u0641\u0627\u0635\u064a\u0644 \u0627\u0644\u0645\u0631\u0628\u0639"
                     },
                     "nodegroup_id": "d4afc9d7-52f6-11ea-a3f7-02e7594ce0a0",
@@ -436,16 +446,17 @@
                     "graph_id": "35b99cb7-379a-11ea-9989-06f597a7d5ce",
                     "helpenabled": false,
                     "helptext": {
-                        "en": null
+                        "en": ""
                     },
                     "helptitle": {
-                        "en": null
+                        "en": ""
                     },
                     "instructions": {
-                        "en": null
+                        "en": ""
                     },
                     "is_editable": false,
                     "name": {
+                        "ar": "\u0627\u0644\u0645\u0631\u0627\u062c\u0639",
                         "en": "Bibliography / \u0627\u0644\u0645\u0631\u0627\u062c\u0639"
                     },
                     "nodegroup_id": "49c2fb32-5250-11ea-a3f7-02e7594ce0a0",
@@ -463,16 +474,17 @@
                     "graph_id": "35b99cb7-379a-11ea-9989-06f597a7d5ce",
                     "helpenabled": false,
                     "helptext": {
-                        "en": null
+                        "en": ""
                     },
                     "helptitle": {
-                        "en": null
+                        "en": ""
                     },
                     "instructions": {
-                        "en": null
+                        "en": ""
                     },
                     "is_editable": false,
                     "name": {
+                        "ar": "\u0631\u0642\u0645 (\u0623\u0631\u0642\u0627\u0645) \u0627\u0644\u0634\u0643\u0644",
                         "en": "Figure(s) / \u0631\u0642\u0645 (\u0623\u0631\u0642\u0627\u0645) \u0627\u0644\u0634\u0643\u0644"
                     },
                     "nodegroup_id": "33721083-5252-11ea-a3f7-02e7594ce0a0",
@@ -497,16 +509,17 @@
                     "graph_id": "35b99cb7-379a-11ea-9989-06f597a7d5ce",
                     "helpenabled": false,
                     "helptext": {
-                        "en": null
+                        "en": ""
                     },
                     "helptitle": {
-                        "en": null
+                        "en": ""
                     },
                     "instructions": {
-                        "en": null
+                        "en": ""
                     },
                     "is_editable": false,
                     "name": {
+                        "ar": "\u0627\u0644\u0645\u0624\u0644\u0641 (\u0627\u0644\u0645\u0624\u0644\u0641\u0648\u0646)",
                         "en": "Author(s) / \u0627\u0644\u0645\u0624\u0644\u0641 (\u0627\u0644\u0645\u0624\u0644\u0641\u0648\u0646)"
                     },
                     "nodegroup_id": "6c0d426a-c5aa-11ea-9026-02e7594ce0a0",
@@ -531,13 +544,13 @@
                     "graph_id": "35b99cb7-379a-11ea-9989-06f597a7d5ce",
                     "helpenabled": false,
                     "helptext": {
-                        "en": null
+                        "en": ""
                     },
                     "helptitle": {
-                        "en": null
+                        "en": ""
                     },
                     "instructions": {
-                        "en": null
+                        "en": ""
                     },
                     "is_editable": false,
                     "name": {
@@ -571,13 +584,13 @@
                     "graph_id": "35b99cb7-379a-11ea-9989-06f597a7d5ce",
                     "helpenabled": false,
                     "helptext": {
-                        "en": null
+                        "en": ""
                     },
                     "helptitle": {
-                        "en": null
+                        "en": ""
                     },
                     "instructions": {
-                        "en": null
+                        "en": ""
                     },
                     "is_editable": false,
                     "name": {
@@ -605,16 +618,17 @@
                     "graph_id": "35b99cb7-379a-11ea-9989-06f597a7d5ce",
                     "helpenabled": false,
                     "helptext": {
-                        "en": null
+                        "en": ""
                     },
                     "helptitle": {
-                        "en": null
+                        "en": ""
                     },
                     "instructions": {
-                        "en": null
+                        "en": ""
                     },
                     "is_editable": false,
                     "name": {
+                        "ar": "\u0646\u0648\u0639 \u0645\u0635\u062f\u0631 \u0627\u0644\u062e\u0631\u064a\u0637\u0629",
                         "en": "Map Source Type / \u0646\u0648\u0639 \u0645\u0635\u062f\u0631 \u0627\u0644\u062e\u0631\u064a\u0637\u0629"
                     },
                     "nodegroup_id": "f7cc2731-52f5-11ea-a3f7-02e7594ce0a0",
@@ -632,10 +646,10 @@
                     "graph_id": "35b99cb7-379a-11ea-9989-06f597a7d5ce",
                     "helpenabled": false,
                     "helptext": {
-                        "en": null
+                        "en": ""
                     },
                     "helptitle": {
-                        "en": null
+                        "en": ""
                     },
                     "instructions": {
                         "en": "e.g. Journal/Volume Title / \u0645\u062b\u0627\u0644: \u0645\u062c\u0644\u0629/\u0639\u0646\u0648\u0627\u0646 \u0627\u0644\u0645\u062c\u0644\u062f"
@@ -666,16 +680,17 @@
                     "graph_id": "35b99cb7-379a-11ea-9989-06f597a7d5ce",
                     "helpenabled": false,
                     "helptext": {
-                        "en": null
+                        "en": ""
                     },
                     "helptitle": {
-                        "en": null
+                        "en": ""
                     },
                     "instructions": {
-                        "en": null
+                        "en": ""
                     },
                     "is_editable": false,
                     "name": {
+                        "ar": "\u0645\u0643\u0627\u0646 \u0627\u0644\u0646\u0634\u0631",
                         "en": "Place of publication / \u0645\u0643\u0627\u0646 \u0627\u0644\u0646\u0634\u0631"
                     },
                     "nodegroup_id": "ff7ee06d-52f5-11ea-a3f7-02e7594ce0a0",
@@ -706,16 +721,17 @@
                     "graph_id": "35b99cb7-379a-11ea-9989-06f597a7d5ce",
                     "helpenabled": false,
                     "helptext": {
-                        "en": null
+                        "en": ""
                     },
                     "helptitle": {
-                        "en": null
+                        "en": ""
                     },
                     "instructions": {
-                        "en": null
+                        "en": ""
                     },
                     "is_editable": false,
                     "name": {
+                        "ar": "\u0646\u0648\u0639 \u0627\u0644\u0645\u0635\u062f\u0631",
                         "en": "Resource Type / \u0646\u0648\u0639 \u0627\u0644\u0645\u0635\u062f\u0631"
                     },
                     "nodegroup_id": "54c62e2e-524f-11ea-a3f7-02e7594ce0a0",
@@ -749,16 +765,17 @@
                     "graph_id": "35b99cb7-379a-11ea-9989-06f597a7d5ce",
                     "helpenabled": false,
                     "helptext": {
-                        "en": null
+                        "en": ""
                     },
                     "helptitle": {
-                        "en": null
+                        "en": ""
                     },
                     "instructions": {
-                        "en": null
+                        "en": ""
                     },
                     "is_editable": false,
                     "name": {
+                        "ar": "\u0627\u0644\u0645\u0648\u0642\u0639",
                         "en": "Location / \u0627\u0644\u0645\u0648\u0642\u0639"
                     },
                     "nodegroup_id": "587447d5-b0c2-11ea-9b1f-02e7594ce0a0",
@@ -776,16 +793,17 @@
                     "graph_id": "35b99cb7-379a-11ea-9989-06f597a7d5ce",
                     "helpenabled": false,
                     "helptext": {
-                        "en": null
+                        "en": ""
                     },
                     "helptitle": {
-                        "en": null
+                        "en": ""
                     },
                     "instructions": {
-                        "en": null
+                        "en": ""
                     },
                     "is_editable": true,
                     "name": {
+                        "ar": "\u0639\u0644\u0627\u0642\u0627\u062a \u0645\u0641\u0635\u0644\u0629 \u0644\u062a\u0642\u064a\u064a\u0645 \u0627\u0644\u062d\u0627\u0644\u0629",
                         "en": "Related Detailed Condition Assessment / \u0639\u0644\u0627\u0642\u0627\u062a \u0645\u0641\u0635\u0644\u0629 \u0644\u062a\u0642\u064a\u064a\u0645 \u0627\u0644\u062d\u0627\u0644\u0629"
                     },
                     "nodegroup_id": "aa018e31-8098-11ea-a6a6-02e7594ce0a0",
@@ -816,16 +834,17 @@
                     "graph_id": "35b99cb7-379a-11ea-9989-06f597a7d5ce",
                     "helpenabled": false,
                     "helptext": {
-                        "en": null
+                        "en": ""
                     },
                     "helptitle": {
-                        "en": null
+                        "en": ""
                     },
                     "instructions": {
-                        "en": null
+                        "en": ""
                     },
                     "is_editable": false,
                     "name": {
+                        "ar": "\u0627\u0644\u0628\u064a\u0627\u0646\u0627\u062a \u0627\u0644\u0645\u0634\u062a\u0631\u0643\u0629",
                         "en": "Shared Data / \u0627\u0644\u0628\u064a\u0627\u0646\u0627\u062a \u0627\u0644\u0645\u0634\u062a\u0631\u0643\u0629"
                     },
                     "nodegroup_id": "641b3858-52f7-11ea-a3f7-02e7594ce0a0",
@@ -856,13 +875,13 @@
                     "graph_id": "35b99cb7-379a-11ea-9989-06f597a7d5ce",
                     "helpenabled": false,
                     "helptext": {
-                        "en": null
+                        "en": ""
                     },
                     "helptitle": {
-                        "en": null
+                        "en": ""
                     },
                     "instructions": {
-                        "en": null
+                        "en": ""
                     },
                     "is_editable": false,
                     "name": {
@@ -896,16 +915,17 @@
                     "graph_id": "35b99cb7-379a-11ea-9989-06f597a7d5ce",
                     "helpenabled": false,
                     "helptext": {
-                        "en": null
+                        "en": ""
                     },
                     "helptitle": {
-                        "en": null
+                        "en": ""
                     },
                     "instructions": {
-                        "en": null
+                        "en": ""
                     },
                     "is_editable": false,
                     "name": {
+                        "ar": "\u0627\u0644\u062e\u0631\u0627\u0626\u0637",
                         "en": "Cartography / \u0627\u0644\u062e\u0631\u0627\u0626\u0637"
                     },
                     "nodegroup_id": "8439ef28-52f5-11ea-a3f7-02e7594ce0a0",
@@ -936,16 +956,17 @@
                     "graph_id": "35b99cb7-379a-11ea-9989-06f597a7d5ce",
                     "helpenabled": false,
                     "helptext": {
-                        "en": null
+                        "en": ""
                     },
                     "helptitle": {
-                        "en": null
+                        "en": ""
                     },
                     "instructions": {
-                        "en": null
+                        "en": ""
                     },
                     "is_editable": false,
                     "name": {
+                        "ar": "\u0627\u0644\u0635\u0648\u0631\u0629",
                         "en": "Imagery / \u0627\u0644\u0635\u0648\u0631\u0629"
                     },
                     "nodegroup_id": "90181f02-5252-11ea-a3f7-02e7594ce0a0",
@@ -963,16 +984,17 @@
                     "graph_id": "35b99cb7-379a-11ea-9989-06f597a7d5ce",
                     "helpenabled": false,
                     "helptext": {
-                        "en": null
+                        "en": ""
                     },
                     "helptitle": {
-                        "en": null
+                        "en": ""
                     },
                     "instructions": {
-                        "en": null
+                        "en": ""
                     },
                     "is_editable": false,
                     "name": {
+                        "ar": "\u0647\u0648\u064a\u0629 \u0627\u0644\u0645\u0635\u0646\u0641/\u0627\u0644\u0643\u062a\u0627\u0644\u0648\u062c",
                         "en": "Catalogue ID / \u0647\u0648\u064a\u0629 \u0627\u0644\u0645\u0635\u0646\u0641/\u0627\u0644\u0643\u062a\u0627\u0644\u0648\u062c"
                     },
                     "nodegroup_id": "341f9905-5253-11ea-a3f7-02e7594ce0a0",
@@ -990,16 +1012,17 @@
                     "graph_id": "35b99cb7-379a-11ea-9989-06f597a7d5ce",
                     "helpenabled": false,
                     "helptext": {
-                        "en": null
+                        "en": ""
                     },
                     "helptitle": {
-                        "en": null
+                        "en": ""
                     },
                     "instructions": {
-                        "en": null
+                        "en": ""
                     },
                     "is_editable": false,
                     "name": {
+                        "ar": "\u0646\u0648\u0639 \u0627\u0644\u0645\u0639\u0627\u0644\u062c",
                         "en": "Processing Type / \u0646\u0648\u0639 \u0627\u0644\u0645\u0639\u0627\u0644\u062c"
                     },
                     "nodegroup_id": "8e38fc39-52f2-11ea-a3f7-02e7594ce0a0",
@@ -1017,16 +1040,17 @@
                     "graph_id": "35b99cb7-379a-11ea-9989-06f597a7d5ce",
                     "helpenabled": false,
                     "helptext": {
-                        "en": null
+                        "en": ""
                     },
                     "helptitle": {
-                        "en": null
+                        "en": ""
                     },
                     "instructions": {
-                        "en": null
+                        "en": ""
                     },
                     "is_editable": false,
                     "name": {
+                        "ar": "\u062a\u0627\u0631\u064a\u062e \u0627\u0644\u0645\u0644\u0641",
                         "en": "Date of File / \u062a\u0627\u0631\u064a\u062e \u0627\u0644\u0645\u0644\u0641"
                     },
                     "nodegroup_id": "bf22c07c-52f1-11ea-a3f7-02e7594ce0a0",
@@ -1051,13 +1075,13 @@
                     "graph_id": "35b99cb7-379a-11ea-9989-06f597a7d5ce",
                     "helpenabled": false,
                     "helptext": {
-                        "en": null
+                        "en": ""
                     },
                     "helptitle": {
-                        "en": null
+                        "en": ""
                     },
                     "instructions": {
-                        "en": null
+                        "en": ""
                     },
                     "is_editable": false,
                     "name": {
@@ -1085,13 +1109,13 @@
                     "graph_id": "35b99cb7-379a-11ea-9989-06f597a7d5ce",
                     "helpenabled": false,
                     "helptext": {
-                        "en": null
+                        "en": ""
                     },
                     "helptitle": {
-                        "en": null
+                        "en": ""
                     },
                     "instructions": {
-                        "en": null
+                        "en": ""
                     },
                     "is_editable": true,
                     "name": {
@@ -1119,13 +1143,13 @@
                     "graph_id": "35b99cb7-379a-11ea-9989-06f597a7d5ce",
                     "helpenabled": false,
                     "helptext": {
-                        "en": null
+                        "en": ""
                     },
                     "helptitle": {
-                        "en": null
+                        "en": ""
                     },
                     "instructions": {
-                        "en": null
+                        "en": ""
                     },
                     "is_editable": false,
                     "name": {
@@ -1146,16 +1170,17 @@
                     "graph_id": "35b99cb7-379a-11ea-9989-06f597a7d5ce",
                     "helpenabled": false,
                     "helptext": {
-                        "en": null
+                        "en": ""
                     },
                     "helptitle": {
-                        "en": null
+                        "en": ""
                     },
                     "instructions": {
-                        "en": null
+                        "en": ""
                     },
                     "is_editable": false,
                     "name": {
+                        "ar": "\u062a\u0627\u0631\u064a\u062e \u0627\u0644\u062d\u064a\u0627\u0632\u0629",
                         "en": "Date of Acquisition / \u062a\u0627\u0631\u064a\u062e \u0627\u0644\u062d\u064a\u0627\u0632\u0629"
                     },
                     "nodegroup_id": "4077fb00-5253-11ea-a3f7-02e7594ce0a0",
@@ -1180,13 +1205,13 @@
                     "graph_id": "35b99cb7-379a-11ea-9989-06f597a7d5ce",
                     "helpenabled": false,
                     "helptext": {
-                        "en": null
+                        "en": ""
                     },
                     "helptitle": {
-                        "en": null
+                        "en": ""
                     },
                     "instructions": {
-                        "en": null
+                        "en": ""
                     },
                     "is_editable": false,
                     "name": {
@@ -1214,13 +1239,13 @@
                     "graph_id": "35b99cb7-379a-11ea-9989-06f597a7d5ce",
                     "helpenabled": false,
                     "helptext": {
-                        "en": null
+                        "en": ""
                     },
                     "helptitle": {
-                        "en": null
+                        "en": ""
                     },
                     "instructions": {
-                        "en": null
+                        "en": ""
                     },
                     "is_editable": false,
                     "name": {
@@ -1241,16 +1266,17 @@
                     "graph_id": "35b99cb7-379a-11ea-9989-06f597a7d5ce",
                     "helpenabled": false,
                     "helptext": {
-                        "en": null
+                        "en": ""
                     },
                     "helptitle": {
-                        "en": null
+                        "en": ""
                     },
                     "instructions": {
-                        "en": null
+                        "en": ""
                     },
                     "is_editable": false,
                     "name": {
+                        "ar": "\u0646\u0648\u0639 \u0648\u0636\u0648\u062d \u0639\u064a\u0646\u0629 \u0627\u0644\u0635\u0648\u0631\u0629 \u0627\u0644\u0645\u0646\u062a\u0642\u0627\u0629",
                         "en": "Imagery Sampled Resolution Type / \u0646\u0648\u0639 \u0648\u0636\u0648\u062d \u0639\u064a\u0646\u0629 \u0627\u0644\u0635\u0648\u0631\u0629 \u0627\u0644\u0645\u0646\u062a\u0642\u0627\u0629"
                     },
                     "nodegroup_id": "8ab38e85-52f2-11ea-a3f7-02e7594ce0a0",
@@ -1275,13 +1301,13 @@
                     "graph_id": "35b99cb7-379a-11ea-9989-06f597a7d5ce",
                     "helpenabled": false,
                     "helptext": {
-                        "en": null
+                        "en": ""
                     },
                     "helptitle": {
-                        "en": null
+                        "en": ""
                     },
                     "instructions": {
-                        "en": null
+                        "en": ""
                     },
                     "is_editable": false,
                     "name": {
@@ -1309,16 +1335,17 @@
                     "graph_id": "35b99cb7-379a-11ea-9989-06f597a7d5ce",
                     "helpenabled": false,
                     "helptext": {
-                        "en": null
+                        "en": ""
                     },
                     "helptitle": {
-                        "en": null
+                        "en": ""
                     },
                     "instructions": {
-                        "en": null
+                        "en": ""
                     },
                     "is_editable": true,
                     "name": {
+                        "ar": "\u0645\u0635\u062f\u0631 \u0627\u0644\u0639\u0644\u0627\u0642\u0627\u062a",
                         "en": "Resource Relationships / \u0645\u0635\u062f\u0631 \u0627\u0644\u0639\u0644\u0627\u0642\u0627\u062a"
                     },
                     "nodegroup_id": "aa018e34-8098-11ea-a6a6-02e7594ce0a0",
@@ -1336,16 +1363,17 @@
                     "graph_id": "35b99cb7-379a-11ea-9989-06f597a7d5ce",
                     "helpenabled": false,
                     "helptext": {
-                        "en": null
+                        "en": ""
                     },
                     "helptitle": {
-                        "en": null
+                        "en": ""
                     },
                     "instructions": {
-                        "en": null
+                        "en": ""
                     },
                     "is_editable": false,
                     "name": {
+                        "ar": "\u062d\u0642 \u0627\u0644\u0646\u0634\u0631",
                         "en": "Copyright / \u062d\u0642 \u0627\u0644\u0646\u0634\u0631"
                     },
                     "nodegroup_id": "47ecc2d0-5253-11ea-a3f7-02e7594ce0a0",
@@ -1363,16 +1391,17 @@
                     "graph_id": "35b99cb7-379a-11ea-9989-06f597a7d5ce",
                     "helpenabled": false,
                     "helptext": {
-                        "en": null
+                        "en": ""
                     },
                     "helptitle": {
-                        "en": null
+                        "en": ""
                     },
                     "instructions": {
-                        "en": null
+                        "en": ""
                     },
                     "is_editable": false,
                     "name": {
+                        "ar": "\u0627\u0644\u0645\u062c\u0644\u062f",
                         "en": "Volume / \u0627\u0644\u0645\u062c\u0644\u062f"
                     },
                     "nodegroup_id": "6a5d14c7-5251-11ea-a3f7-02e7594ce0a0",
@@ -1390,16 +1419,17 @@
                     "graph_id": "35b99cb7-379a-11ea-9989-06f597a7d5ce",
                     "helpenabled": false,
                     "helptext": {
-                        "en": null
+                        "en": ""
                     },
                     "helptitle": {
-                        "en": null
+                        "en": ""
                     },
                     "instructions": {
-                        "en": null
+                        "en": ""
                     },
                     "is_editable": false,
                     "name": {
+                        "ar": "\u0627\u0644\u0625\u0635\u062f\u0627\u0631/\u0627\u0644\u0637\u0628\u0639\u0629",
                         "en": "Issues / \u0627\u0644\u0625\u0635\u062f\u0627\u0631/\u0627\u0644\u0637\u0628\u0639\u0629"
                     },
                     "nodegroup_id": "99e55b37-5251-11ea-a3f7-02e7594ce0a0",
@@ -1424,16 +1454,17 @@
                     "graph_id": "35b99cb7-379a-11ea-9989-06f597a7d5ce",
                     "helpenabled": false,
                     "helptext": {
-                        "en": null
+                        "en": ""
                     },
                     "helptitle": {
-                        "en": null
+                        "en": ""
                     },
                     "instructions": {
-                        "en": null
+                        "en": ""
                     },
                     "is_editable": false,
                     "name": {
+                        "ar": "\u0627\u0644\u0645\u0635\u0648\u0631/\u0627\u0644\u0645\u0627\u0644\u0643",
                         "en": "Creator(s) / \u0627\u0644\u0645\u0635\u0648\u0631/\u0627\u0644\u0645\u0627\u0644\u0643"
                     },
                     "nodegroup_id": "22877ce5-52f2-11ea-a3f7-02e7594ce0a0",
@@ -1464,16 +1495,17 @@
                     "graph_id": "35b99cb7-379a-11ea-9989-06f597a7d5ce",
                     "helpenabled": false,
                     "helptext": {
-                        "en": null
+                        "en": ""
                     },
                     "helptitle": {
-                        "en": null
+                        "en": ""
                     },
                     "instructions": {
-                        "en": null
+                        "en": ""
                     },
                     "is_editable": false,
                     "name": {
+                        "ar": "\u0645\u0639\u0644\u0648\u0645\u0627\u062a \u0625\u0636\u0627\u0641\u064a\u0629",
                         "en": "Additional Information / \u0645\u0639\u0644\u0648\u0645\u0627\u062a \u0625\u0636\u0627\u0641\u064a\u0629"
                     },
                     "nodegroup_id": "b528b064-5189-11ea-a3f7-02e7594ce0a0",
@@ -1498,16 +1530,17 @@
                     "graph_id": "35b99cb7-379a-11ea-9989-06f597a7d5ce",
                     "helpenabled": false,
                     "helptext": {
-                        "en": null
+                        "en": ""
                     },
                     "helptitle": {
-                        "en": null
+                        "en": ""
                     },
                     "instructions": {
-                        "en": null
+                        "en": ""
                     },
                     "is_editable": false,
                     "name": {
+                        "ar": "\u0627\u0644\u0645\u0635\u062f\u0631",
                         "en": "Source(s) / \u0627\u0644\u0645\u0635\u062f\u0631"
                     },
                     "nodegroup_id": "4f95a760-52f1-11ea-a3f7-02e7594ce0a0",
@@ -1538,16 +1571,17 @@
                     "graph_id": "35b99cb7-379a-11ea-9989-06f597a7d5ce",
                     "helpenabled": false,
                     "helptext": {
-                        "en": null
+                        "en": ""
                     },
                     "helptitle": {
-                        "en": null
+                        "en": ""
                     },
                     "instructions": {
-                        "en": null
+                        "en": ""
                     },
                     "is_editable": false,
                     "name": {
+                        "ar": "\u062a\u062d\u0645\u064a\u0644 \u0627\u0644\u0645\u0644\u0641",
                         "en": "File Upload / \u062a\u062d\u0645\u064a\u0644 \u0627\u0644\u0645\u0644\u0641"
                     },
                     "nodegroup_id": "c712066a-8094-11ea-a6a6-02e7594ce0a0",
@@ -1572,16 +1606,17 @@
                     "graph_id": "35b99cb7-379a-11ea-9989-06f597a7d5ce",
                     "helpenabled": false,
                     "helptext": {
-                        "en": null
+                        "en": ""
                     },
                     "helptitle": {
-                        "en": null
+                        "en": ""
                     },
                     "instructions": {
-                        "en": null
+                        "en": ""
                     },
                     "is_editable": false,
                     "name": {
+                        "ar": "\u0627\u0644\u0639\u0646\u0648\u0627\u0646",
                         "en": "Publication Title / \u0627\u0644\u0639\u0646\u0648\u0627\u0646"
                     },
                     "nodegroup_id": "3d0dfc7f-5251-11ea-a3f7-02e7594ce0a0",
@@ -1599,16 +1634,17 @@
                     "graph_id": "35b99cb7-379a-11ea-9989-06f597a7d5ce",
                     "helpenabled": false,
                     "helptext": {
-                        "en": null
+                        "en": ""
                     },
                     "helptitle": {
-                        "en": null
+                        "en": ""
                     },
                     "instructions": {
-                        "en": null
+                        "en": ""
                     },
                     "is_editable": false,
                     "name": {
+                        "ar": "\u062a\u0627\u0631\u064a\u062e \u0627\u0644\u0625\u0646\u0634\u0627\u0621",
                         "en": "Date of Creation / \u062a\u0627\u0631\u064a\u062e \u0627\u0644\u0625\u0646\u0634\u0627\u0621"
                     },
                     "nodegroup_id": "3de4f416-52f7-11ea-a3f7-02e7594ce0a0",
@@ -1749,7 +1785,7 @@
                         "en": "Title"
                     },
                     "node_id": "3d0dfc7f-5251-11ea-a3f7-02e7594ce0a0",
-                    "sortorder": null,
+                    "sortorder": 0,
                     "visible": true,
                     "widget_id": "10000000-0000-0000-0000-000000000001"
                 },
@@ -1766,7 +1802,7 @@
                         "en": "File Upload / \u062a\u062d\u0645\u064a\u0644 \u0627\u0644\u0645\u0644\u0641"
                     },
                     "node_id": "c712066a-8094-11ea-a6a6-02e7594ce0a0",
-                    "sortorder": null,
+                    "sortorder": 0,
                     "visible": true,
                     "widget_id": "10000000-0000-0000-0000-000000000019"
                 },
@@ -1790,7 +1826,7 @@
                         "en": "Biblio Place Appellation"
                     },
                     "node_id": "14e4ffc6-5251-11ea-a3f7-02e7594ce0a0",
-                    "sortorder": null,
+                    "sortorder": 0,
                     "visible": true,
                     "widget_id": "10000000-0000-0000-0000-000000000001"
                 },
@@ -2067,7 +2103,7 @@
                         "en": "Geometric Place Expression / \u0627\u0644\u062a\u0639\u0628\u064a\u0631 \u0647\u0646\u062f\u0633\u064a\u064b\u0627 \u0639\u0646 \u0634\u0643\u0644 \u0627\u0644\u0645\u0648\u0642\u0639"
                     },
                     "node_id": "587447d2-b0c2-11ea-9b1f-02e7594ce0a0",
-                    "sortorder": null,
+                    "sortorder": 0,
                     "visible": true,
                     "widget_id": "10000000-0000-0000-0000-000000000007"
                 },
@@ -2317,7 +2353,7 @@
                         "en": "Scale Type"
                     },
                     "node_id": "e7884aa3-52f5-11ea-a3f7-02e7594ce0a0",
-                    "sortorder": null,
+                    "sortorder": 0,
                     "visible": true,
                     "widget_id": "10000000-0000-0000-0000-000000000002"
                 },
@@ -2339,7 +2375,7 @@
                         "en": "Projection Type"
                     },
                     "node_id": "d7b3f06d-52f6-11ea-a3f7-02e7594ce0a0",
-                    "sortorder": null,
+                    "sortorder": 0,
                     "visible": true,
                     "widget_id": "10000000-0000-0000-0000-000000000002"
                 },
@@ -2405,7 +2441,7 @@
                         "en": "Series Type / \u0646\u0648\u0639 \u0627\u0644\u0633\u0644\u0633\u0644\u0629"
                     },
                     "node_id": "e48c6f2d-52f5-11ea-a3f7-02e7594ce0a0",
-                    "sortorder": null,
+                    "sortorder": 0,
                     "visible": true,
                     "widget_id": "10000000-0000-0000-0000-000000000002"
                 },
@@ -2525,7 +2561,7 @@
                         "en": "Editor Appellation / \u0627\u0644\u0645\u062d\u0631\u0631 (\u0627\u0644\u0645\u062d\u0631\u0631\u0648\u0646)"
                     },
                     "node_id": "eaad4114-c5ab-11ea-9026-02e7594ce0a0",
-                    "sortorder": null,
+                    "sortorder": 0,
                     "visible": true,
                     "widget_id": "10000000-0000-0000-0000-000000000001"
                 },
@@ -2571,7 +2607,7 @@
                         "en": "Tile Square Appellation"
                     },
                     "node_id": "d2c1d525-52f6-11ea-a3f7-02e7594ce0a0",
-                    "sortorder": null,
+                    "sortorder": 0,
                     "visible": true,
                     "widget_id": "10000000-0000-0000-0000-000000000001"
                 },
@@ -2595,7 +2631,7 @@
                         "en": "Tile Sqaure Details"
                     },
                     "node_id": "d4afc9d7-52f6-11ea-a3f7-02e7594ce0a0",
-                    "sortorder": null,
+                    "sortorder": 0,
                     "visible": true,
                     "widget_id": "10000000-0000-0000-0000-000000000001"
                 },
@@ -2619,7 +2655,7 @@
                         "en": "Creator / \u0627\u0633\u0645 \u0627\u0644\u0646\u0627\u0634\u0631"
                     },
                     "node_id": "f3124fb3-52f5-11ea-a3f7-02e7594ce0a0",
-                    "sortorder": null,
+                    "sortorder": 0,
                     "visible": true,
                     "widget_id": "31f3728c-7613-11e7-a139-784f435179ea"
                 },
@@ -2641,7 +2677,7 @@
                         "en": "Map Source Type / \u0646\u0648\u0639 \u0645\u0635\u062f\u0631 \u0627\u0644\u062e\u0631\u064a\u0637\u0629"
                     },
                     "node_id": "f7cc2731-52f5-11ea-a3f7-02e7594ce0a0",
-                    "sortorder": null,
+                    "sortorder": 0,
                     "visible": true,
                     "widget_id": "10000000-0000-0000-0000-000000000002"
                 },
@@ -2665,7 +2701,7 @@
                         "en": "Map Place Appellation"
                     },
                     "node_id": "ff7ee071-52f5-11ea-a3f7-02e7594ce0a0",
-                    "sortorder": null,
+                    "sortorder": 0,
                     "visible": true,
                     "widget_id": "10000000-0000-0000-0000-000000000001"
                 },
@@ -2685,7 +2721,7 @@
                         "en": "Date of Creation / \u062a\u0627\u0631\u064a\u062e \u0627\u0644\u0625\u0646\u0634\u0627\u0621"
                     },
                     "node_id": "3de4f416-52f7-11ea-a3f7-02e7594ce0a0",
-                    "sortorder": null,
+                    "sortorder": 0,
                     "visible": true,
                     "widget_id": "10000000-0000-0000-0000-000000000004"
                 },
@@ -2817,7 +2853,7 @@
                         "en": "Restricted Access Record Designation"
                     },
                     "node_id": "9fb54d2d-c6a6-11ea-a292-02e7594ce0a0",
-                    "sortorder": null,
+                    "sortorder": 0,
                     "visible": false,
                     "widget_id": "10000000-0000-0000-0000-000000000002"
                 },
@@ -2884,7 +2920,7 @@
                         "en": "Shared Data Source / \u0645\u0635\u062f\u0631 \u0627\u0644\u0628\u064a\u0627\u0646\u0627\u062a \u0627\u0644\u0645\u0634\u062a\u0631\u0643\u0629"
                     },
                     "node_id": "f2322129-52f7-11ea-a3f7-02e7594ce0a0",
-                    "sortorder": null,
+                    "sortorder": 0,
                     "visible": true,
                     "widget_id": "10000000-0000-0000-0000-000000000001"
                 },
@@ -2908,7 +2944,7 @@
                         "en": "Source / \u0627\u0644\u0645\u0635\u062f\u0631"
                     },
                     "node_id": "4f95a760-52f1-11ea-a3f7-02e7594ce0a0",
-                    "sortorder": null,
+                    "sortorder": 0,
                     "visible": true,
                     "widget_id": "10000000-0000-0000-0000-000000000002"
                 },
@@ -2932,7 +2968,7 @@
                         "en": "Creator"
                     },
                     "node_id": "22877ce5-52f2-11ea-a3f7-02e7594ce0a0",
-                    "sortorder": null,
+                    "sortorder": 0,
                     "visible": true,
                     "widget_id": "31f3728c-7613-11e7-a139-784f435179ea"
                 },
@@ -3085,7 +3121,7 @@
                         "en": "Shared Data Source Project / \u0627\u0633\u0645 \u0627\u0644\u0645\u0634\u0631\u0648\u0639 \u0645\u0635\u062f\u0631 \u0627\u0644\u0628\u064a\u0627\u0646\u0627\u062a \u0627\u0644\u0645\u0634\u062a\u0631\u0643\u0629"
                     },
                     "node_id": "349cac15-52f8-11ea-a3f7-02e7594ce0a0",
-                    "sortorder": null,
+                    "sortorder": 0,
                     "visible": true,
                     "widget_id": "10000000-0000-0000-0000-000000000001"
                 },
@@ -3242,7 +3278,7 @@
                         "en": "Shared Data Source Date of Creation / \u062a\u0627\u0631\u064a\u062e \u0645\u0635\u062f\u0631 \u0627\u0644\u0628\u064a\u0627\u0646\u0627\u062a \u0627\u0644\u0645\u0634\u062a\u0631\u0643\u0629"
                     },
                     "node_id": "f3ef77c2-52f7-11ea-a3f7-02e7594ce0a0",
-                    "sortorder": null,
+                    "sortorder": 0,
                     "visible": true,
                     "widget_id": "10000000-0000-0000-0000-000000000004"
                 },
@@ -3266,7 +3302,7 @@
                         "en": "Shared Data Source Affiliation / \u0627\u0633\u0645 \u0627\u0644\u062c\u0647\u0629 \u0645\u0627\u0644\u0643\u0629 \u0627\u0644\u0628\u064a\u0627\u0646\u0627\u062a \u0627\u0644\u0645\u0634\u062a\u0631\u0643"
                     },
                     "node_id": "f2322128-52f7-11ea-a3f7-02e7594ce0a0",
-                    "sortorder": null,
+                    "sortorder": 0,
                     "visible": true,
                     "widget_id": "10000000-0000-0000-0000-000000000001"
                 },
@@ -4127,6 +4163,20 @@
                     "function_id": "60000000-0000-0000-0000-000000000001",
                     "graph_id": "35b99cb7-379a-11ea-9989-06f597a7d5ce",
                     "id": "626a5f93-303d-4f67-ac05-cd2464c77dcc"
+                },
+                {
+                    "config": {
+                        "last_value": "150036",
+                        "prefix": "INFORMATION-",
+                        "selected_nodegroup": "4c403a80-8a3d-11ea-a6a6-02e7594ce0a0",
+                        "starting_value": "0150000",
+                        "suffix": "",
+                        "target_node": "4c403a80-8a3d-11ea-a6a6-02e7594ce0a0",
+                        "triggering_nodegroups": []
+                    },
+                    "function_id": "2cc07b0a-adbd-4721-86ce-dad1699caa86",
+                    "graph_id": "35b99cb7-379a-11ea-9989-06f597a7d5ce",
+                    "id": "e07dc038-7107-4d87-ac57-d8cef22da4eb"
                 }
             ],
             "graphid": "35b99cb7-379a-11ea-9989-06f597a7d5ce",
@@ -5253,7 +5303,7 @@
                 {
                     "alias": "geometric_place_expression",
                     "config": {
-                        "addToMap": true,
+                        "addToMap": false,
                         "advancedStyle": "",
                         "advancedStyling": false,
                         "autoManageCache": false,
@@ -5265,7 +5315,7 @@
                         "haloRadius": 3,
                         "haloWeight": 3,
                         "layerActivated": true,
-                        "layerIcon": "",
+                        "layerIcon": "fa fa-file-image-o",
                         "layerLegend": "",
                         "layerName": "",
                         "lineColor": "rgba(60,208,43,0.7)",
@@ -6238,11 +6288,20 @@
             "publication": {
                 "graph_id": "35b99cb7-379a-11ea-9989-06f597a7d5ce",
                 "notes": null,
-                "publicationid": "ab1601e8-6483-11ed-9618-08002727641f",
-                "published_time": "2022-11-14T19:20:19.219",
-                "user_id": 4
+                "publicationid": "a82e83da-0f26-11ee-ba96-7fe7726d1f84",
+                "published_time": "2023-06-19T23:55:19.985",
+                "user_id": 1
             },
-            "relatable_resource_model_ids": [],
+            "relatable_resource_model_ids": [
+                "35b99cb7-379a-11ea-9989-06f597a7d5ce",
+                "35b99cb7-379a-11ea-9989-06f597a7d5ce",
+                "f6235ff1-f992-11e9-b345-06f597a7d5ce",
+                "5297fa9e-8e16-11ea-a6a6-02e7594ce0a0",
+                "77d18973-7428-11ea-b4d0-02e7594ce0a0",
+                "6c4f0703-c381-11ea-9026-02e7594ce0a0",
+                "e98e1cee-c38b-11ea-9026-02e7594ce0a0",
+                "34cfe98e-c2c0-11ea-9026-02e7594ce0a0"
+            ],
             "resource_2_resource_constraints": [],
             "root": {
                 "alias": "information_resource",
@@ -6272,9 +6331,9 @@
         }
     ],
     "metadata": {
-        "db": "PostgreSQL 14.7 (Ubuntu 14.7-1.pgdg20.04+1) on x86_64-pc-linux-gnu, compiled by gcc (Ubuntu 9.4.0-1ubuntu1~20.04.1) 9.4.0, 64-bit",
+        "db": "PostgreSQL 14.7 (Ubuntu 14.7-1.pgdg20.04+1) on aarch64-unknown-linux-gnu, compiled by gcc (Ubuntu 9.4.0-1ubuntu1~20.04.1) 9.4.0, 64-bit",
         "git hash": "fatal: not a git repository (or any of the parent directories): .git",
         "os": "Linux",
-        "os version": "5.15.0-1031-aws"
+        "os version": "5.15.0-1037-aws"
     }
 }
