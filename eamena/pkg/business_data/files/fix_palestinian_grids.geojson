@@ -1,7 +1,0 @@
-{
-"type": "FeatureCollection",
-"name": "fix_palestinian_grids",
-"features": [
-{ "type": "Feature", "properties": { "Grid ID": "E35N32-14" }, "geometry": { "type": "Polygon", "coordinates": [ [ [ 35.0, 32.25 ], [ 35.0, 32.5 ], [ 35.25, 32.5 ], [ 35.25, 32.25 ], [ 35.0, 32.25 ] ] ] } }
-]
-}
