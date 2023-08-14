@@ -8,7 +8,7 @@ from arches.app.models.concept import Concept, get_preflabel_from_valueid, get_v
 from arches.app.views import search
 from django.core.management.base import BaseCommand
 from django.contrib.gis.geos.error import GEOSException
-from eamena.bulk_uploader import HeritagePlaceBulkUploadSheet, GridSquareBulkUploadSheet
+from eamena.bulk_uploader import HeritagePlaceBulkUploadSheet, GeoarchaeologyBulkUploadSheet, GridSquareBulkUploadSheet
 from elasticsearch import Elasticsearch
 from elasticsearch.exceptions import RequestError, NotFoundError
 from geomet import wkt
@@ -923,12 +923,25 @@ class Command(BaseCommand):
 					data.append(sheet.data(i))
 				for error in sheet.errors():
 					self.__warn(error[0], error[1], error[2])
+			elif rm.name == 'Geoarchaeology':
+				expected_nodes = ['UNIQUEID', 'ASSESSMENT_INVESTIGATOR___ACTOR', 'INVESTIGATOR_ROLE_TYPE', 'ASSESSMENT_ACTIVITY_TYPE', 'ASSESSMENT_ACTIVITY_DATE', 'GE_ASSESSMENT_YES_NO_', 'GE_IMAGERY_ACQUISITION_DATE', 'INFORMATION_RESOURCE_USED', 'INFORMATION_RESOURCE_ACQUISITION_DATE', 'RESOURCE_NAME', 'NAME_TYPE', 'HERITAGE_PLACE_TYPE', 'GENERAL_DESCRIPTION_TYPE', 'GENERAL_DESCRIPTION', 'HERITAGE_PLACE_FUNCTION', 'HERITAGE_PLACE_FUNCTION_CERTAINTY', 'DESIGNATION', 'DESIGNATION_FROM_DATE', 'DESIGNATION_TO_DATE', 'GEOMETRIC_PLACE_EXPRESSION', 'GEOMETRY_QUALIFIER', 'SITE_LOCATION_CERTAINTY', 'GEOMETRY_EXTENT_CERTAINTY', 'SITE_OVERALL_SHAPE_TYPE', 'GRID_ID', 'COUNTRY_TYPE', 'CADASTRAL_REFERENCE', 'RESOURCE_ORIENTATION', 'ADDRESS', 'ADDRESS_TYPE', 'ADMINISTRATIVE_SUBDIVISION', 'ADMINISTRATIVE_SUBDIVISION_TYPE', 'OVERALL_ARCHAEOLOGICAL_CERTAINTY_VALUE', 'OVERALL_SITE_MORPHOLOGY_TYPE', 'CULTURAL_PERIOD_TYPE', 'CULTURAL_PERIOD_CERTAINTY', 'CULTURAL_SUBPERIOD_TYPE', 'CULTURAL_SUBPERIOD_CERTAINTY', 'DATE_INFERENCE_MAKING_ACTOR', 'ARCHAEOLOGICAL_DATE_FROM__CAL_', 'ARCHAEOLOGICAL_DATE_TO__CAL_', 'BP_DATE_FROM', 'BP_DATE_TO', 'AH_DATE_FROM', 'AH_DATE_TO', 'SH_DATE_FROM', 'SH_DATE_TO', 'SITE_FEATURE_FORM_TYPE', 'SITE_FEATURE_FORM_TYPE_CERTAINTY', 'SITE_FEATURE_SHAPE_TYPE', 'SITE_FEATURE_ARRANGEMENT_TYPE', 'SITE_FEATURE_NUMBER_TYPE', 'SITE_FEATURE_INTERPRETATION_TYPE', 'SITE_FEATURE_INTERPRETATION_NUMBER', 'SITE_FEATURE_INTERPRETATION_CERTAINTY', 'BUILT_COMPONENT_RELATED_RESOURCE', 'HP_RELATED_RESOURCE', 'MATERIAL_CLASS', 'MATERIAL_TYPE', 'CONSTRUCTION_TECHNIQUE', 'MEASUREMENT_NUMBER', 'MEASUREMENT_UNIT', 'DIMENSION_TYPE', 'MEASUREMENT_SOURCE_TYPE', 'RELATED_GEOARCH_PALAEO', 'OVERALL_CONDITION_STATE', 'DAMAGE_EXTENT_TYPE', 'DISTURBANCE_CAUSE_CATEGORY_TYPE', 'DISTURBANCE_CAUSE_TYPE', 'DISTURBANCE_CAUSE_CERTAINTY', 'DISTURBANCE_DATE_FROM', 'DISTURBANCE_DATE_TO', 'DISTURBANCE_DATE_OCCURRED_BEFORE', 'DISTURBANCE_DATE_OCCURRED_ON', 'DISTURBANCE_CAUSE_ASSIGNMENT_ASSESSOR_NAME', 'EFFECT_TYPE', 'EFFECT_CERTAINTY', 'THREAT_CATEGORY', 'THREAT_TYPE', 'THREAT_PROBABILITY', 'THREAT_INFERENCE_MAKING_ASSESSOR_NAME', 'INTERVENTION_ACTIVITY_TYPE', 'RECOMMENDATION_TYPE', 'PRIORITY_TYPE', 'RELATED_DETAILED_CONDITION_RESOURCE', 'TOPOGRAPHY_TYPE', 'LAND_COVER_TYPE', 'LAND_COVER_ASSESSMENT_DATE', 'SURFICIAL_GEOLOGY_TYPE', 'DEPOSITIONAL_PROCESS', 'BEDROCK_GEOLOGY', 'FETCH_TYPE', 'WAVE_CLIMATE', 'TIDAL_ENERGY', 'MINIMUM_DEPTH_MAX_ELEVATION_M_', 'MAXIMUM_DEPTH_MIN_ELEVATION_M_', 'DATUM_TYPE', 'DATUM_DESCRIPTION_EPSG_CODE', 'RESTRICTED_ACCESS_RECORD_DESIGNATION']
+				sheet = GeoarchaeologyBulkUploadSheet(options['source'])
+				for ch in sheet.columns():
+					if ch == '':
+						continue
+					if ch in expected_nodes:
+						continue
+					self.__warn('', 'Unexpected column header: "' + str(ch) + '"', 'Please check you are using the correct version of the Heritage Place bulk upload template.')
+				for i in range(0, sheet.count()):
+					data.append(sheet.data(i))
+				for error in sheet.errors():
+					self.__warn(error[0], error[1], error[2])
 			elif rm.name == 'Grid Square':
 				sheet = GridSquareBulkUploadSheet(options['source'])
 				for i in range(0, sheet.count()):
 					data.append(sheet.data(i))
 			else:
-				self.__error("", "No bulk upload sheet for graph " + rm.name)
+				self.__error("", "No bulk upload sheet for graph " + str(rm.name))
 		else:
 			self.__error("", "Could not open the file: " + str(options['source']))
 
