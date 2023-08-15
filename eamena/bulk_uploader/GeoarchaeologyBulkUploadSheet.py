@@ -668,7 +668,7 @@ class GeoarchaeologyBulkUploadSheet(BulkUploadSheet):
 		resource_summary = self.__parse_resource_summary(index, uid)
 		geometries = self.__parse_geometries(index, uid)
 		geography = self.__parse_geography(index, uid)
-		arc_assessment = self.__parse_archaeological_assessment(index, uid)
+		#arc_assessment = self.__parse_archaeological_assessment(index, uid)
 		cond_assessment = self.__parse_condition_assessment(index, uid)
 		env_assessment = self.__parse_environment_assessment(index, uid)
 		access = self.__parse_access(index, uid)
@@ -679,7 +679,7 @@ class GeoarchaeologyBulkUploadSheet(BulkUploadSheet):
 		ret["RESOURCE_SUMMARY"] = resource_summary
 		ret["GEOMETRIES"] = geometries
 		ret["GEOGRAPHY"] = geography
-		ret["ARCHAEOLOGICAL_ASSESSMENT"] = arc_assessment
+		#ret["ARCHAEOLOGICAL_ASSESSMENT"] = arc_assessment
 		ret["CONDITION_ASSESSMENT"] = cond_assessment
 		ret["ENVIRONMENT_ASSESSMENT"] = env_assessment
 		#ret["ACCESS"] = access
@@ -701,7 +701,7 @@ class GeoarchaeologyBulkUploadSheet(BulkUploadSheet):
 	def __init__(self, filename, uidkey='UNIQUEID'):
 
 		super().__init__(filename, uidkey)
-		self.__required_fields = ["UNIQUEID", "ASSESSMENT_ACTIVITY_DATE","ASSESSMENT_ACTIVITY_TYPE","ASSESSMENT_INVESTIGATOR___ACTOR","COUNTRY_TYPE","CULTURAL_PERIOD_CERTAINTY","CULTURAL_SUBPERIOD_CERTAINTY","DAMAGE_EXTENT_TYPE","DIMENSION_TYPE","DISTURBANCE_CAUSE_CERTAINTY","DISTURBANCE_CAUSE_TYPE","EFFECT_CERTAINTY","EFFECT_TYPE","GEOMETRIC_PLACE_EXPRESSION","GEOMETRY_EXTENT_CERTAINTY","HERITAGE_PLACE_FUNCTION","HERITAGE_PLACE_FUNCTION_CERTAINTY","HERITAGE_PLACE_TYPE","INVESTIGATOR_ROLE_TYPE","MEASUREMENT_SOURCE_TYPE","MEASUREMENT_UNIT","OVERALL_ARCHAEOLOGICAL_CERTAINTY_VALUE","OVERALL_CONDITION_STATE","OVERALL_SITE_MORPHOLOGY_TYPE","SITE_FEATURE_ARRANGEMENT_TYPE","SITE_FEATURE_FORM_TYPE","SITE_FEATURE_FORM_TYPE_CERTAINTY","SITE_FEATURE_INTERPRETATION_CERTAINTY","SITE_FEATURE_INTERPRETATION_NUMBER","SITE_FEATURE_INTERPRETATION_TYPE","SITE_FEATURE_NUMBER_TYPE","SITE_FEATURE_SHAPE_TYPE","SITE_LOCATION_CERTAINTY","THREAT_PROBABILITY","THREAT_TYPE","TOPOGRAPHY_TYPE"]
+		self.__required_fields = ["UNIQUEID"]
 		self.__errors = []
 		for i in range(0, len(self._BulkUploadSheet__data)):
 			for row in range(0, len(self._BulkUploadSheet__data[i])):

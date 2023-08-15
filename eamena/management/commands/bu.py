@@ -8,7 +8,7 @@ from arches.app.models.concept import Concept, get_preflabel_from_valueid, get_v
 from arches.app.views import search
 from django.core.management.base import BaseCommand
 from django.contrib.gis.geos.error import GEOSException
-from eamena.bulk_uploader import HeritagePlaceBulkUploadSheet, GeoarchaeologyBulkUploadSheet, GridSquareBulkUploadSheet
+from eamena.bulk_uploader import HeritagePlaceBulkUploadSheet, GeoarchaeologyBulkUploadSheet
 from elasticsearch import Elasticsearch
 from elasticsearch.exceptions import RequestError, NotFoundError
 from geomet import wkt
@@ -674,73 +674,50 @@ class Command(BaseCommand):
 
 		return ret
 
-	def __convert_translated_grid_square(self, data, options):
-
-		try:
-			rm = GraphModel.objects.get(graphid=options['graph'])
-		except GraphModel.DoesNotExist:
-			rm = None
-
-		ret = []
-		for item in data:
-
-			grid_id = ''
-			grid_uuid = ''
-			if 'GRID_ID' in item[0]:
-				grid_id = item[0]['GRID_ID']
-			if 'GRID ID' in item[0]:
-				grid_id = item[0]['GRID ID']
-			if 'Grid ID' in item[0]:
-				grid_id = item[0]['Grid ID']
-			if grid_id == '':
-				continue
-			ri = self.__resourceinstance_from_eamenaid(grid_id, str(rm.graphid))
-			if not(ri is None):
-				grid_uuid = str(ri.resourceinstanceid)
-
-			if grid_uuid == '':
-				res = self.__create_res(rm.graphid)
-				resid = res['resourceinstance']['resourceinstanceid']
-				for nodegroupidkey in item[0].keys():
-					nodegroupid = str(nodegroupidkey)
-					oldnodegroupid = nodegroupid
-					if nodegroupid == 'Grid ID':
-						nodegroupid = 'b3628db0-742d-11ea-b4d0-02e7594ce0a0' # EAMENA Grid ID
-					tile = self.__create_tile(resid, nodegroupid)
-					tiledata = item[0][oldnodegroupid]
-					if tiledata.startswith('POLYGON'):
-						tiledata = self.__geojson_from_wkt(tiledata)
-					tile['data'][nodegroupid] = tiledata
-					res['tiles'].append(tile)
-			else:
-				res = self.__create_res(rm.graphid, grid_uuid)
-				resid = res['resourceinstance']['resourceinstanceid']
-				for nodegroupidkey in item[0].keys():
-					nodegroupid = str(nodegroupidkey)
-					if nodegroupid == 'Grid ID':
-						continue # Don't add the grid ID if it already exists
-					tile = self.__create_tile(resid, nodegroupid)
-					tiledata = item[0][nodegroupid]
-					if tiledata.startswith('POLYGON'):
-						tiledata = self.__geojson_from_wkt(tiledata)
-					tile['data'][nodegroupid] = tiledata
-					res['tiles'].append(tile)
-
-			ret.append(res)
-
-		return ret
-
-	def __translate_grid_square(self, options):
+	def __translate_geoarchaeology(self, options):
 
 		nodes = {}
 		for node in self.__list_nodes(options):
 			key = node['key']
-
 			nodes[key] = node
+
+			if key == 'GEOMETRY':
+				nodes['GEOMETRIES'] = node
+			if key == 'GEOARCHAEOLOGY_ASSESSMENT':
+				nodes['ARCHAEOLOGICAL_ASSESSMENT'] = node
+			if key == 'GEOARCHAEOLOGICAL_TIMESPACE':
+				nodes['ABSOLUTE_CHRONOLOGY'] = node
+			if key == 'TIDAL_RANGE':
+				nodes['TIDAL_ENERGY'] = node
+			if key == 'GOOGLE_EARTH_ASSESSMENT':
+				nodes['GE_ASSESSMENT_YES_NO_'] = node
+			if key == 'LOCATION_CERTAINTY':
+				nodes['SITE_LOCATION_CERTAINTY'] = node
+			if key == 'MINIMUM_DEPTH_MAX_ELEVATION':
+				nodes['MINIMUM_DEPTH_MAX_ELEVATION_M_'] = node
+			if key == 'MAXIMUM_DEPTH_MIN_ELEVATION':
+				nodes['MAXIMUM_DEPTH_MIN_ELEVATION_M_'] = node
+			if key == 'ARCHAEOLOGICAL_TIMESPACE':
+				nodes['ABSOLUTE_CHRONOLOGY'] = node
+
+			if key == 'INFORMATION_RESOURCE':
+				nodes['INFORMATION_RESOURCE_USED'] = node
+			if key == 'BUILT_COMPONENT':
+				nodes['BUILT_COMPONENT_RELATED_RESOURCE'] = node
+			if key == 'HERITAGE_PLACE_RESOURCE_INSTANCE':
+				nodes['HP_RELATED_RESOURCE'] = node
+			if key == 'RELATED_GEOARCHAEOLOGY_PALAEOLANDSCAPE':
+				nodes['RELATED_GEOARCH_PALAEO'] = node
+			if key == 'DETAILED_CONDITION_ASSESSMENTS':
+				nodes['RELATED_DETAILED_CONDITION_RESOURCE'] = node
+
+			if key.endswith('___ACTOR'):
+				nodes[key.replace('___ACTOR', '')] = node
 
 		data = self.__replace_node_uuids(self.__unflatten(options), nodes)
 
 		return data
+
 
 	def __translate_heritage_place(self, options):
 
@@ -936,10 +913,6 @@ class Command(BaseCommand):
 					data.append(sheet.data(i))
 				for error in sheet.errors():
 					self.__warn(error[0], error[1], error[2])
-			elif rm.name == 'Grid Square':
-				sheet = GridSquareBulkUploadSheet(options['source'])
-				for i in range(0, sheet.count()):
-					data.append(sheet.data(i))
 			else:
 				self.__error("", "No bulk upload sheet for graph " + str(rm.name))
 		else:
@@ -966,7 +939,7 @@ class Command(BaseCommand):
 				try:
 					uo = uuid.UUID(key)
 				except ValueError:
-					self.__error("", '"' + key + '" is an invalid column value.')
+					self.__error("", '"' + key + '" is a rubbish invalid column value.')
 					ret = False
 			return ret
 
@@ -1016,36 +989,33 @@ class Command(BaseCommand):
 					business_data = {"resources": mapped_resources}
 					data = {"business_data": business_data}
 
-			if model_name == 'Grid Square':
+			if model_name == 'Geoarchaeology':
 
-				translated_data = self.__translate_grid_square(options)
-#				if self.__check_translated_data(translated_data):
-				resources = self.__convert_translated_grid_square(translated_data, options)
-				business_data = {"resources": resources}
-				data = {"business_data": business_data}
-
-#				data = []
-#				for item in self.__unflatten(options):
-#					grid_id = ''
-#					grid_uuid = ''
-#					if 'GRID_ID' in item[0]:
-#						grid_id = item[0]['GRID_ID']
-#					if 'GRID ID' in item[0]:
-#						grid_id = item[0]['GRID ID']
-#					if 'Grid ID' in item[0]:
-#						grid_id = item[0]['Grid ID']
-#					if grid_id == '':
-#						continue
-#					if not('GRID_SQUARE_GEOMETRIC_PLACE_EXPRESSION' in item[0]):
-#						continue
-#					ri = self.__resourceinstance_from_eamenaid(grid_id, str(rm.graphid))
-#					if not(ri is None):
-#						grid_uuid = str(ri.resourceinstanceid)
-#					data.append([grid_uuid, grid_id, item[0]['GRID_SQUARE_GEOMETRIC_PLACE_EXPRESSION']])
+				translated_data = self.__translate_geoarchaeology(options)
+				if self.__check_translated_data(translated_data):
+					resources = self.__convert_translated_data(translated_data, options)
+					mapped_resources = self.__map_resources(resources, options)
+					business_data = {"resources": mapped_resources}
+					data = {"business_data": business_data}
 
 		if options['operation'] == 'validate':
 
-			translated_data = self.__translate_heritage_place(options)
+			try:
+				rm = GraphModel.objects.get(graphid=options['graph'])
+			except GraphModel.DoesNotExist:
+				rm = None
+
+			if rm is None:
+				self.__error("", "Invalid or missing graph UUID. Use --graph")
+				model_name = ''
+			else:
+				model_name = str(rm.name)
+
+			if model_name == 'Heritage Place':
+				translated_data = self.__translate_heritage_place(options)
+			if model_name == 'Geoarchaeology':
+				translated_data = self.__translate_geoarchaeology(options)
+
 			if self.__check_translated_data(translated_data):
 				resources = self.__convert_translated_data(translated_data, options)
 				mapped_resources = self.__map_resources(resources, options)
@@ -1064,7 +1034,23 @@ class Command(BaseCommand):
 
 		if options['operation'] == 'prerequisites':
 
-			translated_data = self.__translate_heritage_place(options)
+			try:
+				rm = GraphModel.objects.get(graphid=options['graph'])
+			except GraphModel.DoesNotExist:
+				rm = None
+
+			if rm is None:
+				self.__error("", "Invalid or missing graph UUID. Use --graph")
+				model_name = ''
+			else:
+				model_name = str(rm.name)
+
+			translated_data = []
+			if model_name == 'Heritage Place':
+				translated_data = self.__translate_heritage_place(options)
+			if model_name == 'Geoarchaeology':
+				translated_data = self.__translate_geoarchaeology(options)
+
 			resources = self.__convert_translated_data(translated_data, options)
 			prerequisites = self.__get_prerequisites(resources, options)
 			business_data = {"resources": prerequisites}
@@ -1090,8 +1076,8 @@ class Command(BaseCommand):
 			if model_name == 'Heritage Place':
 				data = self.__translate_heritage_place(options)
 
-			if model_name == 'Grid Square':
-				data = self.__translate_grid_square(options)
+			if model_name == 'Geoarchaeology':
+				data = self.__translate_geoarchaeology(options)
 
 			for i in range(0, len(data)):
 				if '_' in (data[i]):
