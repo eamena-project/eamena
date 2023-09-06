@@ -710,6 +710,14 @@ class Command(BaseCommand):
 				nodes['RELATED_GEOARCH_PALAEO'] = node
 			if key == 'DETAILED_CONDITION_ASSESSMENTS':
 				nodes['RELATED_DETAILED_CONDITION_RESOURCE'] = node
+			if key == 'FEATURE_INTERPRETATION_TYPE_CERTAINTY':
+				nodes['FEATURE_INTERPRETATION_CERTAINTY'] = node
+			if key == 'QUATERNARY_DIVISION_CERTAINTY':
+				nodes['QUATERNARY_DATE_CERTAINTY'] = node
+			if key == 'FEATURE_LANDFORM_NUMBER_TYPE':
+				nodes['SITE_LANDFORM_NUMBER_TYPE'] = node
+			if key == 'FEATURE_LANDFORM_ARRANGEMENT_TYPE':
+				nodes['SITE_LANDFORM_ARRANGEMENT_TYPE'] = node
 
 			if key.endswith('___ACTOR'):
 				nodes[key.replace('___ACTOR', '')] = node
@@ -939,7 +947,7 @@ class Command(BaseCommand):
 				try:
 					uo = uuid.UUID(key)
 				except ValueError:
-					self.__error("", '"' + key + '" is a rubbish invalid column value.')
+					self.__error("", '"' + key + '" is an invalid column value.')
 					ret = False
 			return ret
 
