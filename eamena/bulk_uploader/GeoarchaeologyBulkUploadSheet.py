@@ -30,230 +30,6 @@ class GeoarchaeologyBulkUploadSheet(BulkUploadSheet):
 			return ret
 		return data
 
-	def __parse_archaeological_assessment(self, index, uniqueid=''):
-
-		if len(self._BulkUploadSheet__data[index]) == 1: # Support the old 'one item per line' style
-			exceptions = ['SITE_FEATURE_FORM_TYPE', 'SITE_FEATURE_FORM_TYPE_CERTAINTY', 'SITE_FEATURE_SHAPE_TYPE', 'SITE_FEATURE_ARRANGEMENT_TYPE', 'SITE_FEATURE_NUMBER_TYPE', 'SITE_FEATURE_INTERPRETATION_TYPE', 'SITE_FEATURE_INTERPRETATION_NUMBER', 'SITE_FEATURE_INTERPRETATION_CERTAINTY', 'BUILT_COMPONENT_RELATED_RESOURCE', 'HP_RELATED_RESOURCE']
-		else:
-			c = len(self._BulkUploadSheet__data[index])
-			for ii in range(0, c):
-				i = (c - (ii + 1))
-				item = self._BulkUploadSheet__data[index][i]
-				if 'CULTURAL_PERIOD_TYPE' in item:
-					if len(item['CULTURAL_PERIOD_TYPE'].strip()) > 0:
-						continue
-				if 'CULTURAL_SUBPERIOD_TYPE' in item:
-					if len(item['CULTURAL_SUBPERIOD_TYPE'].strip()) > 0:
-						if not('CULTURAL_SUBPERIOD_TYPE' in self._BulkUploadSheet__data[index][(i - 1)]):
-							self._BulkUploadSheet__data[index][(i - 1)]['CULTURAL_SUBPERIOD_TYPE'] = ''
-						if not('CULTURAL_SUBPERIOD_CERTAINTY' in self._BulkUploadSheet__data[index][(i - 1)]):
-							self._BulkUploadSheet__data[index][(i - 1)]['CULTURAL_SUBPERIOD_CERTAINTY'] = ''
-						newvalue = (self._BulkUploadSheet__data[index][(i - 1)]['CULTURAL_SUBPERIOD_TYPE'].split('|')) + (self._BulkUploadSheet__data[index][i]['CULTURAL_SUBPERIOD_TYPE'].split('|'))
-						fixedvalue = []
-						for value in newvalue:
-							if value.strip() == '':
-								continue
-							fixedvalue.append(value)
-						self._BulkUploadSheet__data[index][(i - 1)]['CULTURAL_SUBPERIOD_TYPE'] = ('|'.join(fixedvalue))
-						self._BulkUploadSheet__data[index][i]['CULTURAL_SUBPERIOD_TYPE'] = ''
-						newvalue = (self._BulkUploadSheet__data[index][(i - 1)]['CULTURAL_SUBPERIOD_CERTAINTY'].split('|')) + (self._BulkUploadSheet__data[index][i]['CULTURAL_SUBPERIOD_CERTAINTY'].split('|'))
-						fixedvalue = []
-						for value in newvalue:
-							if value.strip() == '':
-								continue
-							fixedvalue.append(value)
-						self._BulkUploadSheet__data[index][(i - 1)]['CULTURAL_SUBPERIOD_CERTAINTY'] = ('|'.join(fixedvalue))
-						self._BulkUploadSheet__data[index][i]['CULTURAL_SUBPERIOD_CERTAINTY'] = ''
-			exceptions = ['CULTURAL_SUBPERIOD_TYPE', 'CULTURAL_SUBPERIOD_CERTAINTY', 'SITE_FEATURE_FORM_TYPE', 'SITE_FEATURE_FORM_TYPE_CERTAINTY', 'SITE_FEATURE_SHAPE_TYPE', 'SITE_FEATURE_ARRANGEMENT_TYPE', 'SITE_FEATURE_NUMBER_TYPE', 'SITE_FEATURE_INTERPRETATION_TYPE', 'SITE_FEATURE_INTERPRETATION_NUMBER', 'SITE_FEATURE_INTERPRETATION_CERTAINTY', 'BUILT_COMPONENT_RELATED_RESOURCE', 'HP_RELATED_RESOURCE']
-		unparsed = self.pre_parse(index, ['OVERALL_ARCHAEOLOGICAL_CERTAINTY_VALUE', 'OVERALL_SITE_MORPHOLOGY_TYPE', 'CULTURAL_PERIOD_TYPE', 'CULTURAL_PERIOD_CERTAINTY', 'CULTURAL_SUBPERIOD_TYPE', 'CULTURAL_SUBPERIOD_CERTAINTY', 'DATE_INFERENCE_MAKING_ACTOR', 'ARCHAEOLOGICAL_DATE_FROM__CAL_', 'ARCHAEOLOGICAL_DATE_TO__CAL_', 'BP_DATE_FROM', 'BP_DATE_TO', 'AH_DATE_FROM', 'AH_DATE_TO', 'SH_DATE_FROM', 'SH_DATE_TO', 'SITE_FEATURE_FORM_TYPE', 'SITE_FEATURE_FORM_TYPE_CERTAINTY', 'SITE_FEATURE_SHAPE_TYPE', 'SITE_FEATURE_ARRANGEMENT_TYPE', 'SITE_FEATURE_NUMBER_TYPE', 'SITE_FEATURE_INTERPRETATION_TYPE', 'SITE_FEATURE_INTERPRETATION_NUMBER', 'SITE_FEATURE_INTERPRETATION_CERTAINTY', 'BUILT_COMPONENT_RELATED_RESOURCE', 'HP_RELATED_RESOURCE', 'MATERIAL_CLASS', 'MATERIAL_TYPE', 'CONSTRUCTION_TECHNIQUE', 'MEASUREMENT_NUMBER', 'MEASUREMENT_UNIT', 'DIMENSION_TYPE', 'MEASUREMENT_SOURCE_TYPE', 'RELATED_GEOARCH_PALAEO'], exceptions)
-
-		oacv = []
-		osmt = []
-		rel_geoarch = []
-		periods = []
-		cron = []
-		site_features = []
-		materials = []
-		measurements = []
-
-		for item in unparsed:
-
-			oacv_item = item["OVERALL_ARCHAEOLOGICAL_CERTAINTY_VALUE"].strip()
-			osmt_item = item["OVERALL_SITE_MORPHOLOGY_TYPE"].strip()
-			geoarch_item = ''
-			if "RELATED_GEOARCH_PALAEO" in item:
-				geoarch_item = item["RELATED_GEOARCH_PALAEO"].strip()
-			if len(oacv_item) > 0:
-				oacv.append({"OVERALL_ARCHAEOLOGICAL_CERTAINTY_VALUE": oacv_item})
-			if len(osmt_item) > 0:
-				osmt.append({"OVERALL_SITE_MORPHOLOGY_TYPE": osmt_item})
-			if len(geoarch_item) > 0:
-				rel_geoarch.append(geoarch_item)
-
-			# PERIODIZATION
-
-			cp_actor = ''
-			if 'DATE_INFERENCE_MAKING_ACTOR' in item:
-				cp_actor = item["DATE_INFERENCE_MAKING_ACTOR"].strip()
-
-			cp_type = item["CULTURAL_PERIOD_TYPE"].strip()
-			cp_cert = item["CULTURAL_PERIOD_CERTAINTY"].strip()
-			csp_type = item["CULTURAL_SUBPERIOD_TYPE"].split('|')
-			csp_cert = item["CULTURAL_SUBPERIOD_CERTAINTY"].split('|')
-
-			cp = {}
-			if ((len(cp_cert) > 0) & (len(csp_cert) == len(csp_type))):
-				if len(cp_type) > 0:
-					cp['CULTURAL_PERIOD_TYPE'] = cp_type
-				cp['CULTURAL_PERIOD_CERTAINTY'] = cp_cert
-				subperiods = []
-				for i in range(0, len(csp_type)):
-					csp = {"CULTURAL_SUBPERIOD_TYPE": csp_type[i], "CULTURAL_SUBPERIOD_CERTAINTY": csp_cert[i]}
-					subperiods.append(csp)
-				if len(subperiods) > 0:
-					cp['CULTURAL_SUBPERIOD'] = subperiods
-				if len(cp_actor) > 0:
-					cp['DATE_INFERENCE_MAKING_ACTOR_NAME'] = cp_actor
-			if len(cp) > 0:
-				periods.append(cp)
-
-			# ABSOLUTE CHRONOLOGY
-
-			a_date_from = ''
-			a_date_to = ''
-			bp_date_from = ''
-			bp_date_to = ''
-			ah_date_from = ''
-			ah_date_to = ''
-			sh_date_from = ''
-			sh_date_to = ''
-			if 'ARCHAEOLOGICAL_DATE_FROM__CAL_' in item:
-				a_date_from = item["ARCHAEOLOGICAL_DATE_FROM__CAL_"].strip()
-			if 'ARCHAEOLOGICAL_DATE_TO__CAL_' in item:
-				a_date_to = item["ARCHAEOLOGICAL_DATE_TO__CAL_"].strip()
-			if 'BP_DATE_FROM' in item:
-				bp_date_from = item["BP_DATE_FROM"].strip()
-			if 'BP_DATE_TO' in item:
-				bp_date_to = item["BP_DATE_TO"].strip()
-			if 'AH_DATE_FROM' in item:
-				ah_date_from = item["AH_DATE_FROM"].strip()
-			if 'AH_DATE_TO' in item:
-				ah_date_to = item["AH_DATE_TO"].strip()
-			if 'SH_DATE_FROM' in item:
-				sh_date_from = item["SH_DATE_FROM"].strip()
-			if 'SH_DATE_TO' in item:
-				sh_date_to = item["SH_DATE_TO"].strip()
-			a_cron = {}
-			if len(a_date_from) > 0:
-				a_cron["ARCHAEOLOGICAL_DATE_FROM__CAL_"] = a_date_from
-			if len(a_date_to) > 0:
-				a_cron["ARCHAEOLOGICAL_DATE_TO__CAL_"] = a_date_to
-			if len(bp_date_from) > 0:
-				a_cron["BP_DATE_FROM"] = bp_date_from
-			if len(bp_date_to) > 0:
-				a_cron["BP_DATE_TO"] = bp_date_to
-			if len(ah_date_from) > 0:
-				a_cron["AH_DATE_FROM"] = ah_date_from
-			if len(ah_date_to) > 0:
-				a_cron["AH_DATE_TO"] = ah_date_to
-			if len(sh_date_from) > 0:
-				a_cron["SH_DATE_FROM"] = sh_date_from
-			if len(sh_date_to) > 0:
-				a_cron["SH_DATE_TO"] = sh_date_to
-			if len(a_cron) > 0:
-				cron.append(a_cron)
-
-			# SITE FEATURES
-
-			sf = {"SITE_FEATURE_FORM": [], "SITE_FEATURE_INTERPRETATION": [], "BUILT_COMPONENT_RELATED_RESOURCE": [], "HP_RELATED_RESOURCE": []}
-
-			if 'BUILT_COMPONENT_RELATED_RESOURCE' in item:
-				for bcr in item["BUILT_COMPONENT_RELATED_RESOURCE"].strip().split('|'):
-					if len(bcr) == 0:
-						continue
-					sf["BUILT_COMPONENT_RELATED_RESOURCE"].append(bcr)
-			if 'HP_RELATED_RESOURCE' in item:
-				for hpr in item["HP_RELATED_RESOURCE"].strip().split('|'):
-					if len(hpr) == 0:
-						continue
-					sf['HP_RELATED_RESOURCE'].append(hpr)
-
-			sf_int_type = item["SITE_FEATURE_INTERPRETATION_TYPE"].split('|')
-			sf_int_num = []
-			if item["SITE_FEATURE_INTERPRETATION_NUMBER"].strip() != '':
-				sf_int_num = item["SITE_FEATURE_INTERPRETATION_NUMBER"].split('|')
-			if item["SITE_FEATURE_INTERPRETATION_TYPE"].strip() != '':
-				sf_int_type = item["SITE_FEATURE_INTERPRETATION_TYPE"].split('|')
-			sf_int_cert = item["SITE_FEATURE_INTERPRETATION_CERTAINTY"].split('|')
-			if ((len(sf_int_type) == len(sf_int_num)) & (len(sf_int_num) == len(sf_int_cert)) & (len(sf_int_num) > 0)):
-				for i in range(0, len(sf_int_num)):
-					sf["SITE_FEATURE_INTERPRETATION"].append({"SITE_FEATURE_INTERPRETATION_TYPE": sf_int_type[i], "SITE_FEATURE_INTERPRETATION_NUMBER": sf_int_num[i], "SITE_FEATURE_INTERPRETATION_CERTAINTY": sf_int_cert[i]})
-
-			sff_type = item["SITE_FEATURE_FORM_TYPE"].split('|')
-			sff_cert = item["SITE_FEATURE_FORM_TYPE_CERTAINTY"].split('|')
-			sff_shape = item["SITE_FEATURE_SHAPE_TYPE"].split('|')
-			sff_arr = item["SITE_FEATURE_ARRANGEMENT_TYPE"].split('|')
-			sff_num = item["SITE_FEATURE_NUMBER_TYPE"].split('|')
-			if ((len(sff_type) == len(sff_cert)) & (len(sff_cert) == len(sff_shape)) & (len(sff_shape) == len(sff_arr)) & (len(sff_arr) == len(sff_num)) & (len(sff_num) > 0)):
-				for i in range(0, len(sff_num)):
-					sf["SITE_FEATURE_FORM"].append({"SITE_FEATURE_FORM_TYPE": sff_type[i], "SITE_FEATURE_FORM_TYPE_CERTAINTY": sff_cert[i], "SITE_FEATURE_SHAPE_TYPE": [{"SITE_FEATURE_SHAPE_TYPE": sff_shape[i]}], "SITE_FEATURE_ARRANGEMENT_TYPE": [{"SITE_FEATURE_ARRANGEMENT_TYPE": sff_arr[i]}], "SITE_FEATURE_NUMBER_TYPE": [{"SITE_FEATURE_NUMBER_TYPE": sff_num[i]}]})
-
-			if not((len(sf["BUILT_COMPONENT_RELATED_RESOURCE"]) == 0) & (len(sf["SITE_FEATURE_FORM"]) == 0) & (len(sf["HP_RELATED_RESOURCE"]) == 0) & (len(sf["SITE_FEATURE_INTERPRETATION"]) == 0)):
-				site_features.append(sf)
-
-			# MATERIALS
-
-			m_class = ''
-			m_type = ''
-			m_tech = ''
-			if "MATERIAL_CLASS" in item:
-				m_class = item["MATERIAL_CLASS"].strip()
-			if "MATERIAL_TYPE" in item:
-				m_type = item["MATERIAL_TYPE"].strip()
-			if "CONSTRUCTION_TECHNIQUE" in item:
-				m_tech = item["CONSTRUCTION_TECHNIQUE"].strip()
-			material = {}
-			if len(m_class) > 0:
-				material["MATERIAL_CLASS"] = m_class
-			if len(m_type) > 0:
-				material["MATERIAL_TYPE"] = m_type
-			if len(m_tech) > 0:
-				material["CONSTRUCTION_TECHNIQUE"] = m_tech
-			if len(material) > 0:
-				materials.append(material)
-
-			# MEASUREMENTS
-
-			m_num = ''
-			m_unit = ''
-			m_dum = ''
-			if 'MEASUREMENT_NUMBER' in item:
-				m_num = item["MEASUREMENT_NUMBER"].strip()
-			if 'MEASUREMENT_UNIT' in item:
-				m_unit = item["MEASUREMENT_UNIT"].strip()
-			if 'DIMENSION_TYPE' in item:
-				m_dim = item["DIMENSION_TYPE"].strip()
-			if 'MEASUREMENT_SOURCE_TYPE' in item:
-				m_source = item["MEASUREMENT_SOURCE_TYPE"].strip()
-			measurement = {}
-			if (len(m_num) > 0):
-				try:
-					m_num_float = float(m_num)
-				except:
-					self.error(uniqueid, "Error in Measurements", "'" + str(m_num) + "' is not a valid measurement, a measurement must be a single number with no additional information.")
-				measurement["MEASUREMENT_NUMBER"] = m_num
-			if ((len(m_unit) > 0) & (len(m_dim) > 0) & (len(m_source) > 0)):
-				measurement["MEASUREMENT_UNIT"] = m_unit
-				measurement["DIMENSION_TYPE"] = m_dim
-				measurement["MEASUREMENT_SOURCE_TYPE"] = m_source
-			else:
-				if not(((len(m_unit) == 0) & (len(m_dim) == 0) & (len(m_source) == 0))):
-					self.error(uniqueid, "Error in Measurements.", "A valid measurement contains a Measurement Source Type, a Measurement Unit and a Dimension Type.")
-			if len(measurement) > 0:
-				measurements.append(measurement)
-
-		return {"ARCHAEOLOGICAL_CERTAINTY_OBSERVATION": oacv, "OVERALL_SITE_MORPHOLOGY_TYPE": osmt, "PERIODIZATION": periods, "ABSOLUTE_CHRONOLOGY": cron, "SITE_FEATURES": site_features, "MATERIAL": materials, "MEASUREMENTS": measurements, "RELATED_GEOARCH_PALAEO": rel_geoarch}
-
 	def __parse_condition_assessment(self, index, uniqueid=''):
 
 		exceptions = ['EFFECT_TYPE', 'EFFECT_CERTAINTY']
@@ -373,6 +149,76 @@ class GeoarchaeologyBulkUploadSheet(BulkUploadSheet):
 				plans.append(rec)
 
 		return {"OVERALL_CONDITION_STATE": states, "ESTIMATED_DAMAGE_EXTENT": types, "DAMAGE_STATE": {"DISTURBANCE_EVENT": disturbances}, "THREATS": threats, "RECOMMENDATION_PLAN": plans, "RELATED_DETAILED_CONDITION_RESOURCE": dcr}
+
+	def __parse_geoarchaeological_assessment(self, index, uniqueid=''):
+
+		timespace = []
+		feature_ass = {"FEATURE_LANDFORM": [], "FEATURE_SEDIMENT": [], "FEATURE_INTERPRETATION_BELIEF": []}
+		general_date = {}
+		evidence = []
+		certainty_obs = {}
+
+		exceptions = []
+		unparsed = self.pre_parse(index, ['OVERALL_GEOARCHAEOLOGICAL_CERTAINTY_VALUE', 'SOURCE_OF_EVIDENCE_TYPE', 'MARINE_ISOTOPE_STAGES', 'MARINE_ISOTOPE_STAGE_CERTAINTY', 'QUATERNARY_DIVISIONS', 'QUATERNARY_DATE_CERTAINTY', 'DATE_INFERENCE_MAKING_ACTOR', 'ARCHAEOLOGICAL_DATE_FROM', 'ARCHAEOLOGICAL_DATE_TO', 'BP_DATE_FROM', 'BP_DATE_TO', 'AH_DATE_FROM', 'AH_DATE_TO', 'SH_DATE_FROM', 'SH_DATE_TO', 'FEATURE_SEDIMENT_TYPE', 'FEATURE_SEDIMENT_TRANSITION', 'FEATURE_SEDIMENT_TYPE_CERTAINTY', 'FEATURE_LANDFORM_TYPE', 'SITE_LANDFORM_ARRANGEMENT_TYPE', 'SITE_LANDFORM_NUMBER_TYPE', 'FEATURE_LANDFORM_TYPE_CERTAINTY', 'FEATURE_INTERPRETATION_TYPE', 'FEATURE_INTERPRETATION_CERTAINTY', 'RELATED_GEOARCHAEOLOGY_RESOURCE'], exceptions)
+		ret = {'DEBUG': 'GeoArch'}
+		for item in unparsed:
+
+			if 'MARINE_ISOTOPE_STAGES' in item:
+				if item['MARINE_ISOTOPE_STAGES'] != '':
+					general_date['MARINE_ISOTOPE_STAGES'] = item['MARINE_ISOTOPE_STAGES']
+			if 'MARINE_ISOTOPE_STAGE_CERTAINTY' in item:
+				if item['MARINE_ISOTOPE_STAGE_CERTAINTY'] != '':
+					general_date['MARINE_ISOTOPE_STAGE_CERTAINTY'] = item['MARINE_ISOTOPE_STAGE_CERTAINTY']
+			if 'QUATERNARY_DIVISIONS' in item:
+				if item['QUATERNARY_DIVISIONS'] != '':
+					general_date['QUATERNARY_DIVISIONS'] = item['QUATERNARY_DIVISIONS']
+			if 'QUATERNARY_DATE_CERTAINTY' in item:
+				if item['QUATERNARY_DATE_CERTAINTY'] != '':
+					general_date['QUATERNARY_DATE_CERTAINTY'] = item['QUATERNARY_DATE_CERTAINTY']
+
+			landform = {}
+			if 'FEATURE_LANDFORM_TYPE' in item:
+				landform['FEATURE_LANDFORM_TYPE'] = item['FEATURE_LANDFORM_TYPE']
+			if 'FEATURE_LANDFORM_TYPE_CERTAINTY' in item:
+				landform['FEATURE_LANDFORM_TYPE_CERTAINTY'] = item['FEATURE_LANDFORM_TYPE_CERTAINTY']
+			if 'SITE_LANDFORM_ARRANGEMENT_TYPE' in item:
+				landform['SITE_LANDFORM_ARRANGEMENT_TYPE'] = item['SITE_LANDFORM_ARRANGEMENT_TYPE']
+			if 'SITE_LANDFORM_NUMBER_TYPE' in item:
+				landform['SITE_LANDFORM_NUMBER_TYPE'] = item['SITE_LANDFORM_NUMBER_TYPE']
+			if len(landform) > 0:
+				feature_ass['FEATURE_LANDFORM'].append(landform) # FEATURE_LANDFORM is wrong
+
+			int_belief = {}
+			if 'FEATURE_INTERPRETATION_TYPE' in item:
+				int_belief['FEATURE_INTERPRETATION_TYPE'] = item['FEATURE_INTERPRETATION_TYPE']
+			if 'FEATURE_INTERPRETATION_CERTAINTY' in item:
+				int_belief['FEATURE_INTERPRETATION_CERTAINTY'] = item['FEATURE_INTERPRETATION_CERTAINTY']
+			if 'RELATED_HERITAGE_PLACE' in item:
+				if item['RELATED_HERITAGE_PLACE'] != '':
+					ret['RELATED_HERITAGE_PLACE'] = item['RELATED_HERITAGE_PLACE']
+			if len(int_belief) > 0:
+				feature_ass["FEATURE_INTERPRETATION_BELIEF"].append(int_belief)
+
+			ev = {}
+			if 'SOURCE_OF_EVIDENCE_TYPE' in item:
+				ev['SOURCE_OF_EVIDENCE_TYPE'] = item['SOURCE_OF_EVIDENCE_TYPE']
+			if 'RELATED_INFORMATION_RESOURCE' in item:
+				ev['RELATED_INFORMATION_RESOURCE'] = item['RELATED_INFORMATION_RESOURCE']
+			if len(ev) > 0:
+				evidence.append(ev)
+
+			if 'OVERALL_GEOARCHAEOLOGICAL_CERTAINTY_VALUE' in item:
+				certainty_obs['OVERALL_GEOARCHAEOLOGICAL_CERTAINTY_VALUE'] = item['OVERALL_GEOARCHAEOLOGICAL_CERTAINTY_VALUE']
+
+		ret['GEOARCHAEOLOGY_FEATURE_ASSESSMENT'] = feature_ass
+		ret['GENERAL_DATE'] = general_date
+		if len(timespace) > 0:
+			ret['GEOARCHAEOLOGICAL_TIMESPACE'] = timespace
+		if len(evidence) > 0:
+			ret['SOURCE_OF_EVIDENCE'] = evidence
+		if len(certainty_obs) > 0:
+			ret['GEOARCHAEOLOGY_CERTAINTY_OBSERVATION'] = certainty_obs
+		return ret
 
 	def __parse_environment_assessment(self, index, uniqueid=''):
 
@@ -668,7 +514,7 @@ class GeoarchaeologyBulkUploadSheet(BulkUploadSheet):
 		resource_summary = self.__parse_resource_summary(index, uid)
 		geometries = self.__parse_geometries(index, uid)
 		geography = self.__parse_geography(index, uid)
-		#arc_assessment = self.__parse_archaeological_assessment(index, uid)
+		geo_assessment = self.__parse_geoarchaeological_assessment(index, uid)
 		cond_assessment = self.__parse_condition_assessment(index, uid)
 		env_assessment = self.__parse_environment_assessment(index, uid)
 		access = self.__parse_access(index, uid)
@@ -679,7 +525,7 @@ class GeoarchaeologyBulkUploadSheet(BulkUploadSheet):
 		ret["RESOURCE_SUMMARY"] = resource_summary
 		ret["GEOMETRIES"] = geometries
 		ret["GEOGRAPHY"] = geography
-		#ret["ARCHAEOLOGICAL_ASSESSMENT"] = arc_assessment
+		ret["GEOARCHAEOLOGY_ASSESSMENT"] = geo_assessment
 		ret["CONDITION_ASSESSMENT"] = cond_assessment
 		ret["ENVIRONMENT_ASSESSMENT"] = env_assessment
 		#ret["ACCESS"] = access
