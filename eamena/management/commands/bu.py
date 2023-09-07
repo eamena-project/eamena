@@ -1192,7 +1192,7 @@ class Command(BaseCommand):
 			deleted_tiles = 0
 			deleted_indices = 0
 
-			es = Elasticsearch()
+			es = Elasticsearch(hosts=settings.ELASTICSEARCH_HOSTS)
 			for id in uuids:
 				try:
 					ri = ResourceInstance.objects.get(resourceinstanceid=id)
