@@ -293,6 +293,8 @@ class HeritagePlaceBulkUploadSheet(BulkUploadSheet):
 			dd_name = item["DISTURBANCE_CAUSE_ASSIGNMENT_ASSESSOR_NAME"].strip()
 			eff_type = item["EFFECT_TYPE"]
 			eff_certainty = item["EFFECT_CERTAINTY"]
+			if ((eff_type == '') & (eff_certainty == '')):
+				self.error(uniqueid, "No effect type or certainty.", "Each disturbance in a condition assessment must have an effect type and an effect certainty. These can be Unknown and Not Applicable respectively, but may not be left blank.")
 			t_cat = item["THREAT_CATEGORY"].strip()
 			t_type = item["THREAT_TYPE"].strip()
 			t_prob = item["THREAT_PROBABILITY"].strip()
@@ -310,6 +312,7 @@ class HeritagePlaceBulkUploadSheet(BulkUploadSheet):
 				priority = item["PRIORITY_TYPE"].strip()
 
 			if ((len(eff_type) > 0) & (len(eff_certainty) > 0) & (len(dc_type) > 0) & (len(dc_certainty) > 0)):
+
 				eff_types = eff_type.split('|')
 				eff_certs = eff_certainty.split('|')
 				if (len(eff_certs) != len(eff_types)):
