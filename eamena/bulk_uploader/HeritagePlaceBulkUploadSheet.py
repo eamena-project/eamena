@@ -313,7 +313,6 @@ class HeritagePlaceBulkUploadSheet(BulkUploadSheet):
 
 				if ((eff_type == '') & (eff_certainty == '')):
 					self.error(uniqueid, "No effect type or certainty.", "Each disturbance in a condition assessment must have an effect type and an effect certainty. These can be Unknown and Not Applicable respectively, but may not be left blank.")
-
 				eff_types = eff_type.split('|')
 				eff_certs = eff_certainty.split('|')
 				if (len(eff_certs) != len(eff_types)):

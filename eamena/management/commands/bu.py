@@ -51,8 +51,9 @@ class Command(BaseCommand):
 	Commands for managing the import of EAMENA BUS files
 
 	"""
-	def __init__(self):
+	def __init__(self, *args, **kwargs):
 
+		super(Command, self).__init__(*args, **kwargs)
 		self.__idcache = {}
 		self.__graphcache = {}
 
@@ -1038,6 +1039,10 @@ class Command(BaseCommand):
 				mapped_resources = self.__map_resources(resources, options)
 				business_data = {"resources": mapped_resources}
 
+				if (len(self.warnings) + len(self.errors)) == 0:
+					if len(business_data['resources']) == 0:
+						self.__warn('', 'No valid data found', 'The validator has been through the file provided and cannot find any valid data.')
+
 			if warn_mode != 'ignore':
 
 				self.errors = self.errors + self.warnings
@@ -1185,7 +1190,7 @@ class Command(BaseCommand):
 			deleted_tiles = 0
 			deleted_indices = 0
 
-			es = Elasticsearch()
+			es = Elasticsearch(hosts=settings.ELASTICSEARCH_HOSTS)
 			for id in uuids:
 				try:
 					ri = ResourceInstance.objects.get(resourceinstanceid=id)
@@ -1248,4 +1253,6 @@ class Command(BaseCommand):
 				fp.close()
 			else:
 				if options['operation'] != 'undo':
-					print(json.dumps(data))
+					self.stdout.write(json.dumps(data))
+
+
