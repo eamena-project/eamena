@@ -1,4 +1,5 @@
 from django.conf.urls import include, url
+from django.urls import path
 from django.conf import settings
 from django.conf.urls.static import static
 from django.conf.urls.i18n import i18n_patterns
@@ -17,6 +18,7 @@ urlpatterns = [
     url(r"^bulk-upload/validate$", bulk_uploader.validate, name="bulk_upload_validate"),
     url(r"^bulk-upload/convert$", bulk_uploader.convert, name="bulk_upload_convert"),
     url(r"^bulk-upload/templates/(?P<graphid>%s)\.xlsx$" % uuid_regex, bulk_uploader.download_template, name="download_template"),
+    path("id/", include('uriresolver.urls')),
     url(r'^', include('arches.urls')),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
