@@ -3,7 +3,9 @@ import requests
 import json
 
 
-ACCESS_TOKEN = 'P9bPdbaMsFgU9vZcotRxXaJsqrYSUcszQ7x6ilQO4OEwW2B7LpBtR3tZMDG3' #'ZdGvXQUsnL592Cwo1NQjV6QVGahechZElPWYRbWEReKpxGBTEw5qlNfaVpxS'
+# 'kWzm2cCbLqpD6ljHYq8pJLATqc3IVrC6ZJxsraGcdxy2sfvF0DwkWSBWThIh' (=token-citation-1) is the token of the eamenadatabase@gmail.com user account for sandbox.zenodo.org  
+
+ACCESS_TOKEN = 'kWzm2cCbLqpD6ljHYq8pJLATqc3IVrC6ZJxsraGcdxy2sfvF0DwkWSBWThIh' # 'P9bPdbaMsFgU9vZcotRxXaJsqrYSUcszQ7x6ilQO4OEwW2B7LpBtR3tZMDG3' #'ZdGvXQUsnL592Cwo1NQjV6QVGahechZElPWYRbWEReKpxGBTEw5qlNfaVpxS'
 ZENODO_URL = 'https://sandbox.zenodo.org/api/deposit/depositions'
 
 METADATA = {
