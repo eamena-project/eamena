@@ -4,7 +4,7 @@ from django.conf.urls.static import static
 from django.conf.urls.i18n import i18n_patterns
 from eamena.views.resource import ResourceEditorView
 from eamena.views import bulk_uploader
-from eamena.views import geoserver
+#from eamena.views import geoserver
 from citations.urls import urlpatterns as citation_urlpatterns
 uuid_regex = settings.UUID_REGEX
 
