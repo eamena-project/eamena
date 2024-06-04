@@ -1,12 +1,6 @@
-
+from django.conf import settings
 import requests
 import json
-
-
-# 'kWzm2cCbLqpD6ljHYq8pJLATqc3IVrC6ZJxsraGcdxy2sfvF0DwkWSBWThIh' (=token-citation-1) is the token of the eamenadatabase@gmail.com user account for sandbox.zenodo.org  
-
-ACCESS_TOKEN = 'kWzm2cCbLqpD6ljHYq8pJLATqc3IVrC6ZJxsraGcdxy2sfvF0DwkWSBWThIh' # 'P9bPdbaMsFgU9vZcotRxXaJsqrYSUcszQ7x6ilQO4OEwW2B7LpBtR3tZMDG3' #'ZdGvXQUsnL592Cwo1NQjV6QVGahechZElPWYRbWEReKpxGBTEw5qlNfaVpxS'
-ZENODO_URL = 'https://sandbox.zenodo.org/api/deposit/depositions'
 
 METADATA = {
 	 'metadata': {
@@ -27,7 +21,7 @@ METADATA = {
  }
 
 def create_zenodo_bucket(params): 
-	r = requests.post(ZENODO_URL,
+	r = requests.post(settings.ZENODO_URL,
 					params=params,
 					json={})
 		
@@ -45,12 +39,12 @@ def add_zenodo_data(bucket_url, params, filename):
 		)
 
 def add_zenodo_metadata(deposition_id, params, metadata):
-	r = requests.put('%s/%s' % (ZENODO_URL, deposition_id),
+	r = requests.put('%s/%s' % (settings.ZENODO_URL, deposition_id),
 					params = params,
 					data = json.dumps(metadata))
 
 def zenodo_publish(title, filename, description, zenodo_calculated_fields):
-	params = {'access_token': ACCESS_TOKEN}
+	params = {'access_token': settings.ZENODO_ACCESS_TOKEN}
 	deposition_id, bucket_url = create_zenodo_bucket(params)
 	add_zenodo_data(bucket_url, params, filename)
 	METADATA['metadata']['title'] = title
@@ -59,10 +53,10 @@ def zenodo_publish(title, filename, description, zenodo_calculated_fields):
 	METADATA['metadata']['keywords'] = zenodo_calculated_fields[1]
 	METADATA['metadata']['dates'] = zenodo_calculated_fields[2]
 	add_zenodo_metadata(deposition_id, params, METADATA)
-	r = requests.post('%s/%s/actions/publish' % (ZENODO_URL, deposition_id),
-						params={'access_token': ACCESS_TOKEN} )
+	r = requests.post('%s/%s/actions/publish' % (settings.ZENODO_URL, deposition_id),
+						params={'access_token': settings.ZENODO_ACCESS_TOKEN} )
 
-	r = requests.get(ZENODO_URL,
-				  params={'access_token': ACCESS_TOKEN})
+	r = requests.get(settings.ZENODO_URL,
+				  params={'access_token': settings.ZENODO_ACCESS_TOKEN})
 	print(r.json()[0]['links']['html'])
 	return r.json()[0]['links']['html']
