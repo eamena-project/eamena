@@ -14,7 +14,7 @@ uuid_regex = settings.UUID_REGEX
 
 urlpatterns = [
 #    url(r"^resource/(?P<resourceid>%s)$" % uuid_regex, ResourceEditorView.as_view(), name="resource_editor"),
-    url(r"^geoserver$", geoserver.index), # redirect to the GeoServer # NOT WORKING
+#    url(r"^geoserver$", geoserver.index), # redirect to the GeoServer # NOT WORKING
     url(r"^bulk-upload$", bulk_uploader.index),
     url(r"^bulk-upload/excel-upload$", bulk_uploader.upload_spreadsheet, name="bulk_upload"),
     url(r"^bulk-upload/validate$", bulk_uploader.validate, name="bulk_upload_validate"),
