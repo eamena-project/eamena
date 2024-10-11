@@ -1,6 +1,7 @@
 from django.conf import settings
 import requests
 import json
+import os
 
 METADATA = {
 	 'metadata': {
@@ -30,10 +31,13 @@ def create_zenodo_bucket(params):
 	return deposition_id, bucket_url
 
 def add_zenodo_data(bucket_url, params, filename):
-	zip_file_name = filename + ".zip"
+	if os.path.exists(filename):
+		zip_file_name = filename
+	else:
+		zip_file_name = filename + ".zip"
 	with open(zip_file_name, "rb") as fp:
 		r = requests.put(
-			"%s/%s" % (bucket_url, zip_file_name),
+			"%s/%s" % (bucket_url, zip_file_name.split('/')[-1]),
 			data = fp,
 			params = params,
 		)
