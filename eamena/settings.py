@@ -67,7 +67,8 @@ WSGI_APPLICATION = 'eamena.wsgi.application'
 
 # URL that handles the media served from MEDIA_ROOT, used for managing stored files.
 # It must end in a slash if set to a non-empty value.
-MEDIA_URL = '/files/'
+# MEDIA_URL = '/files/'
+MEDIA_URL = '/uploadedfiles/'
 
 # URL prefix for static files.
 # Example: "http://media.lawrence.com/static/"
@@ -108,19 +109,6 @@ LANGUAGES = [
 # override this to permenantly display/hide the language switcher
 SHOW_LANGUAGE_SWITCH = len(LANGUAGES) > 1
 
-#RESOURCE_FORMATTERS = {
-#    "csv": "arches.app.utils.data_management.resources.formats.csvfile.CsvWriter",
-#    "json": "arches.app.utils.data_management.resources.formats.archesfile.ArchesFileWriter",
-#    "tilecsv": "arches.app.utils.data_management.resources.formats.csvfile.TileCsvWriter",
-#    "shp": "arches.app.utils.data_management.resources.formats.shpfile.ShpWriter",
-#    "xml": "arches.app.utils.data_management.resources.formats.rdffile.RdfWriter",
-#    "pretty-xml": "arches.app.utils.data_management.resources.formats.rdffile.RdfWriter",
-#    "json-ld": "arches.app.utils.data_management.resources.formats.rdffile.JsonLdWriter",
-#    "n3": "arches.app.utils.data_management.resources.formats.rdffile.RdfWriter",
-#    "nt": "arches.app.utils.data_management.resources.formats.rdffile.RdfWriter",
-#    "trix": "arches.app.utils.data_management.resources.formats.rdffile.RdfWriter",
-#}
-
 INSTALLED_APPS = [
     "webpack_loader",
     "django.contrib.admin",
@@ -142,6 +130,11 @@ INSTALLED_APPS = [
     "eamena",
     "compressor",
 ]
+
+RESOURCE_FORMATTERS['jsonl'] = "eamena.exporters.JsonLWriter"
+RESOURCE_FORMATTERS['nt'] = "eamena.exporters.RdfWriter"
+RESOURCE_FORMATTERS['n3'] = "eamena.exporters.RdfWriter"
+RESOURCE_FORMATTERS['json-ld'] = "eamena.exporters.JsonLdWriter"
 
 # returns an output that can be read by NODEJS
 if __name__ == "__main__":

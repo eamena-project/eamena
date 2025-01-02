@@ -1,157 +1,157 @@
 
 #%% test
 
-def summed_values(data = None, fieldname = None):
-	"""
-	Creates a dataframe summing the number of occurences for a given field
-	
-	::param data: dictionary of Heritage Places (JSON)
-	"""
-	import pandas as pd
-	from collections import Counter
+def summed_values(data=None, fieldname=None):
+    import pandas as pd
+    from collections import Counter
 
-	l = list()
-	for i in range(len(data['features'])):
-		l.append(data['features'][i]['properties'][fieldname])
-	split_names = [name.strip() for item in l if item is not None for name in item.split(',')]
-	name_counts = Counter(split_names)
-	df = pd.DataFrame.from_dict(name_counts, orient='index').reset_index()
-	df = df.rename(columns={'index': 'name', 0: 'n_hp'})
-	df = df.sort_values('n_hp', ascending=False)
-	return df
+    l = [f['properties'].get(fieldname) for f in data['features']]
+    # Filter out None values first to avoid errors
+    l = [x for x in l if x is not None]
+    
+    # If still empty, return an empty DataFrame with the expected columns
+    if not l:
+        return pd.DataFrame(columns=['name', 'n_hp'])
+    
+    split_names = [name.strip() for item in l for name in item.split(',') if name.strip()]
+    name_counts = Counter(split_names)
+    
+    if len(name_counts) == 0:
+        return pd.DataFrame(columns=['name', 'n_hp'])
+    
+    df = pd.DataFrame.from_dict(name_counts, orient='index').reset_index()
+    df = df.rename(columns={'index': 'name', 0: 'n_hp'})
+    df = df.sort_values('n_hp', ascending=False)
+    return df
 
 def zenodo_contributors(data = None, fieldname = "Assessment Investigator - Actor", 
-						contributors_layout_HP = {"name": None, "type": "DataCollector"}, contributors_layout_GS = [{'name': "University of Oxford", "type": "DataManager"},{'name': "University of Southampton", "type": "DataManager"}]):
-	"""
-	Creates dictionary of contributors, filling a dictionary layout (`contributors_layout_*`). Contributors are sorted according to the total number of their name occurences in the selected `fieldname`.
-	
-	:param data: dictionary of Heritage Places (JSON)
-	"""
-	if fieldname in list(data['features'][0]['properties'].keys()):
-	# HPs
-		df = summed_values(data, fieldname)
-		CONTRIBUTORS = list()
-		for name in df['name']:
-			contibut = contributors_layout_HP.copy()
-			contibut['name'] = name
-			# TODO: "affiliation" and "orcid"
-			contibut = {key: value for key, value in contibut.items() if value is not None and value != 'null'}
-			CONTRIBUTORS.append(contibut)
-	else:
-	# not HPs (GS, ...)
-		CONTRIBUTORS = contributors_layout_GS
-	return CONTRIBUTORS
+                        contributors_layout_HP = {"name": None, "type": "DataCollector"}, contributors_layout_GS = [{'name': "University of Oxford", "type": "DataManager"},{'name': "University of Southampton", "type": "DataManager"}]):
+    """
+    Creates dictionary of contributors, filling a dictionary layout (`contributors_layout_*`). Contributors are sorted according to the total number of their name occurences in the selected `fieldname`.
+    
+    :param data: dictionary of Heritage Places (JSON)
+    """
+    if fieldname in list(data['features'][0]['properties'].keys()):
+    # HPs
+        df = summed_values(data, fieldname)
+        CONTRIBUTORS = list()
+        for name in df['name']:
+            contibut = contributors_layout_HP.copy()
+            contibut['name'] = name
+            # TODO: "affiliation" and "orcid"
+            contibut = {key: value for key, value in contibut.items() if value is not None and value != 'null'}
+            CONTRIBUTORS.append(contibut)
+    else:
+    # not HPs (GS, ...)
+        CONTRIBUTORS = contributors_layout_GS
+    return CONTRIBUTORS
 
-def zenodo_keywords(data = None, constant = ['EAMENA', 'MaREA', 'Cultural Heritage'], additional = None, fields = ["Country Type", "Cultural Period Type"]):
-	"""
-	Creates a list of keywords with a constant basis (`constant`) and parsed supplementary `fields` (for space-time keywords)
-	
-	:param data: dictionary of Heritage Places (JSON)
-	:param additional: additional keyworks provided by the user
-	"""
-	KEYWORDS = list()
-	KEYWORDS = KEYWORDS + constant + additional
-	if all(elem in list(data['features'][0]['properties'].keys()) for elem in fields):
-	# HPs
-		for fieldname in fields:
-			df = summed_values(data, fieldname)
-			KEYWORDS = KEYWORDS + df['name'].tolist()
-		try:
-			KEYWORDS.remove('Unknown')
-		except ValueError:
-			pass
-	return KEYWORDS
+def zenodo_keywords(data=None, constant=['EAMENA', 'MaREA', 'Cultural Heritage'], additional=None, fields=["Country Type", "Cultural Period Type"]):
+    KEYWORDS = constant + (additional if additional else [])
+    
+    # Check that the fields exist in the data
+    if all(elem in data['features'][0]['properties'] for elem in fields):
+        for fieldname in fields:
+            df = summed_values(data, fieldname)
+            # Only add names if the 'name' column is available and df is not empty
+            if not df.empty and 'name' in df.columns:
+                KEYWORDS += df['name'].tolist()
+
+        # Remove "Unknown" if present
+        if "Unknown" in KEYWORDS: 
+            KEYWORDS.remove('Unknown')
+    
+    return KEYWORDS
 
 def zenodo_dates(data = None, fields = ["Assessment Activity Date"]):
-	"""
-	Get the min and the max of dates recorded in `fields`	
+    """
+    Get the min and the max of dates recorded in `fields`    
 
-	:param data: dictionary of Heritage Places (JSON)
-	"""
-	from datetime import datetime
+    :param data: dictionary of Heritage Places (JSON)
+    """
+    from datetime import datetime
 
-	if all(elem in list(data['features'][0]['properties'].keys()) for elem in fields):
-	# HPs
-		ldates = list()
-		for fieldname in fields:
-			df = summed_values(data, fieldname)
-			ldates = ldates + df['name'].tolist() 
-		if 'None' in ldates:
-			ldates.remove('None')
-		# ldates.remove('None')
-		# date_strings = [x for x in date_strings if x is not 'None']
-		date_objects = [datetime.strptime(date, '%Y-%m-%d') for date in ldates]
-		min_date = min(date_objects)
-		max_date = max(date_objects)
-		min_date_str = min_date.strftime('%Y-%m-%d')
-		max_date_str = max_date.strftime('%Y-%m-%d')
-		DATES = [{'type': 'created', 'start': min_date_str, 'end': max_date_str}]
-		return DATES
-	else:
-	# not HPs (GS, ...)
-		DATES = [{'type': 'created', 'start': '2021-01-01', 'end': '2021-01-02'}]
-		return DATES
+    if all(elem in list(data['features'][0]['properties'].keys()) for elem in fields):
+    # HPs
+        ldates = list()
+        for fieldname in fields:
+            df = summed_values(data, fieldname)
+            ldates = ldates + df['name'].tolist() 
+        if 'None' in ldates:
+            ldates.remove('None')
+        # date_strings = [x for x in date_strings if x is not 'None']
+        date_objects = [datetime.strptime(date, '%Y-%m-%d') for date in ldates]
+        min_date = min(date_objects)
+        max_date = max(date_objects)
+        min_date_str = min_date.strftime('%Y-%m-%d')
+        max_date_str = max_date.strftime('%Y-%m-%d')
+        DATES = [{'type': 'created', 'start': min_date_str, 'end': max_date_str}]
+        return DATES
+    else:
+    # not HPs (GS, ...)
+        DATES = [{'type': 'created', 'start': '2021-01-01', 'end': '2021-01-02'}]
+        return DATES
 
 def zenodo_related_identifiers(site = 'https://zenodo.org/oai2d', set = 'user-eamena', metadataPrefix = 'oai_dc', reference_data_list = "https://raw.githubusercontent.com/eamena-project/eamena-arches-dev/main/data/lod/zenodo/reference_data_list.tsv"):
-	"""
-	Parse the 'EAMENA database' community in Zenodo ('user-eamena') to check if there are already uploaded datasets. Handle differently the refrence data (collections, RMs, ...) and the datasets, or business data. The former are 'isDescribedBy' related identifiers, whereas the latter are 'isContinuedBy' related resources.
+    """
+    Parse the 'EAMENA database' community in Zenodo ('user-eamena') to check if there are already uploaded datasets. Handle differently the refrence data (collections, RMs, ...) and the datasets, or business data. The former are 'isDescribedBy' related identifiers, whereas the latter are 'isContinuedBy' related resources.
 
-	:param reference_data_list: the list of reference data already existing in the 'eamena' Zenodo community. These objects will not be added as 'isContinuedBy' in the metadata key 'related_identifiers' but as 'isDescribedBy'
-	"""
-	import pandas as pd
-	from sickle import Sickle
+    :param reference_data_list: the list of reference data already existing in the 'eamena' Zenodo community. These objects will not be added as 'isContinuedBy' in the metadata key 'related_identifiers' but as 'isDescribedBy'
+    """
+    import pandas as pd
+    from sickle import Sickle
 
-	# reference_data_list = "https://raw.githubusercontent.com/eamena-project/eamena-arches-dev/main/data/lod/zenodo/reference_data_list.tsv"
-	reference_data = pd.read_csv (reference_data_list, sep = '\t')
-	l_isDescribedBy = reference_data['url'].tolist()
+    # reference_data_list = "https://raw.githubusercontent.com/eamena-project/eamena-arches-dev/main/data/lod/zenodo/reference_data_list.tsv"
+    reference_data = pd.read_csv (reference_data_list, sep = '\t')
+    l_isDescribedBy = reference_data['url'].tolist()
 
-	sickle = Sickle(site)
-	records = sickle.ListRecords(metadataPrefix=metadataPrefix, set=set)
-	# record = records.next()
-	# return record.metadata['identifier'][0]# record = records.next()
-	l = list()
-	for record in records:
-		l.append(record.metadata['identifier'][0])
-	# remove the reference data
-	l_isContinuedBy = [x for x in l if x not in l_isDescribedBy]
-	## create the record
-	# business data
-	l_isContinuedBy_out = list()
-	for busdata in l_isContinuedBy:
-		l_isContinuedBy_out.append({'relation': 'isContinuedBy',
-									'identifier': busdata})
-	# reference data
-	l_isDescribedBy_out = list()   
-	for refdata in l_isDescribedBy:
-		l_isDescribedBy_out.append({'relation': 'isDescribedBy',
-									'identifier': refdata})
-	# merge lists
-	l_related_identifiers = l_isContinuedBy + l_isDescribedBy_out
-	return(l_related_identifiers)
+    sickle = Sickle(site)
+    records = sickle.ListRecords(metadataPrefix=metadataPrefix, set=set)
+    # record = records.next()
+    # return record.metadata['identifier'][0]# record = records.next()
+    l = list()
+    for record in records:
+        l.append(record.metadata['identifier'][0])
+    # remove the reference data
+    l_isContinuedBy = [x for x in l if x not in l_isDescribedBy]
+    ## create the record
+    # business data
+    l_isContinuedBy_out = list()
+    for busdata in l_isContinuedBy:
+        l_isContinuedBy_out.append({'relation': 'isContinuedBy',
+                                    'identifier': busdata})
+    # reference data
+    l_isDescribedBy_out = list()   
+    for refdata in l_isDescribedBy:
+        l_isDescribedBy_out.append({'relation': 'isDescribedBy',
+                                    'identifier': refdata})
+    # merge lists
+    l_related_identifiers = l_isContinuedBy + l_isDescribedBy_out
+    return(l_related_identifiers)
 
 def zenodo_statistics(data = None):
-	"""
-	Calculate basic statistics on HPs. Return a list with: the total number of Heritage Places; the number of Heritage Places layered by number of geometries (some have 1, 2, 3, ...); the total number of geometries; etc.
+    """
+    Calculate basic statistics on HPs. Return a list with: the total number of Heritage Places; the number of Heritage Places layered by number of geometries (some have 1, 2, 3, ...); the total number of geometries; etc.
 
-	:param data: dictionary of Heritage Places (JSON)
-	"""
-	from collections import Counter
+    :param data: dictionary of Heritage Places (JSON)
+    """
+    from collections import Counter
 
-	l = list()
-	LIST_HPS = list()
-	for i in range(len(data['features'])):
-		ea_id = data['features'][i]['properties']['EAMENA ID']
-		l.append(ea_id)
-	my_dict = {i:l.count(i) for i in l}
-	value_counts = Counter(my_dict.values())
-	HPS_GEOM_NB = dict(value_counts)
-	HPS_NB = sum(HPS_GEOM_NB.values())   
-	LIST_HPS.append(HPS_NB)
-	LIST_HPS.append(HPS_GEOM_NB)
-	HPS_GEOM_NB_TOTAL = {key: key * value for key, value in HPS_GEOM_NB.items()}
-	HPS_GEOM_NB_TOTAL = sum(HPS_GEOM_NB_TOTAL.values())
-	LIST_HPS.append(HPS_GEOM_NB_TOTAL)
-	return(LIST_HPS)
+    l = list()
+    LIST_HPS = list()
+    for i in range(len(data['features'])):
+        ea_id = data['features'][i]['properties']['EAMENA ID']
+        l.append(ea_id)
+    my_dict = {i:l.count(i) for i in l}
+    value_counts = Counter(my_dict.values())
+    HPS_GEOM_NB = dict(value_counts)
+    HPS_NB = sum(HPS_GEOM_NB.values())   
+    LIST_HPS.append(HPS_NB)
+    LIST_HPS.append(HPS_GEOM_NB)
+    HPS_GEOM_NB_TOTAL = {key: key * value for key, value in HPS_GEOM_NB.items()}
+    HPS_GEOM_NB_TOTAL = sum(HPS_GEOM_NB_TOTAL.values())
+    LIST_HPS.append(HPS_GEOM_NB_TOTAL)
+    return(LIST_HPS)
 
 # #%% test
 # import requests

@@ -26,3 +26,4 @@ eamena/uploadedfiles
 eamena/webpack/webpack-stats.json
 eamena/webpack/webpack-user-config.js
 nohup.out
+.tmp
