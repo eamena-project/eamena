@@ -1,0 +1,8 @@
+{
+	"name": "Eamena Form Card",
+	"componentid": "60e4e022-e2ba-40a0-948d-0538e27fbe1c",
+	"description": "Allows multiple node groups to appear on same card",
+	"component": "views/components/cards/eamena-default-card",
+	"componentname": "eamena-default-card",
+	"defaultconfig": {}
+}

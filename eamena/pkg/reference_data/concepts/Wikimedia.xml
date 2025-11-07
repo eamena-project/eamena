@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<rdf:RDF
+  xmlns:skos="http://www.w3.org/2004/02/skos/core#"
+  xmlns:dcterms="http://purl.org/dc/terms/"
+  xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+>
+  <skos:ConceptScheme rdf:about="https://database.eamena.org/470882be-9ca4-450a-bf49-f394c75f5d44">
+    <dcterms:identifier xml:lang="en">{"id": "e16962d8-32ec-46b7-8971-36b6f2a6dc31", "value": "https://database.eamena.org/concepts/470882be-9ca4-450a-bf49-f394c75f5d44"}</dcterms:identifier>
+    <dcterms:identifier xml:lang="en">{"id": "f98ff370-ac74-4b83-a4a3-bb2d636d75ca", "value": "https://database.eamena.org/concepts/470882be-9ca4-450a-bf49-f394c75f5d44"}</dcterms:identifier>
+    <dcterms:identifier xml:lang="en">{"id": "68b40f92-9e37-49e3-8f3d-0dc30e3ada5a", "value": "https://database.eamena.org/concepts/470882be-9ca4-450a-bf49-f394c75f5d44"}</dcterms:identifier>
+    <dcterms:identifier xml:lang="en">{"id": "53d25755-fc1d-40bb-b469-f3cf88cad8cf", "value": "https://database.eamena.org/concepts/470882be-9ca4-450a-bf49-f394c75f5d44"}</dcterms:identifier>
+    <dcterms:identifier xml:lang="en">{"id": "6efc81a6-a481-4dff-ad19-0d387fd474b7", "value": "https://database.eamena.org/concepts/470882be-9ca4-450a-bf49-f394c75f5d44"}</dcterms:identifier>
+    <dcterms:identifier xml:lang="en">{"id": "3dc15a8a-faed-4c3e-b1a8-0c13e6b0b8b9", "value": "https://database.eamena.org/concepts/470882be-9ca4-450a-bf49-f394c75f5d44"}</dcterms:identifier>
+    <dcterms:identifier xml:lang="en">{"id": "8389755f-74d9-4924-a06e-c3e05c8d061b", "value": "https://database.eamena.org/concepts/470882be-9ca4-450a-bf49-f394c75f5d44"}</dcterms:identifier>
+    <dcterms:title xml:lang="en">{"id": "302e0f09-edc6-4a2f-a466-889ea4dfaae4", "value": "Wikimedia"}</dcterms:title>
+  </skos:ConceptScheme>
+</rdf:RDF>
