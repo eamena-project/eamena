@@ -1,0 +1,44 @@
+<div class="scroll-y">
+
+    <div id="page-content" style="padding: 0 50px 160px; margin-top: 30px;">
+        <div id="resource-list" class="report-image-grid flex" style="margin-top: 5px; flex-wrap: wrap;">
+
+<!--ko ifnot: $data.loading -->
+
+<!--ko foreach: { data: $data.datasets, as: 'item' } -->
+
+            <div class="r-grid-item relative">
+                <div data-bind="attr: {href: '#', title: item.label, target: '_blank'}" href="#">
+                    <div class="r-select-card">
+                        <h4 class="r-select-title" data-bind="text: item.label"></h4>
+                        <div class="r-select-circle">
+                            <span>
+                                <i class="fa fa-list-alt r-select-icon"></i>
+                            </span>
+                        </div>
+                        <div class="r-desc-container">
+                            <p class="r-select-desc"><span data-bind="text: item.results"></span> records</p> 
+                        </div>  
+                    </div>
+                </div>
+
+                <!-- card Tools -->
+                <div class="r-select-card-footer">
+                    <div class="">
+                        <a href="#" class="btn btn-primary btn-resource-select" role="button" data-bind="
+                        attr: { href: 'curator/' + item.id}">
+                        View Dataset</a>
+                    </div>
+
+                </div>
+            </div>
+
+<!-- /ko -->
+
+<!-- /ko -->
+
+        </div>
+    </div>
+
+</div>
+

@@ -1,27 +1,27 @@
-from django.conf.urls import include, url
 from django.conf import settings
 from django.conf.urls.static import static
 from django.conf.urls.i18n import i18n_patterns
-from eamena.views.resource import ResourceEditorView
-from eamena.views import bulk_uploader
-#from eamena.views import geoserver
+from django.urls import include, path
 from citations.urls import urlpatterns as citation_urlpatterns
-uuid_regex = settings.UUID_REGEX
-
-#urlpatterns = [
-#    url(r'^', include('arches.urls')),
-#] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 urlpatterns = [
-#    url(r"^resource/(?P<resourceid>%s)$" % uuid_regex, ResourceEditorView.as_view(), name="resource_editor"),
-#    url(r"^geoserver$", geoserver.index), # redirect to the GeoServer # NOT WORKING
-    url(r"^bulk-upload$", bulk_uploader.index),
-    url(r"^bulk-upload/excel-upload$", bulk_uploader.upload_spreadsheet, name="bulk_upload"),
-    url(r"^bulk-upload/validate$", bulk_uploader.validate, name="bulk_upload_validate"),
-    url(r"^bulk-upload/convert$", bulk_uploader.convert, name="bulk_upload_convert"),
-    url(r"^bulk-upload/templates/(?P<graphid>%s)\.xlsx$" % uuid_regex, bulk_uploader.download_template, name="download_template"),
-    url(r'^', include('arches.urls')),
-] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT) + citation_urlpatterns
+    # project-level urls
+    path("bulk-upload/", include("eamena.bulk_uploader.urls"))
+]
 
-#if settings.SHOW_LANGUAGE_SWITCH is True:
-#    urlpatterns = i18n_patterns(*urlpatterns)
+# Ensure Arches core urls are superseded by project-level urls
+urlpatterns.append(path('', include('arches.urls')))
+
+# Adds URL pattern to serve media files during development
+urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+
+# Add citation manager
+urlpatterns += citation_urlpatterns
+
+# Only handle i18n routing in active project. This will still handle the routes provided by Arches core and Arches applications,
+# but handling i18n routes in multiple places causes application errors.
+if settings.ROOT_URLCONF == __name__:
+    if settings.SHOW_LANGUAGE_SWITCH is True:
+        urlpatterns = i18n_patterns(*urlpatterns)
+
+    urlpatterns.append(path("i18n/", include("django.conf.urls.i18n")))

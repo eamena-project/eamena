@@ -1,15 +1,299 @@
-<!-- your_app_name/templates/citations.html -->
+<!--
+This plugin is part of the EAMENA project, which aims to document and protect archaeological sites in conflict zones. 
+The Plugins is redesigned and improved by Salahaddin Ebrahimipour, EAMENA researcher and Database Manager in June 2025. 
+-->
+{% load static %}
+{% load template_tags %}
+
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Citations</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EAMENA Zenodo Citation Generator</title>
+    <link rel="shortcut icon" href="{% static 'img/favicon.png' %}" />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://rsms.me/inter/inter.css">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        .form-label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+            color: #374151; /* gray-700 */
+        }
+        /* Styles for the lightbox */
+        .lightbox-overlay {
+            transition: opacity 0.3s ease-in-out;
+        }
+        .lightbox-content {
+            transition: transform 0.3s ease-in-out, opacity 0.3s ease-in-out;
+        }
+        #mobile-menu {
+            transition: max-height 0.3s ease-in-out;
+        }
+    </style>
 </head>
-<body>
-    <h2>Add Citation</h2>
-    <form method="post" action="{% url 'citation_generator' %}">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit">Submit</button>
-    </form>
+<body class="bg-gray-200">
+
+    <!-- Lightbox Structure -->
+    <div id="lightbox-overlay" class="fixed inset-0 bg-black bg-opacity-50 z-40 hidden lightbox-overlay"></div>
+    <div id="lightbox" class="fixed inset-0 z-50 hidden flex items-center justify-center p-4">
+        <div id="lightbox-content" class="bg-white rounded-lg shadow-2xl w-full max-w-3xl transform scale-95 opacity-0 lightbox-content">
+            <div class="flex justify-between items-center p-4 border-b">
+                <h3 id="lightbox-title" class="text-xl font-semibold text-gray-800"></h3>
+                <button id="lightbox-close" class="text-gray-400 hover:text-gray-600">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+                </button>
+            </div>
+            <div id="lightbox-body" class="p-6 text-gray-600 space-y-4">
+                <!-- Content will be injected here by JavaScript -->
+            </div>
+        </div>
+    </div>
+
+    <div class="container mx-auto px-4 py-8 md:py-12">
+        <div class="max-w-3xl mx-auto">
+        
+            <!-- Main Form Card -->
+            <div class="bg-white rounded-2xl shadow-lg overflow-hidden">
+
+                <!-- CORRECTED: The <nav> element is now inside the main card, but outside the <form> -->
+                <nav class="bg-gray-50 border-b border-gray-200">
+                    <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
+                        <div class="flex items-center justify-between h-16">
+                            <div class="flex items-center">
+                                <a href="https://database.eamena.org/search" target="_blank" class="text-lg font-bold text-gray-800 hover:text-blue-600 transition-colors">
+                                    EAMENA Database
+                                </a>
+                            </div>
+                            <div class="hidden sm:block">
+                                <div class="ml-10 flex items-baseline space-x-1">
+                                    <button type="button" data-modal="how-to-use" class="modal-trigger text-gray-600 hover:bg-gray-200 hover:text-blue-600 transition delay-250 duration-300 ease-in-out px-3 py-2 rounded-2xl text-sm font-medium">How to Use</button>
+                                    <button type="button" data-modal="about" class="modal-trigger text-gray-600 hover:bg-gray-200 hover:text-blue-600 transition delay-250 duration-300 ease-in-out px-3 py-2 rounded-2xl text-sm font-medium">About this Plugin</button>
+                                </div>
+                            </div>
+                            <div class="-mr-2 flex sm:hidden">
+                                <!-- Mobile menu button -->
+                                <button type="button" id="hamburger-button" class="bg-transparent inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500" aria-controls="mobile-menu" aria-expanded="false">
+                                    <span class="sr-only">Open main menu</span>
+                                    <svg id="hamburger-open-icon" class="block h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" aria-hidden="true">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16" />
+                                    </svg>
+                                    <svg id="hamburger-close-icon" class="hidden h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" aria-hidden="true">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+                                    </svg>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Mobile menu, show/hide based on menu state. -->
+                    <div class="sm:hidden hidden" id="mobile-menu">
+                        <div class="px-2 pt-2 pb-3 space-y-1">
+                            <button type="button" data-modal="how-to-use" class="modal-trigger text-gray-700 hover:bg-gray-100 block px-3 py-2 rounded-md text-base font-medium w-full text-left">How to Use</button>
+                            <button type="button" data-modal="about" class="modal-trigger text-gray-700 hover:bg-gray-100 block px-3 py-2 rounded-md text-base font-medium w-full text-left">About this Tool</button>
+                        </div>
+                    </div>
+                </nav>
+
+                <!-- Header Section -->
+                <div class="bg-gray-700 p-6 md:p-8">
+                    <h1 class="text-3xl md:text-3xl font-bold text-white tracking-tight">Zenodo Citation Generator</h1>
+                    <p class="text-gray-300 mt-2">Create and publish datasets to Zenodo with ease.</p>
+                </div>
+
+                <!-- Form Section - CORRECTED: Added action="" to the form tag -->
+                <form method="post" action="" class="p-6 md:p-8 space-y-6">
+                    {% csrf_token %}
+
+                    <!-- Title and Description Section -->
+                    <div class="space-y-6">
+                        <div>
+                            <label for="{{ form.title.id_for_label }}" class="form-label">Title</label>
+                            {{ form.title }}
+                            {% if form.title.errors %}
+                                <div class="text-red-600 text-sm mt-1">{{ form.title.errors }}</div>
+                            {% endif %}
+                        </div>
+                        <div>
+                            <label for="{{ form.description.id_for_label }}" class="form-label">Description</label>
+                            {{ form.description }}
+                            {% if form.description.errors %}
+                                <div class="text-red-600 text-sm mt-1">{{ form.description.errors }}</div>
+                            {% endif %}
+                        </div>
+                    </div>
+
+                    <!-- GeoJSON Input Section -->
+                    <div>
+                        <label for="{{ form.json_text.id_for_label }}" class="form-label">GeoJSON Content</label>
+                        {{ form.json_text }}
+                        {% if form.json_text.errors %}
+                            <div class="text-red-600 text-sm mt-1">{{ form.json_text.errors }}</div>
+                        {% endif %}
+                    </div>
+                    
+                    <!-- Options Section -->
+                    <div class="flex items-start">
+                        <div class="flex items-center h-5">
+                            {{ form.advanced }}
+                        </div>
+                        <div class="ml-3 text-sm">
+                            <label for="{{ form.advanced.id_for_label }}" class="font-medium text-gray-700">{{ form.advanced.label }}</label>
+                            <p class="text-gray-500">Includes maps and statistical charts in the final dataset.</p>
+                        </div>
+                    </div>
+
+                    <!-- Submission Button -->
+                    <div class="pt-4 border-t border-gray-200">
+                        <button type="submit" class="w-full sm:w-auto inline-flex items-center justify-center px-6 py-3 border border-transparent text-base font-medium rounded-lg shadow-sm text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-all transform hover:scale-105">
+                            <svg class="w-5 h-5 mr-2 -ml-1" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5m-13.5-9L12 3m0 0l4.5 4.5M12 3v13.5" />
+                            </svg>                          
+                            Publish to Zenodo
+                        </button>
+                    </div>
+                    
+                    <!-- General Form Errors -->
+                    {% if form.non_field_errors %}
+                        <div class="bg-red-50 border-l-4 border-red-400 p-4 mt-6">
+                            <div class="flex">
+                                <div class="flex-shrink-0">
+                                    <svg class="h-5 w-5 text-red-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                                        <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clip-rule="evenodd" />
+                                    </svg>
+                                </div>
+                                <div class="ml-3">
+                                    <p class="text-sm text-red-700">
+                                        {{ form.non_field_errors }}
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    {% endif %}
+                </form>
+            </div>
+            <footer class="text-center mt-8 text-gray-500 text-sm">
+                <p>This app is part of EAMENA database project. It is meant to publish EAMENA datasets to Zenodo.</p>
+                <p>&copy; June, 2025</p>
+            </footer>
+        </div>
+    </div>
+
+    <!-- JavaScript for Menu and Lightbox -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            // Lightbox Elements
+            const lightbox = document.getElementById('lightbox');
+            const lightboxOverlay = document.getElementById('lightbox-overlay');
+            const lightboxTitle = document.getElementById('lightbox-title');
+            const lightboxBody = document.getElementById('lightbox-body');
+            const lightboxClose = document.getElementById('lightbox-close');
+            
+            // Menu Elements
+            const hamburgerButton = document.getElementById('hamburger-button');
+            const mobileMenu = document.getElementById('mobile-menu');
+            const hamburgerOpenIcon = document.getElementById('hamburger-open-icon');
+            const hamburgerCloseIcon = document.getElementById('hamburger-close-icon');
+
+            // All buttons that can trigger a modal
+            const modalTriggers = document.querySelectorAll('.modal-trigger');
+
+            const modalContent = {
+                'how-to-use': {
+                    title: 'How to Use This Plugin',
+                    body: `
+                        <p>This tool simplifies the process of publishing datasets to the EAMENA community on Zenodo.</p>
+                        <p class="mt-2">Follow these steps to create and publish your dataset:</p>
+                        <ol class="list-decimal list-inside mt-4 space-y-2">
+                            <li><strong>Provide a Title:</strong> Enter a clear and descriptive title for your dataset. This will be the main title on the Zenodo record.</li>
+                            <li><strong>Add a Description:</strong> Write a brief summary or abstract explaining the content and context of your dataset.</li>
+                            <li><strong>Paste GeoJSON Content:</strong> Copy the entire GeoJSON content from your source and paste it into the large text area. To receive your GeoJSON, paste the search URL into a browser tab and wait for the JSON file to fully load. Then, copy the entire JSON and paste it into the plugin's GeoJSON box. The tool will parse this data to create the Zenodo record.</li>
+                            <li><strong>Choose Options:</strong> Decide if you want to generate and include additional outputs like maps and statistical plots with your dataset.</li>
+                            <li><strong>Publish:</strong> Click the "Publish to Zenodo" button. The tool will process your data, create a .zip archive, and upload it to Sandbox / Zenodo. You will be provided with a link to the new record upon success.</li>
+                        </ol>
+                        <div class="mt-6 p-4 bg-yellow-50 border-l-4 border-yellow-400">
+                            <div class="flex">
+                                <div class="flex-shrink-0">
+                                    <svg class="h-5 w-5 text-yellow-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                                        <path fill-rule="evenodd" d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.21 3.031-1.742 3.031H4.42c-1.532 0-2.492-1.697-1.742-3.031l5.58-9.92zM10 13a1 1 0 110-2 1 1 0 010 2zm-1-8a1 1 0 00-1 1v3a1 1 0 102 0V6a1 1 0 00-1-1z" clip-rule="evenodd" />
+                                    </svg>
+                                </div>
+                                <div class="ml-3">
+                                    <p class="text-base text-yellow-700">
+                                        <strong>Important:</strong> This plugin sends data to the <strong>Zenodo Sandbox</strong> for preliminary inspection by default. To publish your data on the main <strong>Zenodo</strong> site and submit it to the EAMENA community, please contact EAMENA database manager at <i><strong> eamenadatabase [at] gmail.com </strong></i> to prepare the plugin for your final submission.
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    `
+                },
+                'about': {
+                    title: 'About This Plugin',
+                    body: `
+                        <p>This plugin is designed to streamline the workflow for EAMENA project members/users to publish heritage data directly from the database search results to the Zenodo research data repository.</p>
+                        <p class="mt-2">By automating the metadata extraction and packaging process, it ensures consistency and saves a significant amount of time. The tool automatically calculates contributors, keywords, and date ranges from the provided GeoJSON, and can generate useful data visualizations to enrich the dataset.</p>
+                        <p class="mt-4">This ensures our data is archived, citable, and accessible to the wider research community in a standardized format.</p>
+                    `
+                }
+            };
+
+            function showLightbox(type) {
+                const content = modalContent[type];
+                if (!content) return;
+
+                lightboxTitle.textContent = content.title;
+                lightboxBody.innerHTML = content.body;
+                
+                lightbox.classList.remove('hidden');
+                lightboxOverlay.classList.remove('hidden');
+                
+                // Animate in
+                setTimeout(() => {
+                    lightboxOverlay.classList.add('opacity-100');
+                    document.getElementById('lightbox-content').classList.remove('scale-95', 'opacity-0');
+                    document.getElementById('lightbox-content').classList.add('scale-100', 'opacity-100');
+                }, 10);
+            }
+
+            function hideLightbox() {
+                 // Animate out
+                document.getElementById('lightbox-content').classList.add('scale-95', 'opacity-0');
+                lightboxOverlay.classList.remove('opacity-100');
+                
+                setTimeout(() => {
+                    lightbox.classList.add('hidden');
+                    lightboxOverlay.classList.add('hidden');
+                }, 300);
+            }
+
+            // --- Hamburger Menu Logic ---
+            hamburgerButton.addEventListener('click', () => {
+                const isExpanded = hamburgerButton.getAttribute('aria-expanded') === 'true';
+                hamburgerButton.setAttribute('aria-expanded', !isExpanded);
+                mobileMenu.classList.toggle('hidden');
+                hamburgerOpenIcon.classList.toggle('hidden');
+                hamburgerCloseIcon.classList.toggle('hidden');
+            });
+
+            // --- Combined Event Listeners ---
+            modalTriggers.forEach(trigger => {
+                trigger.addEventListener('click', () => {
+                    const modalType = trigger.getAttribute('data-modal');
+                    showLightbox(modalType);
+
+                    // If mobile menu is open, close it
+                    if (!mobileMenu.classList.contains('hidden')) {
+                        hamburgerButton.click();
+                    }
+                });
+            });
+
+            lightboxClose.addEventListener('click', hideLightbox);
+            lightboxOverlay.addEventListener('click', hideLightbox);
+        });
+    </script>
 </body>
 </html>

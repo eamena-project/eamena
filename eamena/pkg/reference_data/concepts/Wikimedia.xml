@@ -1,6 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<rdf:RDF xmlns:skos="http://www.w3.org/2004/02/skos/core#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:dcterms="http://purl.org/dc/terms/">
-  <skos:ConceptScheme rdf:about="https://database.eamena.org/470882be-9ca4-450a-bf49-f394c75f5d44">
-    <dcterms:title xml:lang="en">{"id": "302e0f09-edc6-4a2f-a466-889ea4dfaae4", "value": "Wikimedia"}</dcterms:title>
-  </skos:ConceptScheme>
-</rdf:RDF>

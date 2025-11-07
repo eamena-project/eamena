@@ -1,0 +1,13 @@
+{% extends "arches_urls.htm" %}
+
+{% load static %}
+{% load l10n %}
+{% load i18n %}
+
+{% block arches_urls %}
+
+<div class="arches-urls" curator="{% url 'curator' %}"></div>
+
+{{ block.super }}
+
+{% endblock arches_urls %}

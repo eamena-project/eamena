@@ -1,5 +1,6 @@
 from arches.app.models import models
 from arches.app.models.concept import Concept, get_preflabel_from_valueid, get_valueids_from_concept_label
+from arches.app.models.system_settings import settings
 
 class SummaryGenerator:
 
@@ -7,6 +8,25 @@ class SummaryGenerator:
 
 		self._properties = []
 		self._cached_summaries = {}
+
+	def missing_fields(self, resourceid):
+		ret = [x for x in settings.MINIMUM_DATA_STANDARD]
+		for x in list(models.TileModel.objects.filter(resourceinstance_id=resourceid).values_list('data')):
+			for y in x:
+				for z in list(y.keys()):
+					zz = str(z)
+					if zz in ret:
+						if not y[zz] is None:
+							ret.remove(zz)
+					if len(ret) == 0:
+						return ret
+		return ret
+
+	def node_name(self, nodeid):
+		try:
+			return models.Node.objects.filter(pk=nodeid).first().name
+		except:
+			return nodeid
 
 	def find_concepts(self, nodeid):
 

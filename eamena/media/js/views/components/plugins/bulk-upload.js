@@ -1,8 +1,12 @@
-define(['jquery', 'knockout', 'arches', 'templates/views/components/plugins/bulk-upload.htm'], function($, ko, arches, defaultReportTemplate) {
+import $ from 'jquery';
+import ko from 'knockout';
+import arches from 'arches';
 
+import BulkUploaderTemplate from 'templates/views/components/plugins/bulk-upload.htm';
 
-	var bulkuploader = {
-		viewModel: function() {
+export default ko.components.register('bulk-upload', {
+
+		viewModel: function(params) {
 
 		    var self = this; console.log(self);
 
@@ -144,7 +148,7 @@ define(['jquery', 'knockout', 'arches', 'templates/views/components/plugins/bulk
 					var c = data.length;
 					for(var i = 0; i < c; i++)
 					{
-						item = data[i];
+						var item = data[i];
 						html = html + '<tr>';
 						html = html + '<td style="padding-right: 1em; vertical-align: top;"><strong>' + item[0] + '</strong></td>';
 						html = html + '<td>';
@@ -176,10 +180,7 @@ define(['jquery', 'knockout', 'arches', 'templates/views/components/plugins/bulk
 
                 });
 
-
 		},
-		template: defaultReportTemplate
-	};
-	return ko.components.register('bulk-upload', bulkuploader);
-});
+		template: BulkUploaderTemplate
 
+});

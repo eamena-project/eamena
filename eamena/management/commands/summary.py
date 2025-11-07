@@ -174,6 +174,7 @@ def get_summaries():
 					item['Role'] = roles[0]
 				else:
 					item['Role'] = roles
+		item['MissingFields'] = [gen.node_name(x) for x in gen.missing_fields(kk)]
 		ret[kk] = item
 	return ret
 

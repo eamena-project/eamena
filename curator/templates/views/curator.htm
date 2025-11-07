@@ -1,0 +1,102 @@
+{% extends "base-manager.htm" %}
+{% load i18n %}
+{% load static %}
+
+{% block title %} {{ block.super }} {{ plugin.name }} {% endblock title %}
+
+{% block main_content %}
+
+<div class="content-panel" style="max-width: 80em !important;">
+	<div class="flex plugin-main">
+		<div class="scroll-y">
+			<div id="page-content" style="width: 100% !important;">
+
+{% if dataset.saved %}
+
+<div class="table-responsive" style="max-width: 90%;">
+<table class="table">
+	<tr>
+		<td><strong>Title:</strong>&nbsp;</td>
+		<td>{{ dataset.search_label }}</td>
+	</tr>
+{% if dataset.zenodo_doi %}
+	<tr>
+		<td><strong>DOI:</strong>&nbsp;</td>
+		<td><a href="{{ dataset.zenodo_doi }}">{{ dataset.zenodo_doi|truncatechars:80 }}</a></td>
+	</tr>
+{% endif %}
+{% if dataset.ipfs_cid %}
+	<tr>
+		<td><strong>CID:</strong>&nbsp;</td>
+		<td><a href="{{ dataset.ipfs_url }}">{{ dataset.ipfs_cid }}</a></td>
+	</tr>
+{% endif %}
+	<tr>
+		<td><strong>URL:</strong>&nbsp;</td>
+		<td><a href="{{ dataset.search_url }}">{{ dataset.search_url|truncatechars:80 }}</a></td>
+	</tr>
+	<tr>
+		<td><strong>Results:</strong>&nbsp;</td>
+		<td>{{ dataset.search_results_count }}</td>
+	</tr>
+	<tr>
+		<td></td>
+		<td>
+			<table><!--// Doing HTML like it's 1997 //-->
+			{% if 'ipfs' in exports_enabled %}<td><form id="search_ipfs_form" action="./{{ dataset.pk }}/ipfs" method="POST" style="position: relative;"><input type="submit" class="btn btn-primary" value="Add to IPFS">{% csrf_token %}</form></td><td>&nbsp;</td>{% endif %}
+			{% if 'zenodo' in exports_enabled %}<td><form id="search_zenodo_form" action="./{{ dataset.pk }}/zenodo" method="POST" style="position: relative;"><input type="submit" class="btn btn-primary" value="Upload to Zenodo">{% csrf_token %}</form></td><td>&nbsp;</td>{% endif %}
+			</table>
+		</td>
+	</tr>
+</table>
+</div>
+
+<div class="table-responsive" style="max-width: 90%;">
+<table class="table table-condensed">
+
+	<tr>
+{% for header in dataset.table_headers %}
+		<th><nobr>{{ header|truncatechars:20 }}</nobr></th>
+{% endfor %}
+	</tr>
+{% for row in dataset.table_data %}
+	<tr>
+{% for item in row %}
+		<td><nobr>{{ item|truncatechars:20 }}</nobr></td>
+{% endfor %}
+	</tr>
+{% endfor %}
+
+</table>
+</div>
+
+{% else %}
+
+<form id="search_name_form" action="" method="POST" style="width: 100%;">
+
+<p>Enter a descriptive name for the dataset returned by this search.</p>
+
+<label>Dataset name: <input type="text" name="datasetname" class="form-control"/></label>
+
+<input type="submit" class="btn btn-success" value="Save">{% csrf_token %}
+<a class="btn btn-danger" href="{{ dataset.search_url }}">Cancel</a>
+
+</form>
+
+{% endif %}
+
+			</div>
+		</div>
+	</div>
+</div>
+
+{% endblock main_content %}
+
+{% block pre_require_js %}
+{{block.super}}
+    <div
+        id="pluginData"
+        style="display: none;"
+        pluginData='{{ plugin_json }}'
+    ></div>
+{% endblock pre_require_js %}
