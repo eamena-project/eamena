@@ -1,0 +1,36 @@
+from eamena.zenodo import zip_callback
+
+# Bulk Uploader settings
+BULK_UPLOAD_TEMPLATE_DIR = ''
+BULK_UPLOAD_DIR = ''
+
+# Fields required for EAMENA's minimum data standard (MDS)
+MINIMUM_DATA_STANDARD = ["34cfea4d-c2c0-11ea-9026-02e7594ce0a0", "34cfea81-c2c0-11ea-9026-02e7594ce0a0", "34cfea8a-c2c0-11ea-9026-02e7594ce0a0", "bcd3a8ae-0404-11eb-a11c-0a5a9a4f6ef7", "d2e1ab96-cc05-11ea-a292-02e7594ce0a0", "34cfea4a-c2c0-11ea-9026-02e7594ce0a0", "34cfea7d-c2c0-11ea-9026-02e7594ce0a0", "5348cf67-c2c5-11ea-9026-02e7594ce0a0", "5348cf6b-c2c5-11ea-9026-02e7594ce0a0", "34cfea43-c2c0-11ea-9026-02e7594ce0a0", "34cfea5d-c2c0-11ea-9026-02e7594ce0a0"]
+
+# Zenodo settings, necessary for the citation generator
+## EAMENA Zenodo sandbox
+ZENODO_ACCESS_TOKEN = ''
+ZENODO_URL = 'https://zenodo.org/api/deposit/depositions'
+ZENODO_METADATA = {
+	'metadata': {
+		'upload_type': 'dataset',
+		'license': 'cc-by',
+		'subjects': [{"term": "Cultural property", "identifier": "https://id.loc.gov/authorities/subjects/sh97000183.html", "scheme": "url"}],
+		'method': 'EAMENA data entry methodology',
+		'creators': [{'name': "EAMENA database",
+		'affiliation': "University of Oxford, University of Southampton"}]
+	},
+	'keywords': {
+		'static': ['EAMENA', 'MaREA', 'Cultural Heritage'],
+		'fields': ["Country Type", "Cultural Period Type"]
+	},
+	'contributors': {
+		'fields': ['Assessment Investigator - Actor', 'Disturbance Cause Assignment Assessor Name - Actor', 'Date Inference Making Actor Name'],
+		'layout': {"name": None, "type": "DataCollector"},
+		'default': [{'name': "University of Oxford", "type": "DataManager"},{'name': "University of Southampton", "type": "DataManager"}]
+	},
+	'dates': {
+		'fields': ["Assessment Activity Date"]
+	}
+}
+CURATOR_CALLBACK = zip_callback
