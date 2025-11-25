@@ -646,6 +646,10 @@ class HeritagePlaceBulkUploadSheet(BulkUploadSheet):
 
 		if len(activity) > 0:
 			activity_data.append(activity)
+			if not 'ASSESSMENT_ACTIVITY_TYPE' in activity:
+				self.error(uniqueid, "Missing activity type", "Every assessment activity must have an activity type.")
+			if not 'ASSESSMENT_ACTIVITY_DATE' in activity:
+				self.error(uniqueid, "Missing activity date", "Every assessment activity must have an activity date.")
 
 		return activity_data
 
