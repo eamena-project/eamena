@@ -189,6 +189,15 @@ class HeritagePlaceBulkUploadSheet(BulkUploadSheet):
 				for i in range(0, len(sf_int_num)):
 					sf["SITE_FEATURE_INTERPRETATION"].append({"SITE_FEATURE_INTERPRETATION_TYPE": sf_int_type[i], "SITE_FEATURE_INTERPRETATION_NUMBER": sf_int_num[i], "SITE_FEATURE_INTERPRETATION_CERTAINTY": sf_int_cert[i]})
 
+			for check_item in sf["SITE_FEATURE_INTERPRETATION"]:
+				check_values = []
+				for k, v in check_item.items():
+					if v.strip() == '':
+						continue
+					check_values.append(k)
+				if len(check_values) < 3:
+					self.error(uniqueid, "Missing required fields", "Found: " + ', '.join(check_values) + "; expecting SITE_FEATURE_INTERPRETATION_TYPE, SITE_FEATURE_INTERPRETATION_NUMBER, SITE_FEATURE_INTERPRETATION_CERTAINTY")
+
 			sff_type = item["SITE_FEATURE_FORM_TYPE"].split('|')
 			sff_cert = item["SITE_FEATURE_FORM_TYPE_CERTAINTY"].split('|')
 			sff_shape = item["SITE_FEATURE_SHAPE_TYPE"].split('|')
