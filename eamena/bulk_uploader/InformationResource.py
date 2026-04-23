@@ -37,6 +37,22 @@ class InformationResource():
     def url(self):
         return "https://doi.org/" + self.doi
 
+    def __make_i18n_string(self, text):
+        return {'en': {'direction': 'ltr', 'value': text}}
+    
+    def __make_date_string(self, data):
+        if isinstance(data, str):
+            return data
+        if not isinstance(data, list):
+            return ''
+        if len(data) == 1:
+            return self.__make_date_string(data[0])
+        if len(data) == 2:
+            return ('0000' + data[0])[-4:] + ('00' + data[1])[-2:]
+        if len(data) == 3:
+            return ('0000' + data[0])[-4:] + ('00' + data[1])[-2:] + ('00' + data[2])[-2:]
+        return ''
+
     def create_tile(self, nodegroup_id, parent_id=None, data={}):
         tile_id = str(uuid.uuid4())
         tile_data = {}
@@ -60,34 +76,28 @@ class InformationResource():
             if self.info['type'] in self.crossref_type_map:
                 type_root = self.create_tile("54c62e2e-524f-11ea-a3f7-02e7594ce0a0", data={"0800e7a9-5250-11ea-a3f7-02e7594ce0a0": self.crossref_type_map[self.info['type']]})
         url_data = {
-                     "7f41dcde-518c-11ea-a3f7-02e7594ce0a0" : {
-                        "en" : {
-                           "direction" : "ltr",
-                           "value" : self.url
-                        }
-                     },
+                     "7f41dcde-518c-11ea-a3f7-02e7594ce0a0" : self.__make_i18n_string(self.url),
                      "d25a68cc-5228-11ea-a3f7-02e7594ce0a0" : datetime.datetime.now().strftime("%Y-%m-%d")
                   }
         url_root = self.create_tile("7f41dcde-518c-11ea-a3f7-02e7594ce0a0", data=url_data)
         for k, v in self.info.items():
             if k in self.crossref_bib_map:
                 rel = self.crossref_bib_map[k]
-                if 'date-parts' in v:
-                    v = '-'.join([str(x) for x in v['date-parts'][0]])
+                if 'title' in k:
+                    if isinstance(v, list):
+                        v = ', '.join(v)
+                if isinstance(v, str):
+                    v =self.__make_i18n_string(v)
+                if isinstance(v, dict):
+                    if 'date-parts' in v:
+                        v = self.__make_date_string(v)
                 self.create_tile(rel[0], parent_id=bib_root, data={rel[1]: v})
 
     def dump_json(self):
 
-        if len(self.tiles) == 0:
-            self.generate_tiles()
-        item = {}
-        item['resourceinstance'] = {
-            "resourceinstanceid" : self.resid, "graph_id" : self.graphid, "legacyid" : self.resid}
-        item['tiles'] = self.tiles
-
         business_data = {"resources": []}
-        business_data['resources'].append(item)
-        return json.dumps({"business_data": business_data})
+        business_data['resources'].append(self.dump_jsonl())
+        return {"business_data": business_data}
 
     def dump_jsonl(self):
 
@@ -98,4 +108,4 @@ class InformationResource():
             "resourceinstanceid" : self.resid, "graph_id" : self.graphid, "legacyid" : self.resid}
         item['tiles'] = self.tiles
 
-        return json.dumps(item)
+        return item
