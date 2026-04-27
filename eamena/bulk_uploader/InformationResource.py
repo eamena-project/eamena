@@ -1,6 +1,7 @@
 from crossref.restful import Works
 from urllib.parse import urlsplit
-import json, uuid, datetime
+import json, uuid, datetime, tempfile
+from arches.app.utils.data_management.resources.importer import BusinessDataImporter
 
 class InformationResource():
 
@@ -36,6 +37,17 @@ class InformationResource():
     @property
     def url(self):
         return "https://doi.org/" + self.doi
+    
+    @property
+    def valid(self):
+        try:
+            if len(self.tiles) == 0:
+                self.generate_tiles()
+        except:
+            return False
+        if len(self.tiles) == 0:
+            return False
+        return True
 
     def __make_i18n_string(self, text):
         return {'en': {'direction': 'ltr', 'value': text}}
@@ -109,3 +121,14 @@ class InformationResource():
         item['tiles'] = self.tiles
 
         return item
+    
+    def import_data(self):
+        if len(self.tiles) == 0:
+            self.generate_tiles()
+        with tempfile.NamedTemporaryFile(suffix='.jsonl') as tf:
+            tf.write(json.dumps(self.dump_jsonl()).encode('utf-8'))
+            tf.flush()
+            print(tf.name)
+            importer = BusinessDataImporter(tf.name, '')
+            importer.import_business_data(overwrite='overwrite', bulk=True)
+        return self.resid
