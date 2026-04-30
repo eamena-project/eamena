@@ -2,6 +2,7 @@ from crossref.restful import Works
 from urllib.parse import urlsplit
 import json, uuid, datetime, tempfile
 from arches.app.utils.data_management.resources.importer import BusinessDataImporter
+from django.core.cache import cache
 
 class InformationResource():
 
@@ -10,8 +11,11 @@ class InformationResource():
         if '://' in doi:
             u = urlsplit(doi)
             self.doi = str(u.path).lstrip('/')
-        works = Works()
-        self.info = works.doi(self.doi)
+        self.info = cache.get(self.doi, [])
+        if len(self.info) == 0:
+            works = Works()
+            self.info = works.doi(self.doi)
+            cache.set(self.doi, self.info)
         self.resid = legacy_uuid
         self.graphid = '35b99cb7-379a-11ea-9989-06f597a7d5ce'
         if legacy_uuid is None:
