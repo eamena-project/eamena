@@ -205,7 +205,26 @@ class HeritagePlaceBulkUploadSheet(BulkUploadSheet):
 			sff_num = item["SITE_FEATURE_NUMBER_TYPE"].split('|')
 			if ((len(sff_type) == len(sff_cert)) & (len(sff_cert) == len(sff_shape)) & (len(sff_shape) == len(sff_arr)) & (len(sff_arr) == len(sff_num)) & (len(sff_num) > 0)):
 				for i in range(0, len(sff_num)):
-					sf["SITE_FEATURE_FORM"].append({"SITE_FEATURE_FORM_TYPE": sff_type[i], "SITE_FEATURE_FORM_TYPE_CERTAINTY": sff_cert[i], "SITE_FEATURE_SHAPE_TYPE": [{"SITE_FEATURE_SHAPE_TYPE": sff_shape[i]}], "SITE_FEATURE_ARRANGEMENT_TYPE": [{"SITE_FEATURE_ARRANGEMENT_TYPE": sff_arr[i]}], "SITE_FEATURE_NUMBER_TYPE": [{"SITE_FEATURE_NUMBER_TYPE": sff_num[i]}]})
+					ct = len((sff_type[i] + sff_cert[i] + sff_shape[i] + sff_arr[i] + sff_num[i]).replace(' ', ''))
+					if ct == 0:
+						continue
+					if len(sff_type[i].strip()) == 0:
+						self.error(uniqueid, "Missing required fields", "Site Feature Form Type is missing")
+					if len(sff_cert[i].strip()) == 0:
+						self.error(uniqueid, "Missing required fields", "Site Feature Form Type Certainty is missing")
+					if len(sff_shape[i].strip()) == 0:
+						self.error(uniqueid, "Missing required fields", "Site Feature Shape Type is missing")
+					if len(sff_arr[i].strip()) == 0:
+						self.error(uniqueid, "Missing required fields", "Site Feature Arrangement Type is missing")
+					if len(sff_num[i].strip()) == 0:
+						self.error(uniqueid, "Missing required fields", "Site Feature Number Type is missing")
+					sf["SITE_FEATURE_FORM"].append({
+						"SITE_FEATURE_FORM_TYPE": sff_type[i], 
+						"SITE_FEATURE_FORM_TYPE_CERTAINTY": sff_cert[i], 
+						"SITE_FEATURE_SHAPE_TYPE": [{"SITE_FEATURE_SHAPE_TYPE": sff_shape[i]}], 
+						"SITE_FEATURE_ARRANGEMENT_TYPE": [{"SITE_FEATURE_ARRANGEMENT_TYPE": sff_arr[i]}], 
+						"SITE_FEATURE_NUMBER_TYPE": [{"SITE_FEATURE_NUMBER_TYPE": sff_num[i]}]
+					})
 
 			if not((len(sf["BUILT_COMPONENT_RELATED_RESOURCE"]) == 0) & (len(sf["SITE_FEATURE_FORM"]) == 0) & (len(sf["HP_RELATED_RESOURCE"]) == 0) & (len(sf["SITE_FEATURE_INTERPRETATION"]) == 0)):
 				site_features.append(sf)

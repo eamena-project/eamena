@@ -8,7 +8,7 @@ from arches.app.models.concept import Concept, get_preflabel_from_valueid, get_v
 from arches.app.views import search
 from django.core.management.base import BaseCommand
 from django.contrib.gis.geos.error import GEOSException
-from eamena.bulk_uploader import HeritagePlaceBulkUploadSheet, GridSquareBulkUploadSheet
+from eamena.bulk_uploader import HeritagePlaceBulkUploadSheet, GridSquareBulkUploadSheet, InformationResource
 from elasticsearch import Elasticsearch
 from elasticsearch.exceptions import RequestError, NotFoundError
 from geomet import wkt
@@ -56,6 +56,7 @@ class Command(BaseCommand):
 		super(Command, self).__init__(*args, **kwargs)
 		self.__idcache = {}
 		self.__graphcache = {}
+		self.prepend_records = []
 
 	def __create_res(self, graphid, legacy_id=''):
 
@@ -227,7 +228,10 @@ class Command(BaseCommand):
 									for target_graph in target_graphs:
 										ri = self.__resourceinstance_from_eamenaid(tile['data'][key], target_graph['graphid'])
 										if not(ri is None):
-											id = str(ri.resourceinstanceid)
+											if isinstance(ri, str):
+												id = ri
+											else:
+												id = str(ri.resourceinstanceid)
 											tile['data'][key] = [{
 												"ontologyProperty": target_graph['ontologyProperty'],
 												"inverseOntologyProperty": target_graph['inverseOntologyProperty'],
@@ -368,6 +372,12 @@ class Command(BaseCommand):
 		if key in self.__idcache:
 			return self.__idcache[key]
 		ret = self.__resourceinstance_from_eamenaid_es(eamenaid, graphid)
+		if ret is None:
+			if '/' in eamenaid:
+				ir = InformationResource(eamenaid)
+				if ir.valid:
+					self.prepend_records.append(ir.dump_jsonl())
+					ret = ir.resid
 		if not(ret is None):
 			self.__idcache[key] = ret
 			return ret
@@ -1001,7 +1011,7 @@ class Command(BaseCommand):
 				if self.__check_translated_data(translated_data):
 					resources = self.__convert_translated_data(translated_data, options)
 					mapped_resources = self.__map_resources(resources, options)
-					business_data = {"resources": mapped_resources}
+					business_data = {"resources": (self.prepend_records + mapped_resources)}
 					data = {"business_data": business_data}
 
 			if model_name == 'Grid Square':
