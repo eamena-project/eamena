@@ -182,6 +182,7 @@ LANGUAGES = [
     ('en', _('English')),
 #   ('en-gb', _('British English')),
 #   ('es', _('Spanish')),
+#   ('ar', _('Arabic')),
 ]
 
 # override this to permenantly display/hide the language switcher
