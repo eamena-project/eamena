@@ -1,19 +1,7 @@
 {% comment %}
-ARCHES - a program developed to inventory and manage immovable cultural heritage.
-Copyright (C) 2013 J. Paul Getty Trust and World Monuments Fund
-
-FINAL FIX v9: This version fixes the carousel transition to create a smooth
-cross-fade effect, removing the black screen that appeared between slides.
-
-This homepage template is designed to showcase the EAMENA Database v5, featuring a carousel of images.
-It is redesigned by EAMENA's researcher and database manager Salah Ebrahimipour in June 2025, with the aim of providing
-a visually appealing and informative introduction to the EAMENA project.
-It includes a responsive navbar, a carousel with image captions and attributions, and a footer with
-links to the EAMENA and MarEA projects, as well as information about the supporting organizations
-and their licenses.
-This template is intended to be used as the landing page for the EAMENA Database v4
-and is built using Bootstrap 5 for styling and responsiveness.
-
+EAMENA Database v5 - Redesigned Homepage
+Redesigned by: Enhanced UI/UX version with modern navigation, carousel dot indicators,
+and full-screen animated menu overlay with flat icons.
 {% endcomment %}
 
 {% load static %}
@@ -25,413 +13,1151 @@ and is built using Bootstrap 5 for styling and responsiveness.
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{{ app_title }}</title>
-    
     <link rel="shortcut icon" href="{% static 'img/favicon.png' %}" />
 
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
-    
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
 
     <style>
-        body {
-            font-family: 'Open Sans', sans-serif;
-            background-color: #000;
-        }
-        
-        /* Animated Downtime Alert */
-        .upgrade-alert {
-            background-color: #c82333;
-D            color: white;
-            font-size: 20px;
-            margin-bottom: 0;
-            border-radius: 0;
-            border: none;
-            max-height: 0;
-            padding-top: 0;
-            padding-bottom: 0;
-            opacity: 0;
-            overflow: hidden;
-            transition: all 0.1s cubic-bezier(0.68, -0.55, 0.27, 1.55);
+        /* ─── RESET & BASE ─── */
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+        :root {
+            --clr-bg:        #0b0c1a;
+            --clr-ink:       #1a0632;
+            --clr-accent:    #6c5ce7;
+            --clr-accent2:   #00cec9;
+            --clr-gold:      #fdcb6e;
+            --clr-white:     #ffffff;
+            --clr-glass:     rgba(11,12,26,.55);
+            --clr-glass-hv:  rgba(11,12,26,.80);
+            --font-display:  'Playfair Display', Georgia, serif;
+            --font-body:     'Inter', system-ui, sans-serif;
+            --ease-out:      cubic-bezier(.16,1,.3,1);
+            --radius-pill:   50px;
+            --radius-card:   16px;
         }
 
-        .upgrade-alert.show {
-            /* Animation: Final State (visible) */
-            max-height: 150px;
-            padding-top: 15px;
-            padding-bottom: 15px;
-            opacity: 1;
+        body {
+            font-family: var(--font-body);
+            background: var(--clr-bg);
+            color: var(--clr-white);
+            overflow-x: hidden;
         }
-        
-        .site-wrapper {
+
+        /* ─── FULL-SCREEN HERO ─── */
+        .hero {
             position: relative;
             height: 100vh;
-            min-height: 750px;
+            min-height: 700px;
             overflow: hidden;
         }
-        /* --- Carousel Customization --- */
-        .carousel, .carousel-inner, .carousel-item { height: 100%; }
-        .carousel-item {
-            background-size: cover;
-            background-position: center center;
-            transition: opacity 0.5s ease;
-        }
-        
-        /* FIX FOR CROSS-FADE: This ensures the outgoing slide doesn't disappear before the new one appears */
-        .carousel-fade .active.carousel-item-start,
-        .carousel-fade .active.carousel-item-end {
-            opacity: 1;
-        }
 
-        .carousel-item::before {
-            content: '';
+        /* ─── CAROUSEL ─── */
+        .carousel-track {
             position: absolute;
-            top: 0; right: 0; bottom: 0; left: 0;
-            background: linear-gradient(to top, rgba(0, 0, 0, 0.7) 0%, rgba(0, 0, 0, 0.4) 50%, rgba(0, 0, 0, 0.1) 100%);
+            inset: 0;
+        }
+        .carousel-slide {
+            position: absolute;
+            inset: 0;
+            background-size: cover;
+            background-position: center;
+            opacity: 0;
+            transition: opacity 1s ease;
+            z-index: 0;
+        }
+        .carousel-slide.active {
+            opacity: 1;
             z-index: 1;
         }
-        
-        .carousel-caption {
-            text-align: left;
-            bottom: 20rem;
-            left: 1%;
-            right: auto;
-            z-index: 2;
-            width: fit-content;
-            padding: 1.5rem;
-            background-color: rgba(26, 6, 50, 0.5);
-            border-radius: 35px;
-            backdrop-filter: blur(5px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-        }
-        .carousel-caption h2 {
-            font-weight: 700;
-            font-size: clamp(1.8rem, 4vw, 2.5rem);
-            text-shadow: none;
-        }
-        .carousel-caption p {
-            font-size: clamp(1rem, 2vw, 1.2rem);
-            text-shadow: none;
-        }
-        .image-attribution {
+        .carousel-slide::after {
+            content: '';
             position: absolute;
-            bottom: 1rem;
-            left: 1.5rem;
-            font-size: 0.8rem;
-            color: rgba(255, 255, 255, 0.7);
-            text-shadow: 1px 1px 2px rgba(0,0,0,0.8);
-            padding: 0.5rem;
-            z-index: 2;
+            inset: 0;
+            background: linear-gradient(
+                135deg,
+                rgba(11,12,26,.75) 0%,
+                rgba(11,12,26,.35) 50%,
+                rgba(11,12,26,.55) 100%
+            );
         }
 
-        /* --- NAVBAR STYLING --- */
+        /* ─── LEFT-SIDE DOT INDICATORS ─── */
+        .carousel-dots {
+            position: absolute;
+            left: 2rem;
+            top: 50%;
+            transform: translateY(-50%);
+            z-index: 20;
+            display: flex;
+            flex-direction: column;
+            gap: .9rem;
+            align-items: center;
+        }
+        .carousel-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: rgba(255,255,255,.3);
+            border: 2px solid rgba(255,255,255,.5);
+            cursor: pointer;
+            transition: all .35s var(--ease-out);
+            position: relative;
+        }
+        .carousel-dot::after {
+            content: '';
+            position: absolute;
+            inset: -5px;
+            border-radius: 50%;
+            border: 1.5px solid transparent;
+            transition: border-color .35s;
+        }
+        .carousel-dot:hover {
+            background: rgba(255,255,255,.6);
+            transform: scale(1.2);
+        }
+        .carousel-dot.active {
+            background: var(--clr-accent);
+            border-color: var(--clr-accent);
+            transform: scale(1.3);
+            box-shadow: 0 0 0 4px rgba(108,92,231,.3);
+        }
+        .carousel-dot.active::after {
+            border-color: rgba(108,92,231,.4);
+        }
+
+        /* Dot progress bar */
+        .carousel-dot-line {
+            width: 2px;
+            height: 24px;
+            background: rgba(255,255,255,.15);
+            border-radius: 2px;
+            overflow: hidden;
+        }
+        .carousel-dot-line:last-child { display: none; }
+        .carousel-dot-fill {
+            width: 100%;
+            height: 0%;
+            background: var(--clr-accent2);
+            transition: height .5s ease;
+        }
+
+        /* ─── HERO CAPTION ─── */
+        .hero-caption {
+            position: absolute;
+            bottom: 6rem;
+            left: 5rem;
+            z-index: 10;
+            max-width: 560px;
+        }
+        .hero-caption .eyebrow {
+            display: inline-flex;
+            align-items: center;
+            gap: .5rem;
+            font-size: .75rem;
+            font-weight: 600;
+            letter-spacing: .15em;
+            text-transform: uppercase;
+            color: var(--clr-accent2);
+            margin-bottom: .8rem;
+            opacity: 0;
+            transform: translateY(12px);
+            transition: opacity .6s .1s ease, transform .6s .1s ease;
+        }
+        .hero-caption .eyebrow .dot { width: 6px; height: 6px; border-radius: 50%; background: var(--clr-accent2); }
+        .hero-caption h1 {
+            font-family: var(--font-display);
+            font-size: clamp(2rem, 4.5vw, 3.2rem);
+            line-height: 1.15;
+            margin-bottom: .9rem;
+            opacity: 0;
+            transform: translateY(16px);
+            transition: opacity .7s .2s ease, transform .7s .2s ease;
+        }
+        .hero-caption p {
+            font-size: clamp(.9rem, 1.6vw, 1.05rem);
+            color: rgba(255,255,255,.75);
+            line-height: 1.65;
+            opacity: 0;
+            transform: translateY(16px);
+            transition: opacity .7s .35s ease, transform .7s .35s ease;
+        }
+        .carousel-slide.active ~ * .hero-caption .eyebrow,
+        .hero-caption.visible .eyebrow,
+        .hero-caption.visible h1,
+        .hero-caption.visible p {
+            opacity: 1;
+            transform: none;
+        }
+
+        /* slide-specific caption shown via JS */
+        .slide-caption { display: none; }
+        .slide-caption.active { display: block; }
+
+        /* Photo attribution */
+        .photo-credit {
+            position: absolute;
+            bottom: 1.2rem;
+            right: 1.5rem;
+            z-index: 10;
+            font-size: .72rem;
+            color: rgba(255,255,255,.55);
+            text-align: right;
+            max-width: 340px;
+            line-height: 1.4;
+            transition: color .3s;
+        }
+
+        /* Slide counter */
+        .slide-counter {
+            position: absolute;
+            bottom: 1.4rem;
+            left: 5rem;
+            z-index: 10;
+            font-size: .75rem;
+            font-weight: 600;
+            color: rgba(255,255,255,.45);
+            letter-spacing: .1em;
+        }
+        .slide-counter span { color: var(--clr-white); font-size: 1rem; font-weight: 700; }
+
+        /* ─── NAVBAR ─── */
         .navbar {
             position: absolute;
-            top: 0; left: 0; width: 100%;
-            z-index: 10;
-            padding: 1rem 0;
-            background: linear-gradient(to bottom, rgba(26, 6, 50, 0.478), transparent);
-        }
-        .navbar-brand-logos img {
-            max-height: 57px;
-            width: auto;
-            margin-right: 1.5rem;
-            vertical-align: middle;
-        }
-        
-        .navbar-nav-right {
-            background-color: rgba(26, 6, 50, 0.75);
-            backdrop-filter: blur(8px);
-            font-size: larger;
-            font-weight: 500;
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            border-radius: 0 0 35px 35px;
-            padding: 0.75rem 1.5rem;
-            text-align: right;
-            margin-top: -1.2rem;
-        }
-        .navbar-nav-right a {
-            color: #fff !important;
-            font-size: 0.8rem;
-            font-weight: 500;
-            text-decoration: none;
-            padding: 0.2rem 0.4rem;
-        }
-        .navbar-nav-right a:hover {color: #0af129 !important; font-weight: 500;}
-}
-        .navbar-nav-right .nav-top-tier { margin-bottom: 0.5rem; margin-right: 0.4rem;}
-        .navbar-nav-right .nav-bottom-tier a { margin-left: 0.2rem; margin-right: 0.2rem;}
-        
-        .navbar-toggler { border: 1px solid rgba(255, 255, 255, 0.5); }
-        .navbar-toggler-icon { background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba%28255, 255, 255, 0.8%29' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e"); }
-        .offcanvas { background-color: rgba(26, 6, 50, 0.870); color: #ecf0f1;}
-        .offcanvas .nav-link { color: #ffffff !important; font-size: 1rem; }
-        .offcanvas .nav-link:hover{ color: #0af129 !important; font-size: 1rem; font-weight: 500; }
-        .offcanvas .btn-close {filter: invert(1);} /* Makes the close button white */
-        
-        
-        /* --- FOOTER STYLING --- */
-        .app-footer {
-            background-color: rgba(26, 6, 50, 0.602);
-            color: #ccc;
-            padding: 3rem 1rem;
-        }
-        .app-footer h3 {
-            color: #fff;
-            font-size: 1.1rem;
-            margin-bottom: 1.5rem;
-            border-left: 3px solid #0d6efd;
-            padding-left: 1rem;
-        }
-        .app-footer a { color: #ccc; text-decoration: none; }
-        .app-footer a:hover { color: #0af129; }
-        .app-footer .organization-address { list-style: none; padding: 0; }
-        .app-footer .organization-address li { margin-bottom: 0.75rem; }
-        
-        .copyright-container {
-            background-color: #12122d;
-            padding: 1rem 0;
-            font-size: 0.8rem;
-        }
-        .copyright-container a { color: #aaa; margin: 0 0.75rem; text-decoration: none; }
-        .copyright-container a:hover { color: #fff; }
-        .copyright-logos img {
-            height: 20px;
-            width: auto;
-            margin-left: 1rem;
-            border-radius: 5px;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 50;
+            padding: 1.25rem 2.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: linear-gradient(to bottom, rgba(11,12,26,.8) 0%, transparent 100%);
         }
 
-        /* --- Responsive Adjustments --- */
-        @media (max-width: 1480px) {
-            .carousel-caption {
-                bottom: 10rem;
+        .navbar-brand {
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+        }
+        .navbar-brand img {
+            height: 44px;
+            width: auto;
+            filter: brightness(1.1);
+        }
+        .brand-divider {
+            width: 1px;
+            height: 30px;
+            background: rgba(255,255,255,.2);
+        }
+
+        /* Quick-access pill (desktop) */
+        .nav-actions {
+            display: flex;
+            align-items: center;
+            gap: .75rem;
+        }
+        .nav-pill {
+            display: inline-flex;
+            align-items: center;
+            gap: .45rem;
+            padding: .45rem 1rem;
+            border-radius: var(--radius-pill);
+            font-size: .8rem;
+            font-weight: 500;
+            text-decoration: none;
+            transition: all .25s;
+            white-space: nowrap;
+        }
+        .nav-pill-ghost {
+            color: rgba(255,255,255,.85);
+            border: 1px solid rgba(255,255,255,.2);
+            background: rgba(255,255,255,.05);
+        }
+        .nav-pill-ghost:hover {
+            background: rgba(255,255,255,.12);
+            color: var(--clr-white);
+            border-color: rgba(255,255,255,.4);
+        }
+        .nav-pill-primary {
+            color: var(--clr-white);
+            background: var(--clr-accent);
+            border: 1px solid transparent;
+        }
+        .nav-pill-primary:hover {
+            background: #7d6ff0;
+            color: var(--clr-white);
+            transform: translateY(-1px);
+            box-shadow: 0 4px 20px rgba(108,92,231,.4);
+        }
+
+        /* Hamburger menu button */
+        .menu-btn {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            width: 44px;
+            height: 44px;
+            background: rgba(255,255,255,.08);
+            border: 1px solid rgba(255,255,255,.18);
+            border-radius: 12px;
+            cursor: pointer;
+            gap: 5px;
+            transition: background .25s, border-color .25s;
+            flex-shrink: 0;
+        }
+        .menu-btn:hover {
+            background: rgba(255,255,255,.15);
+            border-color: rgba(255,255,255,.35);
+        }
+        .menu-btn span {
+            display: block;
+            width: 20px;
+            height: 2px;
+            background: var(--clr-white);
+            border-radius: 2px;
+            transition: transform .4s var(--ease-out), opacity .3s, width .3s;
+            transform-origin: center;
+        }
+        .menu-btn.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+        .menu-btn.open span:nth-child(2) { opacity: 0; width: 0; }
+        .menu-btn.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+        /* ─── FULL-SCREEN MENU OVERLAY ─── */
+        .menu-overlay {
+            position: fixed;
+            inset: 0;
+            z-index: 200;
+            background: linear-gradient(135deg, var(--clr-ink) 0%, #0d1b3e 100%);
+            display: flex;
+            flex-direction: column;
+            pointer-events: none;
+            clip-path: circle(0% at calc(100% - 3.5rem) 3.5rem);
+            transition: clip-path .7s var(--ease-out);
+        }
+        .menu-overlay.open {
+            clip-path: circle(160% at calc(100% - 3.5rem) 3.5rem);
+            pointer-events: all;
+            overflow-y: auto;
+            -webkit-overflow-scrolling: touch;
+        }
+
+        /* Overlay decorative blobs */
+        .menu-overlay::before {
+            content: '';
+            position: absolute;
+            top: -200px;
+            right: -200px;
+            width: 600px;
+            height: 600px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(108,92,231,.18) 0%, transparent 70%);
+            pointer-events: none;
+        }
+        .menu-overlay::after {
+            content: '';
+            position: absolute;
+            bottom: -150px;
+            left: -100px;
+            width: 400px;
+            height: 400px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(0,206,201,.12) 0%, transparent 70%);
+            pointer-events: none;
+        }
+
+        /* Close button inside overlay */
+        .overlay-close {
+            position: absolute;
+            top: 1.5rem;
+            right: 2rem;
+            width: 44px;
+            height: 44px;
+            background: rgba(255,255,255,.08);
+            border: 1px solid rgba(255,255,255,.18);
+            border-radius: 12px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--clr-white);
+            font-size: 1.25rem;
+            transition: background .25s;
+            z-index: 10;
+        }
+        .overlay-close:hover { background: rgba(255,255,255,.15); }
+
+        /* Overlay inner layout */
+        .overlay-inner {
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+            padding: 5rem 3rem 3rem;
+            position: relative;
+            z-index: 5;
+        }
+
+        /* Profile section */
+        .overlay-profile {
+            display: flex;
+            align-items: center;
+            gap: 1.25rem;
+            margin-bottom: 2.5rem;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity .5s .2s ease, transform .5s .2s ease;
+        }
+        .menu-overlay.open .overlay-profile {
+            opacity: 1;
+            transform: none;
+        }
+        .profile-avatar {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--clr-accent), var(--clr-accent2));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            font-weight: 700;
+            flex-shrink: 0;
+            border: 2px solid rgba(255,255,255,.15);
+        }
+        .profile-info .name {
+            font-weight: 700;
+            font-size: 1.15rem;
+        }
+        .profile-info .role {
+            font-size: .8rem;
+            color: var(--clr-accent2);
+            font-weight: 500;
+            letter-spacing: .05em;
+            text-transform: uppercase;
+        }
+
+        .overlay-divider {
+            height: 1px;
+            background: rgba(255,255,255,.1);
+            margin-bottom: 2rem;
+            opacity: 0;
+            transition: opacity .4s .3s ease;
+        }
+        .menu-overlay.open .overlay-divider { opacity: 1; }
+
+        /* Nav items grid */
+        .overlay-nav {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+            flex: 1;
+        }
+        .overlay-nav-item {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 1.1rem 1.4rem;
+            border-radius: var(--radius-card);
+            background: rgba(255,255,255,.04);
+            border: 1px solid rgba(255,255,255,.07);
+            text-decoration: none;
+            color: var(--clr-white);
+            transition: background .25s, border-color .25s, transform .25s;
+            opacity: 0;
+            transform: translateY(24px);
+        }
+        .menu-overlay.open .overlay-nav-item {
+            opacity: 1;
+            transform: none;
+        }
+        /* Staggered delays */
+        .overlay-nav-item:nth-child(1) { transition-delay: .15s; }
+        .overlay-nav-item:nth-child(2) { transition-delay: .2s; }
+        .overlay-nav-item:nth-child(3) { transition-delay: .25s; }
+        .overlay-nav-item:nth-child(4) { transition-delay: .3s; }
+        .overlay-nav-item:nth-child(5) { transition-delay: .35s; }
+        .overlay-nav-item:nth-child(6) { transition-delay: .4s; }
+
+        .overlay-nav-item:hover {
+            background: rgba(108,92,231,.15);
+            border-color: rgba(108,92,231,.35);
+            transform: translateY(-2px);
+        }
+        .overlay-nav-item .item-icon {
+            width: 44px;
+            height: 44px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.25rem;
+            flex-shrink: 0;
+        }
+        .overlay-nav-item .item-text .label {
+            font-weight: 600;
+            font-size: .95rem;
+            display: block;
+        }
+        .overlay-nav-item .item-text .sublabel {
+            font-size: .75rem;
+            color: rgba(255,255,255,.5);
+            display: block;
+            margin-top: .15rem;
+        }
+        .overlay-nav-item .item-arrow {
+            margin-left: auto;
+            color: rgba(255,255,255,.25);
+            font-size: .9rem;
+            transition: transform .25s, color .25s;
+        }
+        .overlay-nav-item:hover .item-arrow {
+            transform: translateX(4px);
+            color: var(--clr-accent);
+        }
+
+        /* Icon color variants */
+        .icon-purple { background: rgba(108,92,231,.18); color: #a29bfe; }
+        .icon-teal   { background: rgba(0,206,201,.15); color: #55efc4; }
+        .icon-gold   { background: rgba(253,203,110,.15); color: var(--clr-gold); }
+        .icon-red    { background: rgba(225,112,85,.15); color: #fab1a0; }
+        .icon-blue   { background: rgba(9,132,227,.15); color: #74b9ff; }
+        .icon-green  { background: rgba(0,184,148,.15); color: #00cec9; }
+
+        /* Bottom links in overlay */
+        .overlay-bottom {
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+            margin-top: 2rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid rgba(255,255,255,.1);
+            opacity: 0;
+            transition: opacity .4s .5s ease;
+        }
+        .menu-overlay.open .overlay-bottom { opacity: 1; }
+        .overlay-bottom a {
+            color: rgba(255,255,255,.45);
+            font-size: .78rem;
+            text-decoration: none;
+            transition: color .25s;
+        }
+        .overlay-bottom a:hover { color: var(--clr-white); }
+
+        /* ─── FOOTER ─── */
+        .site-footer {
+            background: #0d1b3e;
+            padding: 2rem 0 0;
+            border-top: 1px solid rgba(255,255,255,.06);
+        }
+        .footer-grid {
+            display: grid;
+            grid-template-columns: 1.5fr 1fr 1fr 1.5fr;
+            gap: 3rem;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 1rem 2rem;
+        }
+        .footer-col h4 {
+            font-size: .7rem;
+            font-weight: 700;
+            letter-spacing: .12em;
+            text-transform: uppercase;
+            color: var(--clr-accent2);
+            margin-bottom: 1.25rem;
+        }
+        .footer-col p {
+            font-size: .85rem;
+            color: rgba(255,255,255,.45);
+            line-height: 1.7;
+        }
+        .footer-links {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: .6rem;
+        }
+        .footer-links a {
+            font-size: .85rem;
+            color: rgba(255,255,255,.5);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: .5rem;
+            transition: color .25s;
+        }
+        .footer-links a::before {
+            content: '';
+            width: 4px;
+            height: 4px;
+            border-radius: 50%;
+            background: var(--clr-accent);
+            flex-shrink: 0;
+            transition: background .25s;
+        }
+        .footer-links a:hover { color: var(--clr-white); }
+        .footer-links a:hover::before { background: var(--clr-accent2); }
+
+        .footer-bottom {
+            border-top: 1px solid rgba(255,255,255,.06);
+            padding: 1.25rem 2.5rem;
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+        .footer-bottom-links {
+            display: flex;
+            gap: 1.5rem;
+        }
+        .footer-bottom-links a {
+            font-size: .75rem;
+            color: rgba(255,255,255,.3);
+            text-decoration: none;
+            transition: color .25s;
+        }
+        .footer-bottom-links a:hover { color: var(--clr-white); }
+        .footer-logos {
+            display: flex;
+            align-items: center;
+            gap: .75rem;
+        }
+        .footer-logos img {
+            height: 22px;
+            width: auto;
+            border-radius: 4px;
+            opacity: .7;
+            transition: opacity .25s;
+        }
+        .footer-logos img:hover { opacity: 1; }
+
+        /* ─── RESPONSIVE ─── */
+
+        /* Tablet */
+        @media (max-width: 1024px) {
+            .overlay-nav { grid-template-columns: 1fr 1fr; }
+            .nav-actions .nav-pill:not(.nav-pill-primary) { display: none; }
+            .footer-grid { grid-template-columns: 1fr 1fr; }
+        }
+
+        /* Large phone / small tablet */
+        @media (max-width: 768px) {
+            .navbar {
+                padding: .85rem 1rem;
+            }
+            .navbar-brand img { height: 34px; }
+
+            /* Hide all nav pills on mobile — hamburger is the only control */
+            .nav-actions .nav-pill { display: none; }
+            /* Always show the hamburger */
+            .menu-btn { display: flex; }
+
+            .hero-caption {
+                left: 2.8rem;
+                bottom: 5rem;
+                max-width: calc(100% - 3.5rem);
+            }
+            .hero-caption h1 { font-size: clamp(1.5rem, 6vw, 2rem); }
+            .hero-caption p  { font-size: .85rem; }
+
+            .carousel-dots { left: .7rem; gap: .6rem; }
+            .carousel-dot  { width: 8px; height: 8px; }
+            .carousel-dot-line { height: 16px; }
+
+            .slide-counter { left: 2.8rem; }
+
+            .footer-grid { grid-template-columns: 1fr; gap: 2rem; padding: 0 1.25rem 2rem; }
+            .footer-bottom { padding: 1rem 1.25rem; flex-direction: column; text-align: center; }
+
+            /* Overlay: full-screen scroll on mobile */
+            .overlay-inner {
+                padding: 4.5rem 1.25rem 2rem;
+                overflow-y: auto;
+                -webkit-overflow-scrolling: touch;
+            }
+            .overlay-nav { grid-template-columns: 1fr; gap: .75rem; }
+            .overlay-profile { flex-direction: row; text-align: left; margin-bottom: 1.5rem; }
+            .overlay-nav-item { padding: .9rem 1rem; }
+            .overlay-bottom { flex-wrap: wrap; gap: .75rem; margin-top: 1.5rem; }
+        }
+
+        /* small phones (≤430px) */
+        @media (max-width: 430px) {
+            .navbar { padding: .75rem .85rem; }
+            .navbar-brand { gap: .75rem; }
+            .navbar-brand img:last-child { height: 28px; }
+            .brand-divider { display: none; }
+
+            /* Keep primary pill visible as a quick sign-in shortcut */
+            .nav-actions .nav-pill-primary {
+                display: inline-flex;
+                font-size: .72rem;
+                padding: .4rem .75rem;
+            }
+            .menu-btn { width: 38px; height: 38px; }
+
+            .hero-caption {
+                left: 2.5rem;
+                bottom: 4.5rem;
+                max-width: calc(100% - 3rem);
+            }
+            .hero-caption h1 { font-size: 1.4rem; }
+            .hero-caption p  { font-size: .78rem; line-height: 1.5; }
+            .hero-caption .eyebrow { font-size: .65rem; }
+
+            .carousel-dots { left: .5rem; gap: .5rem; }
+            .carousel-dot  { width: 7px; height: 7px; }
+            .carousel-dot-line { height: 12px; }
+
+            .slide-counter { left: 2.5rem; font-size: .68rem; }
+            .photo-credit  { font-size: .65rem; right: .75rem; max-width: 60%; }
+
+            /* Overlay on small phone */
+            .overlay-inner { padding: 4rem 1rem 1.5rem; }
+            .overlay-close { top: 1rem; right: 1rem; }
+            .profile-avatar { width: 48px; height: 48px; font-size: 1.2rem; }
+            .profile-info .name { font-size: 1rem; }
+            .overlay-nav-item .item-icon { width: 38px; height: 38px; font-size: 1.1rem; }
+            .overlay-nav-item .item-text .label   { font-size: .85rem; }
+            .overlay-nav-item .item-text .sublabel { font-size: .7rem; }
+            .overlay-bottom { gap: .6rem; }
+            .overlay-bottom a { font-size: .72rem; }
+        }
+
+        /* Very small screens (≤375px) */
+        @media (max-width: 375px) {
+            .navbar-brand img:first-child { height: 28px; }
+            .hero-caption h1 { font-size: 1.2rem; }
+        }
+
+        /* Ensure menu overlay is always above everything on mobile */
+        @media (max-width: 768px) {
+            .menu-overlay { z-index: 9999; }
+            /* Clip origin: top-right corner where the hamburger sits */
+            .menu-overlay {
+                clip-path: circle(0% at calc(100% - 2.5rem) 2.5rem);
+            }
+            .menu-overlay.open {
+                clip-path: circle(200% at calc(100% - 2.5rem) 2.5rem);
             }
         }
-        @media (max-width: 576px) {
-            .navbar-brand-logos .eamena-main-logo {
-                width: 200px !important;
-                height: auto;
-            }
-            .navbar-brand-logos .marea-logo {
-                width: 110px !important;
-                height: auto;
-            }
+
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after { transition: none !important; animation: none !important; }
+            .menu-overlay { clip-path: none !important; opacity: 0; }
+            .menu-overlay.open { opacity: 1; }
         }
-        /*
-        The hamburger menu's alignment on smaller screens,
-        */
-        @media (max-width: 1399.98px) {
-            
-            .navbar > .container-fluid {
-                flex-wrap: wrap;
-                row-gap: 1rem; 
-            }
-            .navbar-toggler {
-                margin-left: auto;
-            }
-        }
-        
     </style>
 </head>
 <body>
-   <!-- <div id="downtime-alert" class="alert upgrade-alert d-flex justify-content-center align-items-center" role="alert">
-        <i class="bi bi-exclamation-triangle-fill flex-shrink-0 me-3" style="font-size: 1.5rem; color:yellow;"></i>
-        <div>
-            Dear users, Our database will not be available on <b>16th and 17th September 2025</b>, due to some technical arrangements. Thanks for your patience and understanding.
-        </div>
-    </div>-->
 
-    <div class="site-wrapper">
+<!-- ═══════════ HERO ═══════════ -->
+<div class="hero" id="hero">
 
-        <header class="navbar navbar-expand-xxl navbar-dark">
-            <div class="container-fluid px-md-4 px-lg-5 d-flex justify-content-between align-items-center">
-                
-                <div class="navbar-brand-logos">
-                    <a href="https://eamena.org/"><img src="{% static 'img/landing/eamena/eamena_logo_nobackground_lg_update_300dpi.png' %}" alt="EAMENA Logo img-fluid" class="eamena-main-logo" style="max-width: 360px; max-height: 57px;"></a>
-                    <a href="https://marea.soton.ac.uk/"><img src="{% static 'img/landing/eamena/marea-logo_white.png' %}" alt="MarEA Logo" class="marea-logo img-fluid" style="max-width: 203px; max-height: 72px;"></a>
-                </div>
-
-                <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-
-                <div class="d-none d-xxl-block navbar-nav-right">
-                    <div class="nav-top-tier">
-                        {% if user.username == 'anonymous' %}
-                            <a id="auth-link" href="{% url 'auth' %}?next={% url 'home' %}">{% trans "Sign in" %}</a>
-                        {% else %}
-                            <a href="{% url 'user_profile_manager' %}" class="me-3">{% trans "Welcome, " %} {{ user.first_name|default:user.username }}</a>
-                            <a href="{% url 'auth' %}?next={% url 'home' %}&logout=true">{% trans 'Log off' %}</a>
-                        {% endif %}
-                    </div>
-                    <div class="nav-bottom-tier">
-                        <a href="https://eamena.org/database#data-use" target="_blank">{% trans "License and Open Access Policy" %}</a>
-                        {% if user.username != 'anonymous' %}
-                            <a href="{% url 'search_home' %}" target="_blank">{% trans "Search the EAMENA Database" %}</a>
-                        {% else %}
-                            <a href="{% url 'signup' %}">{% trans "Public Access" %}</a>
-                        {% endif %}
-
-                        {% if user|can_create_resource_instance and user.username != 'anonymous' %}
-                            <a href="{% url 'resource' %}" target="_blank">{% trans "Create New Heritage Resources" %}</a>
-                        {% else %}
-                            <a href="http://eamena.web.ox.ac.uk/database-registration-form/">{% trans "Register for Researcher Access" %}</a>
-                        {% endif %}
-                    </div>
-                </div>
-            </div>
-        </header>
-
-        <main id="heroCarousel" class="carousel slide carousel-fade" data-bs-ride="carousel">
-            <div class="carousel-inner">
-                <div class="carousel-item active" data-bs-interval="6000" style="background-image: url({% static 'img/landing/eamena/Sureza_drone_NE.jpg' %});">
-                    <div class="carousel-caption">
-                        <h2>{% trans "EAMENA Database v5" %}</h2>
-                        <p>{% trans " Endangered Archaeology in" %} {% trans " The Middle East & North Africa" %}</p>
-                    </div>
-                    <p class="image-attribution">{% trans "Tell Surezha (Kurdistan Regional Government, Iraq) © University of Chicago/Harvard University" %}</p>
-                </div>
-                <div class="carousel-item" data-bs-interval="6000" style="background-image: url({% static 'img/landing/eamena/Sidon, Lebanon by Crystal Safadi.JPG' %});">
-                    <p class="image-attribution">{% trans "Sidon, Lebanon © Crystal el-Safadi" %}</p>
-                </div>
-               <!-- <div class="carousel-item" data-bs-interval="6000" style="background-image: url({% static 'img/landing/eamena/07-Abbas Abad-2022.jpg' %});">
-                    <p class="image-attribution">{% trans "A historic landscape in Abbas Abad, near Taybad, Iran, featuring a caravanserai, castle, field and Qanat systems, and settlements © Google Earth 2022" %}</p>
-                </div>-->
-                <div class="carousel-item" data-bs-interval="6000" style="background-image: url({% static 'img/landing/eamena/Suakin Island, Sudan by Colin Breen.jpg' %});">
-                    <p class="image-attribution">{% trans "Suakin Island, Sudan © Colin Breen" %}</p>
-                </div>
-                <!--<div class="carousel-item" data-bs-interval="6000" style="background-image: url({% static 'img/landing/eamena/11-Umm al-Rasas-Jordan.jpg' %});">
-                    <p class="image-attribution">{% trans "The World Heritage Site of Umm ar-Rasas, Jordan © Google Earth 2022" %}</p>
-                </div>-->
-                <div class="carousel-item" data-bs-interval="6000" style="background-image: url({% static 'img/landing/eamena/Fig3_StCath1951a.jpg' %});">
-                    <p class="image-attribution">{% trans "St Catherine’s Monastery looking north, Sinai, Egypt, 1951 © John Clubb (683 Squadron RAF)" %}</p>
-                </div>
-                <div class="carousel-item" data-bs-interval="6000" style="background-image: url({% static 'img/landing/eamena/Libya_Wadi Matkhandouch1_JN.jpg' %});">
-                    <p class="image-attribution">{% trans "Rock Art in Wadi Matkhandouch, Libya © Julia Nikolaus" %}</p>
-                </div>
-                <div class="carousel-item" data-bs-interval="6000" style="background-image: url({% static 'img/landing/eamena/Shibam.jpg' %});">
-                    <p class="image-attribution">{% trans "Shibam, Yemen on 2 November, 1929 © Nicholas Salt" %}</p>
-                </div>
-               <!-- <div class="carousel-item" data-bs-interval="6000" style="background-image: url({% static 'img/landing/eamena/09-Seimare-Dam.png' %});">
-                    <p class="image-attribution">{% trans "A submerging archaeological site in the Seimare Dam, Iran © Bing Maps" %}</p>
-                </div>-->
-                <div class="carousel-item" data-bs-interval="6000" style="background-image: url({% static 'img/landing/eamena/Morocco_Ksar Bounou_NS_Middle_Draa Project.jpg' %});">
-                    <p class="image-attribution">{% trans "Qasr Bounou, Morocco © The Middle Draa Project/Nichole Sheldrick" %}</p>
-                </div>
-                <div class="carousel-item" data-bs-interval="6000" style="background-image: url({% static 'img/landing/eamena/Aswan, EgyptJPG.JPG' %});">
-                    <p class="image-attribution">{% trans "Aswan, Egypt © Mohamed Kenawi" %}</p>
-                </div>
-               <!--<div class="carousel-item" data-bs-interval="6000" style="background-image: url({% static 'img/landing/eamena/APAAME_20221123_FAB-0154_reduced.jpg' %}); background-size: contain; background-repeat: no-repeat;">
-                    <p class="image-attribution">{% trans "A Roman temporary military camp in south east Jordan © APAAME" %}</p>
-                </div>-->
-               <!-- <div class="carousel-item" data-bs-interval="6000" style="background-image: url({% static 'img/landing/eamena/02-Azlaa_Castle.jpg' %});">
-                    <p class="image-attribution">{% trans "Azlaa' Castle (Dezh-e-Azlaa), Isfahan province, Iran © Google Earth 2021" %}</p>
-                </div>-->
-               <!-- <div class="carousel-item" data-bs-interval="6000" style="background-image: url({% static 'img/landing/eamena/05-Robat-e-Khakestar_2013.jpg' %});">
-                    <p class="image-attribution">{% trans "A ruined caravanserai near Robat Khakestar, Iran © Google Earth 2013" %}</p>
-                </div>-->
-                <div class="carousel-item" data-bs-interval="6000" style="background-image: url({% static 'img/landing/eamena/Lepcis Magna, Libya, by Julia Nikolaus.JPG' %});">
-                    <p class="image-attribution">{% trans "Lepcis Magna, Libya © Julia Nikolaus" %}</p>
-                </div>
-                <div class="carousel-item" data-bs-interval="6000" style="background-image: url({% static 'img/landing/eamena/Petra_AZ_cropped.jpg' %});">
-                    <p class="image-attribution">{% trans "A View of Petra, Jordan © Andrea Zerbini" %}</p>
-                </div>
-            </div>
-        </main>
+    <!-- Carousel slides -->
+    <div class="carousel-track" id="carouselTrack">
+        <div class="carousel-slide active" data-img="{% static 'img/landing/eamena/Sureza_drone_NE.jpg' %}" style="background-image: url({% static 'img/landing/eamena/Sureza_drone_NE.jpg' %});"
+             data-title="EAMENA Database v5"
+             data-subtitle="Endangered Archaeology in the Middle East &amp; North Africa"
+             data-credit="Tell Surezha (Kurdistan Regional Government, Iraq) © University of Chicago / Harvard University"></div>
+        <div class="carousel-slide" data-img="{% static 'img/landing/eamena/Sidon, Lebanon by Crystal Safadi.JPG' %}" style="background-image: url({% static 'img/landing/eamena/Sidon, Lebanon by Crystal Safadi.JPG' %});"
+             data-title="Sidon, Lebanon"
+             data-subtitle="Documenting coastal heritage across the Levant"
+             data-credit="Sidon, Lebanon © Crystal el-Safadi"></div>
+        <div class="carousel-slide" data-img="{% static 'img/landing/eamena/Abbasabad.jpg' %}" style="background-image: url({% static 'img/landing/eamena/Abbasabad.jpg' %});"
+             data-title="Abbas Abad, Iran"
+             data-subtitle="Historic landscapes: caravanserais, qanats and ancient settlements"
+             data-credit="Abbas Abad, near Taybad, Iran © Google Earth 2022"></div>
+        <div class="carousel-slide" data-img="{% static 'img/landing/eamena/Suakin Island, Sudan by Colin Breen.jpg' %}" style="background-image: url({% static 'img/landing/eamena/Suakin Island, Sudan by Colin Breen.jpg' %});"
+             data-title="Suakin Island, Sudan"
+             data-subtitle="Preserving the memory of Red Sea trading heritage"
+             data-credit="Suakin Island, Sudan © Colin Breen"></div>
+        <div class="carousel-slide" data-img="{% static 'img/landing/eamena/Robat-e-Khakestar_2013_Edited.jpg' %}" style="background-image: url({% static 'img/landing/eamena/Robat-e-Khakestar_2013_Edited.jpg' %});"
+             data-title="Robat Khakestar, Iran"
+             data-subtitle="Ruined caravanserai on the ancient Silk Road"
+             data-credit="Robat Khakestar, Iran © Google Earth 2013"></div>
+        <div class="carousel-slide" data-img="{% static 'img/landing/eamena/Fig3_StCath1951a.jpg' %}" style="background-image: url({% static 'img/landing/eamena/Fig3_StCath1951a.jpg' %});"
+             data-title="Sinai, Egypt"
+             data-subtitle="St Catherine's Monastery — one of the world's oldest Christian communities"
+             data-credit="St Catherine's Monastery, Sinai, Egypt, 1951 © John Clubb (683 Squadron RAF)"></div>
+        <div class="carousel-slide" data-img="{% static 'img/landing/eamena/Libya_Wadi Matkhandouch1_JN.jpg' %}" style="background-image: url({% static 'img/landing/eamena/Libya_Wadi Matkhandouch1_JN.jpg' %});"
+             data-title="Wadi Matkhandouch, Libya"
+             data-subtitle="Prehistoric rock art of the Sahara"
+             data-credit="Rock Art, Wadi Matkhandouch, Libya © Julia Nikolaus"></div>
+        <div class="carousel-slide" data-img="{% static 'img/landing/eamena/Shibam.jpg' %}" style="background-image: url({% static 'img/landing/eamena/Shibam.jpg' %});"
+             data-title="Shibam, Yemen"
+             data-subtitle="The Manhattan of the Desert — a World Heritage Site"
+             data-credit="Shibam, Yemen, 1929 © Nicholas Salt"></div>
+        <div class="carousel-slide" data-img="{% static 'img/landing/eamena/Seimare-Dam_Edited.png' %}" style="background-image: url({% static 'img/landing/eamena/Seimare-Dam_Edited.png' %});"
+             data-title="Seimare Dam, Iran"
+             data-subtitle="Submerged archaeology — racing against rising waters"
+             data-credit="Seimare Dam archaeological site, Iran © Bing Maps"></div>
+        <div class="carousel-slide" data-img="{% static 'img/landing/eamena/Morocco_Ksar Bounou_NS_Middle_Draa Project.jpg' %}" style="background-image: url({% static 'img/landing/eamena/Morocco_Ksar Bounou_NS_Middle_Draa Project.jpg' %});"
+             data-title="Qasr Bounou, Morocco"
+             data-subtitle="Earthen architecture of the Middle Draa Valley"
+             data-credit="Qasr Bounou, Morocco © The Middle Draa Project / Nichole Sheldrick"></div>
+        <div class="carousel-slide" data-img="{% static 'img/landing/eamena/Aswan, EgyptJPG.JPG' %}" style="background-image: url({% static 'img/landing/eamena/Aswan, EgyptJPG.JPG' %});"
+             data-title="Aswan, Egypt"
+             data-subtitle="Millennia of civilisation along the Nile"
+             data-credit="Aswan, Egypt © Mohamed Kenawi"></div>
+        <div class="carousel-slide" data-img="{% static 'img/landing/eamena/Lepcis Magna, Libya, by Julia Nikolaus.JPG' %}" style="background-image: url({% static 'img/landing/eamena/Lepcis Magna, Libya, by Julia Nikolaus.JPG' %});"
+             data-title="Lepcis Magna, Libya"
+             data-subtitle="One of the finest Roman cities of the ancient world"
+             data-credit="Lepcis Magna, Libya © Julia Nikolaus"></div>
+        <div class="carousel-slide" data-img="{% static 'img/landing/eamena/Petra_AZ_cropped.jpg' %}" style="background-image: url({% static 'img/landing/eamena/Petra_AZ_cropped.jpg' %});"
+             data-title="Petra, Jordan"
+             data-subtitle="The rose-red city of the Nabataeans"
+             data-credit="Petra, Jordan © Andrea Zerbini"></div>
     </div>
 
-    <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasNavbar" aria-labelledby="offcanvasNavbarLabel">
-        <div class="offcanvas-header border-bottom">
-            <h5 class="offcanvas-title" id="offcanvasNavbarLabel">{% trans "Menu" %}</h5>
-            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+    <!-- Left-side dot indicators -->
+    <div class="carousel-dots" id="carouselDots" role="tablist" aria-label="Image navigation"></div>
+
+    <!-- Navbar -->
+    <nav class="navbar" role="navigation" aria-label="Main navigation">
+        <div class="navbar-brand">
+            <a href="https://eamena.org/">
+                <img src="{% static 'img/landing/eamena/eamena_logo_nobackground_lg_update_300dpi.png' %}" alt="EAMENA" style="max-height:48px;">
+            </a>
+            <div class="brand-divider"></div>
+            <a href="https://marea.soton.ac.uk/">
+                <img src="{% static 'img/landing/eamena/marea-logo_white.png' %}" alt="MarEA" style="max-height:40px;">
+            </a>
         </div>
-        <div class="offcanvas-body">
-            <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
-                
+
+        <div class="nav-actions">
+            {% if user.username == 'anonymous' %}
+                <a class="nav-pill nav-pill-ghost" href="{% url 'signup' %}">
+                    <i class="bi bi-globe"></i> Public Access
+                </a>
+                <a class="nav-pill nav-pill-ghost" href="http://eamena.web.ox.ac.uk/database-registration-form/">
+                    <i class="bi bi-person-plus"></i> Register
+                </a>
+                <a class="nav-pill nav-pill-primary" href="{% url 'auth' %}?next={% url 'home' %}">
+                    <i class="bi bi-box-arrow-in-right"></i> Sign In
+                </a>
+            {% else %}
+                <a class="nav-pill nav-pill-ghost" href="{% url 'search_home' %}" target="_blank">
+                    <i class="bi bi-search"></i> Search Database
+                </a>
+                {% if user|can_create_resource_instance %}
+                <a class="nav-pill nav-pill-ghost" href="{% url 'resource' %}" target="_blank">
+                    <i class="bi bi-plus-circle"></i> New Resource
+                </a>
+                {% endif %}
+                <a class="nav-pill nav-pill-primary" href="{% url 'user_profile_manager' %}">
+                    <i class="bi bi-person-circle"></i> {{ user.first_name|default:user.username }}
+                </a>
+            {% endif %}
+            <button class="menu-btn" id="menuBtn" aria-label="Open navigation menu" aria-expanded="false">
+                <span></span><span></span><span></span>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Hero caption (updates per slide) -->
+    <div class="hero-caption visible" id="heroCaption">
+        <div class="eyebrow"><span class="dot"></span><span id="captionEyebrow">Endangered Heritage</span></div>
+        <h1 id="captionTitle">EAMENA Database v5</h1>
+        <p id="captionSubtitle">Endangered Archaeology in the Middle East &amp; North Africa</p>
+    </div>
+
+    <!-- Slide counter -->
+    <div class="slide-counter">
+        <span id="slideCurrentNum">01</span> / <span id="slideTotalNum">13</span>
+    </div>
+
+    <!-- Photo credit -->
+    <div class="photo-credit" id="photoCredit">
+        Tell Surezha (Kurdistan Regional Government, Iraq) © University of Chicago / Harvard University
+    </div>
+</div>
+
+<!-- ═══════════ FULL-SCREEN MENU OVERLAY ═══════════ -->
+<div class="menu-overlay" id="menuOverlay" role="dialog" aria-modal="true" aria-label="Navigation menu">
+    <button class="overlay-close" id="menuClose" aria-label="Close menu">
+        <i class="bi bi-x-lg"></i>
+    </button>
+
+    <div class="overlay-inner">
+        <!-- Profile -->
+        <div class="overlay-profile">
+            <div class="profile-avatar" id="overlayAvatar">
                 {% if user.username == 'anonymous' %}
-                    <li class="nav-item"><a class="nav-link" href="{% url 'auth' %}?next={% url 'home' %}">{% trans "Sign in" %}</a></li>
+                    <i class="bi bi-person" style="font-size:1.4rem;"></i>
                 {% else %}
-                    <li class="nav-item"><a class="nav-link" href="{% url 'auth' %}?next={% url 'home' %}&logout=true">{% trans 'Log off' %}</a></li>
-                    <li class="nav-item"><a class="nav-link" href="{% url 'user_profile_manager' %}">{% trans "Welcome, " %} {{ user.first_name|default:user.username }}</a></li>
+                    {{ user.first_name|default:user.username|slice:":1"|upper }}
                 {% endif %}
-                
-                {% if user.username != 'anonymous' %}
-                    <li class="nav-item"><a class="nav-link" href="{% url 'search_home' %}" target="_blank">{% trans "Search the EAMENA Database" %}</a></li>
+            </div>
+            <div class="profile-info">
+                {% if user.username == 'anonymous' %}
+                    <div class="name">Welcome to EAMENA</div>
+                    <div class="role">Guest · Sign in to explore</div>
                 {% else %}
-                    <li class="nav-item"><a class="nav-link" href="{% url 'signup' %}">{% trans "Public Access" %}</a></li>
+                    <div class="name">{{ user.first_name|default:user.username }}</div>
+                    <div class="role">Researcher · EAMENA Database</div>
                 {% endif %}
+            </div>
+        </div>
 
-                {% if user|can_create_resource_instance and user.username != 'anonymous' %}
-                    <li class="nav-item"><a class="nav-link" href="{% url 'resource' %}" target="_blank">{% trans "Create New Heritage Resources" %}</a></li>
-                {% else %}
-                    <li class="nav-item"><a class="nav-link" href="http://eamena.web.ox.ac.uk/database-registration-form/">{% trans "Register for Researcher Access" %}</a></li>
-                {% endif %}
+        <div class="overlay-divider"></div>
 
-                <li class="nav-item mt-3 border-bottom pb-2 mb-2"></li>
-                <li class="nav-item policy"><a class="nav-link" href="https://eamena.org/database#data-use" target="_blank">{% trans "License and Open Access Policy" %}</a></li>
+        <!-- Navigation items grid -->
+        <div class="overlay-nav" id="overlayNav">
+            {% if user.username != 'anonymous' %}
+                <a class="overlay-nav-item" href="{% url 'search_home' %}" target="_blank">
+                    <div class="item-icon icon-purple"><i class="bi bi-search-heart"></i></div>
+                    <div class="item-text">
+                        <span class="label">Search Database</span>
+                        <span class="sublabel">Query heritage records</span>
+                    </div>
+                    <i class="bi bi-arrow-right item-arrow"></i>
+                </a>
+                {% if user|can_create_resource_instance %}
+                <a class="overlay-nav-item" href="{% url 'resource' %}" target="_blank">
+                    <div class="item-icon icon-teal"><i class="bi bi-plus-square"></i></div>
+                    <div class="item-text">
+                        <span class="label">New Heritage Resource</span>
+                        <span class="sublabel">Add a site or monument</span>
+                    </div>
+                    <i class="bi bi-arrow-right item-arrow"></i>
+                </a>
+                {% endif %}
+                <a class="overlay-nav-item" href="{% url 'user_profile_manager' %}">
+                    <div class="item-icon icon-blue"><i class="bi bi-person-badge"></i></div>
+                    <div class="item-text">
+                        <span class="label">My Profile</span>
+                        <span class="sublabel">Manage your account</span>
+                    </div>
+                    <i class="bi bi-arrow-right item-arrow"></i>
+                </a>
+                <a class="overlay-nav-item" href="{% url 'auth' %}?next={% url 'home' %}&logout=true">
+                    <div class="item-icon icon-red"><i class="bi bi-box-arrow-left"></i></div>
+                    <div class="item-text">
+                        <span class="label">Sign Out</span>
+                        <span class="sublabel">End your session</span>
+                    </div>
+                    <i class="bi bi-arrow-right item-arrow"></i>
+                </a>
+            {% else %}
+                <a class="overlay-nav-item" href="{% url 'auth' %}?next={% url 'home' %}">
+                    <div class="item-icon icon-purple"><i class="bi bi-box-arrow-in-right"></i></div>
+                    <div class="item-text">
+                        <span class="label">Sign In</span>
+                        <span class="sublabel">Access your account</span>
+                    </div>
+                    <i class="bi bi-arrow-right item-arrow"></i>
+                </a>
+                <a class="overlay-nav-item" href="{% url 'signup' %}">
+                    <div class="item-icon icon-teal"><i class="bi bi-globe2"></i></div>
+                    <div class="item-text">
+                        <span class="label">Public Access</span>
+                        <span class="sublabel">Explore open data</span>
+                    </div>
+                    <i class="bi bi-arrow-right item-arrow"></i>
+                </a>
+                <a class="overlay-nav-item" href="http://eamena.web.ox.ac.uk/database-registration-form/">
+                    <div class="item-icon icon-blue"><i class="bi bi-person-plus"></i></div>
+                    <div class="item-text">
+                        <span class="label">Register for Access</span>
+                        <span class="sublabel">Researcher credentials</span>
+                    </div>
+                    <i class="bi bi-arrow-right item-arrow"></i>
+                </a>
+            {% endif %}
+
+            <a class="overlay-nav-item" href="https://eamena.org/database#data-use" target="_blank">
+                <div class="item-icon icon-gold"><i class="bi bi-shield-check"></i></div>
+                <div class="item-text">
+                    <span class="label">License &amp; Open Access</span>
+                    <span class="sublabel">Data use policy</span>
+                </div>
+                <i class="bi bi-arrow-right item-arrow"></i>
+            </a>
+            <a class="overlay-nav-item" href="https://eamena.org/" target="_blank">
+                <div class="item-icon icon-green"><i class="bi bi-house-door"></i></div>
+                <div class="item-text">
+                    <span class="label">EAMENA Website</span>
+                    <span class="sublabel">Project homepage</span>
+                </div>
+                <i class="bi bi-arrow-right item-arrow"></i>
+            </a>
+            <a class="overlay-nav-item" href="https://marea.soton.ac.uk/" target="_blank">
+                <div class="item-icon icon-teal"><i class="bi bi-water"></i></div>
+                <div class="item-text">
+                    <span class="label">MarEA Project</span>
+                    <span class="sublabel">Maritime archaeology</span>
+                </div>
+                <i class="bi bi-arrow-right item-arrow"></i>
+            </a>
+        </div>
+
+        <!-- Bottom links -->
+        <div class="overlay-bottom">
+            <a href="https://eamena.org/copyright">Copyright</a>
+            <a href="https://eamena.org/privacy">Privacy Policy</a>
+            <a href="https://www.archesproject.org" target="_blank">Powered by Arches</a>
+        </div>
+    </div>
+</div>
+
+<!-- ═══════════ FOOTER ═══════════ -->
+<footer class="site-footer">
+    <div class="footer-grid">
+        <div class="footer-col">
+            <h4>About EAMENA</h4>
+            <p>Endangered Archaeology in the Middle East and North Africa. Mapping, recording, and monitoring threatened cultural heritage across the region.</p>
+        </div>
+        <div class="footer-col">
+            <h4>EAMENA Project</h4>
+            <ul class="footer-links">
+                <li><a href="https://www.arch.ox.ac.uk/" target="_blank">University of Oxford</a></li>
+                <li><a href="https://le.ac.uk/archaeology/" target="_blank">University of Leicester</a></li>
+                <li><a href="https://www.dur.ac.uk/archaeology/" target="_blank">Durham University</a></li>
+            </ul>
+        </div>
+        <div class="footer-col">
+            <h4>MarEA Project</h4>
+            <ul class="footer-links">
+                <li><a href="https://www.southampton.ac.uk/archaeology/index.page" target="_blank">University of Southampton</a></li>
+                <li><a href="https://www.ulster.ac.uk/" target="_blank">Ulster University</a></li>
+            </ul>
+        </div>
+        <div class="footer-col">
+            <h4>Supported By</h4>
+            <ul class="footer-links">
+                <li><a href="https://www.arcadiafund.org.uk/" target="_blank">Arcadia Fund</a></li>
+                <li><a href="https://www.britishcouncil.org/arts/culture-development/cultural-protection-fund/" target="_blank">British Council Cultural Protection Fund</a></li>
             </ul>
         </div>
     </div>
-
-    <footer class="app-footer">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-3 col-md-6 mb-4">
-                    <h3>{% trans "EAMENA Project" %}</h3>
-                    <ul class="organization-address">
-                        <li><a href="https://www.arch.ox.ac.uk/" target="_blank">{% trans "University of Oxford" %}</a></li>
-                        <li><a href="https://le.ac.uk/archaeology/" target="_blank">{% trans "University of Leicester" %}</a></li>
-                        <li><a href="https://www.dur.ac.uk/archaeology/" target="_blank">{% trans "Durham University" %}</a></li>
-                    </ul>
-                </div>
-                <div class="col-lg-3 col-md-6 mb-4">
-                    <h3>{% trans "MarEA Project" %}</h3>
-                    <ul class="organization-address">
-                        <li><a href="https://www.southampton.ac.uk/archaeology/index.page" target="_blank">{% trans "University of Southampton" %}</a></li>
-                        <li><a href="https://www.ulster.ac.uk/" target="_blank">{% trans "Ulster University" %}</a></li>
-                    </ul>
-                </div>
-                <div class="col-lg-6 col-md-12 mb-4">
-                    <h3>{% trans "Supported By:" %}</h3>
-                    <ul class="organization-address">
-                        <li><a href="https://www.arcadiafund.org.uk/" target="_blank">{% trans "Arcadia" %}</a></li>
-                        <li><a href="https://www.britishcouncil.org/arts/culture-development/cultural-protection-fund/" target="_blank">{% trans "British Council Cultural Protection Fund" %}</a></li>
-                    </ul>
-                </div>
-            </div>
+    <div class="footer-bottom">
+        <div class="footer-bottom-links">
+            <a href="https://eamena.org/copyright">Copyright</a>
+            <a href="https://eamena.org/privacy">Privacy Policy</a>
         </div>
-    </footer>
-    
-    <div class="copyright-container">
-        <div class="container d-flex justify-content-between align-items-center">
-            <div>
-                <a href="https://eamena.org/copyright">{% trans "Copyright" %}</a>
-                <a href="https://eamena.org/privacy">{% trans "Privacy Policy" %}</a>
-            </div>
-            <div class="copyright-logos">
-                <a href="https://eamena.org/database#data-use"><img src="{% static 'img/landing/eamena/license-cc-by.png' %}" alt="CC-BY License"></a>
-                <a href="http://www.archesproject.org" target="_blank"><img src="{% static 'img/PoweredByArches.png' %}" alt="Powered by Arches"></a>
-            </div>
+        <div class="footer-logos">
+            <a href="https://eamena.org/database#data-use">
+                <img src="{% static 'img/landing/eamena/license-cc-by.png' %}" alt="CC-BY License">
+            </a>
+            <a href="http://www.archesproject.org" target="_blank">
+                <img src="{% static 'img/PoweredByArches.png' %}" alt="Powered by Arches">
+            </a>
         </div>
     </div>
+</footer>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+(function () {
+    'use strict';
 
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            // Wait for 1 second after the page loads
-            setTimeout(function() {
-                const alert = document.getElementById('downtime-alert');
-                if (alert) {
-                    // Add the 'show' class to trigger the CSS transition
-                    alert.classList.add('show');
-                }
-            }, 1000); // 1000 milliseconds = 1 second
-        });
-    </script>
+    // ─── CAROUSEL ───
+    const slides    = Array.from(document.querySelectorAll('.carousel-slide'));
+    const dotsWrap  = document.getElementById('carouselDots');
+    const creditEl  = document.getElementById('photoCredit');
+    const titleEl   = document.getElementById('captionTitle');
+    const subEl     = document.getElementById('captionSubtitle');
+    const currEl    = document.getElementById('slideCurrentNum');
+    const totalEl   = document.getElementById('slideTotalNum');
+
+    let current  = 0;
+    let timer    = null;
+    const DELAY  = 6000;
+
+    totalEl.textContent = String(slides.length).padStart(2, '0');
+
+    // Build dots
+    const dots = slides.map(function (_, i) {
+        const wrap = document.createElement('div');
+
+        const dot = document.createElement('button');
+        dot.className = 'carousel-dot' + (i === 0 ? ' active' : '');
+        dot.setAttribute('role', 'tab');
+        dot.setAttribute('aria-label', 'Go to image ' + (i + 1));
+        dot.addEventListener('click', function () { goTo(i, true); });
+        wrap.appendChild(dot);
+
+        // connector line between dots
+        const line = document.createElement('div');
+        line.className = 'carousel-dot-line';
+        const fill = document.createElement('div');
+        fill.className = 'carousel-dot-fill';
+        line.appendChild(fill);
+        wrap.appendChild(line);
+
+        dotsWrap.appendChild(wrap);
+        return dot;
+    });
+
+    function goTo(idx, manual) {
+        if (idx === current) return;
+        slides[current].classList.remove('active');
+        dots[current].classList.remove('active');
+        current = (idx + slides.length) % slides.length;
+        slides[current].classList.add('active');
+        dots[current].classList.add('active');
+        updateCaption();
+        if (manual) { clearInterval(timer); startTimer(); }
+    }
+
+    function updateCaption() {
+        const s = slides[current];
+        creditEl.textContent = s.dataset.credit   || '';
+        titleEl.textContent  = s.dataset.title    || '';
+        subEl.textContent    = s.dataset.subtitle || '';
+        currEl.textContent   = String(current + 1).padStart(2, '0');
+
+        const cap = document.getElementById('heroCaption');
+        cap.classList.remove('visible');
+        void cap.offsetWidth;
+        cap.classList.add('visible');
+    }
+
+    function startTimer() {
+        timer = setInterval(function () { goTo(current + 1, false); }, DELAY);
+    }
+    startTimer();
+
+    // ─── MENU OVERLAY ───
+    const menuBtn     = document.getElementById('menuBtn');
+    const menuOverlay = document.getElementById('menuOverlay');
+    const menuClose   = document.getElementById('menuClose');
+
+    function openMenu() {
+        menuOverlay.classList.add('open');
+        menuBtn.classList.add('open');
+        menuBtn.setAttribute('aria-expanded', 'true');
+        document.body.style.overflow = 'hidden';
+    }
+    function closeMenu() {
+        menuOverlay.classList.remove('open');
+        menuBtn.classList.remove('open');
+        menuBtn.setAttribute('aria-expanded', 'false');
+        document.body.style.overflow = '';
+    }
+
+    menuBtn.addEventListener('click', function () {
+        menuOverlay.classList.contains('open') ? closeMenu() : openMenu();
+    });
+    menuClose.addEventListener('click', closeMenu);
+
+    // Close on Escape
+    document.addEventListener('keydown', function (e) {
+        if (e.key === 'Escape' && menuOverlay.classList.contains('open')) closeMenu();
+    });
+
+    // Close if click is on the overlay backdrop (not inner content)
+    menuOverlay.addEventListener('click', function (e) {
+        if (e.target === menuOverlay) closeMenu();
+    });
+})();
+</script>
 
 </body>
 </html>
