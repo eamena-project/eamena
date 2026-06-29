@@ -479,6 +479,9 @@ class HeritagePlaceBulkUploadSheet(BulkUploadSheet):
 			for t in topography_type:
 				topography.append({"TOPOGRAPHY_TYPE": t})
 
+		if len(bedrock_geology) > 1:
+			self.error(uniqueid, "Multiple bedrock geologies", "Each record can only have one Bedrock Geology. Record " + str(uniqueid) + " contains " + str(len(bedrock_geology)) + ".")
+
 		return {"TOPOGRAPHY": topography, "LAND_COVER": land_cover, "GEOLOGY": {"BEDROCK_GEOLOGY": bedrock_geology, "SURFICIAL_GEOLOGY": surficial_geology}, "MARINE_ENVIRONMENT": marine_environment, "DEPTH_ELEVATION": depth_elevation}
 
 	def __parse_geography(self, index, uniqueid=''):
