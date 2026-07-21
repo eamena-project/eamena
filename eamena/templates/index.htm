@@ -53,7 +53,6 @@ Designer: Salah Ebrahimipour, EAMENA Researcher and Database Manager @ Oxford Un
                 -webkit-font-smoothing: antialiased;
                 -moz-osx-font-smoothing: grayscale;
             }
-
             /* ─── FULL-SCREEN HERO ─── */
             .hero {
                 position: relative;
@@ -62,7 +61,6 @@ Designer: Salah Ebrahimipour, EAMENA Researcher and Database Manager @ Oxford Un
                 overflow: hidden;
                 background: var(--clr-bg);
             }
-
             /* Ambient background glow */
             .hero::before {
                 content: '';
@@ -74,7 +72,6 @@ Designer: Salah Ebrahimipour, EAMENA Researcher and Database Manager @ Oxford Un
                 pointer-events: none;
                 z-index: 2;
             }
-
             /* ─── CAROUSEL ─── */
             .carousel-track {
                 position: absolute;
@@ -104,7 +101,6 @@ Designer: Salah Ebrahimipour, EAMENA Researcher and Database Manager @ Oxford Un
                     linear-gradient(to top, rgba(6,8,26,.9) 0%, transparent 35%);
                 pointer-events: none;
             }
-
             /* ─── LEFT-SIDE DOT INDICATORS ─── */
             .carousel-dots {
                 position: absolute;
@@ -159,7 +155,6 @@ Designer: Salah Ebrahimipour, EAMENA Researcher and Database Manager @ Oxford Un
                 background: linear-gradient(to bottom, var(--clr-accent), var(--clr-accent2));
                 transition: height .5s var(--ease-out);
             }
-
             /* ─── HERO CAPTION ─── */
             .hero-caption {
                 position: absolute;
@@ -230,7 +225,6 @@ Designer: Salah Ebrahimipour, EAMENA Researcher and Database Manager @ Oxford Un
                 opacity: 1;
                 transform: none;
             }
-
             /* Photo attribution */
             .photo-credit {
                 position: absolute;
@@ -244,7 +238,6 @@ Designer: Salah Ebrahimipour, EAMENA Researcher and Database Manager @ Oxford Un
                 line-height: 1.5;
                 transition: opacity .5s;
             }
-
             /* Slide counter */
             .slide-counter {
                 position: absolute;
@@ -279,7 +272,6 @@ Designer: Salah Ebrahimipour, EAMENA Researcher and Database Manager @ Oxford Un
                 border-radius: 2px;
                 transition: width .6s var(--ease-out);
             }
-
             /* ─── NAVBAR ─── */
             .navbar {
                 position: absolute;
@@ -315,7 +307,6 @@ Designer: Salah Ebrahimipour, EAMENA Researcher and Database Manager @ Oxford Un
                 height: 32px;
                 background: linear-gradient(to bottom, transparent, rgba(255,255,255,.25), transparent);
             }
-
             /* Quick-access pill (desktop) */
             .nav-actions {
                 display: flex;
@@ -368,7 +359,6 @@ Designer: Salah Ebrahimipour, EAMENA Researcher and Database Manager @ Oxford Un
                 transform: translateY(-2px);
                 box-shadow: 0 6px 28px rgba(108,92,231,.5);
             }
-
             /* Hamburger menu button */
             .menu-btn {
                 display: flex;
@@ -405,7 +395,6 @@ Designer: Salah Ebrahimipour, EAMENA Researcher and Database Manager @ Oxford Un
             .menu-btn.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
             .menu-btn.open span:nth-child(2) { opacity: 0; width: 0; }
             .menu-btn.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
-
             /* ─── FULL-SCREEN MENU OVERLAY ─── */
             .menu-overlay {
                 position: fixed;
@@ -449,7 +438,6 @@ Designer: Salah Ebrahimipour, EAMENA Researcher and Database Manager @ Oxford Un
                 opacity: 1;
                 transition: opacity .5s var(--ease-out), visibility 0s 0s;
             }
-
             /* Close button inside overlay */
             .overlay-close {
                 position: fixed;
@@ -474,7 +462,6 @@ Designer: Salah Ebrahimipour, EAMENA Researcher and Database Manager @ Oxford Un
                 border-color: rgba(255,255,255,.3);
                 transform: rotate(90deg);
             }
-
             /* Overlay inner layout */
             .overlay-inner {
                 display: flex;
@@ -487,7 +474,6 @@ Designer: Salah Ebrahimipour, EAMENA Researcher and Database Manager @ Oxford Un
                 margin: 0 auto;
                 width: 100%;
             }
-
             /* Profile section */
             .overlay-profile {
                 display: flex;
@@ -537,7 +523,6 @@ Designer: Salah Ebrahimipour, EAMENA Researcher and Database Manager @ Oxford Un
                 transition: opacity .5s .2s var(--ease-out);
             }
             .menu-overlay.open .overlay-divider { opacity: 1; }
-
             /* Nav items grid */
             .overlay-nav {
                 display: grid;
@@ -631,7 +616,6 @@ Designer: Salah Ebrahimipour, EAMENA Researcher and Database Manager @ Oxford Un
                 transform: translateX(5px);
                 color: var(--clr-accent-light);
             }
-
             /* Icon color variants */
             .icon-purple { background: rgba(108,92,231,.15); color: #a29bfe; }
             .icon-teal { background: rgba(0,206,201,.12); color: #55efc4; }
@@ -639,7 +623,6 @@ Designer: Salah Ebrahimipour, EAMENA Researcher and Database Manager @ Oxford Un
             .icon-red { background: rgba(225,112,85,.12); color: #fab1a0; }
             .icon-blue { background: rgba(9,132,227,.12); color: #74b9ff; }
             .icon-green { background: rgba(0,184,148,.12); color: #00cec9; }
-
             /* Bottom links in overlay */
             .overlay-bottom {
                 display: flex;
@@ -660,7 +643,6 @@ Designer: Salah Ebrahimipour, EAMENA Researcher and Database Manager @ Oxford Un
                 letter-spacing: .02em;
             }
             .overlay-bottom a:hover { color: var(--clr-white); }
-
             /* ─── FOOTER ─── */
             .site-footer {
                 background: linear-gradient(to bottom, var(--clr-bg-alt), #050714);
@@ -758,7 +740,6 @@ Designer: Salah Ebrahimipour, EAMENA Researcher and Database Manager @ Oxford Un
                 opacity: 1; 
                 transform: scale(1.05);
             }
-
             /* ─── RESPONSIVE ─── */
             @media (max-width: 1024px) {
                 .overlay-nav { grid-template-columns: repeat(2, 1fr); }
@@ -781,6 +762,7 @@ Designer: Salah Ebrahimipour, EAMENA Researcher and Database Manager @ Oxford Un
                 .carousel-dot { width: 8px; height: 8px; }
                 .carousel-dot-line { height: 18px; }
                 .slide-counter { left: 3rem; }
+                .photo-credit { max-width: 45%; font-size: .68rem; }
                 .footer-grid { grid-template-columns: 1fr; gap: 2rem; padding: 0 1.5rem 2.5rem; }
                 .footer-bottom { padding: 1.25rem 1.5rem; flex-direction: column; text-align: center; }
                 .overlay-inner { padding: 5rem 1.5rem 2rem; }
@@ -795,11 +777,8 @@ Designer: Salah Ebrahimipour, EAMENA Researcher and Database Manager @ Oxford Un
                 .navbar-brand { gap: .75rem; }
                 .navbar-brand img:last-child { height: 30px; }
                 .brand-divider { display: none; }
-                .nav-actions .nav-pill-primary {
-                    display: inline-flex;
-                    font-size: .72rem;
-                    padding: .4rem .8rem;
-                }
+                /* All nav-pills (including nav-pill-primary) stay hidden here — inherited
+                   from the 768px breakpoint above — so only the hamburger remains on phones. */
                 .menu-btn { width: 40px; height: 40px; }
                 .hero-caption { left: 2.5rem; bottom: 5rem; max-width: calc(100% - 3.5rem); }
                 .hero-caption h1 { font-size: 1.5rem; }
@@ -823,7 +802,6 @@ Designer: Salah Ebrahimipour, EAMENA Researcher and Database Manager @ Oxford Un
                 .navbar-brand img:first-child { height: 30px; }
                 .hero-caption h1 { font-size: 1.3rem; }
             }
-
             @media (prefers-reduced-motion: reduce) {
                 *, *::before, *::after { transition: none !important; animation: none !important; }
             }
@@ -841,7 +819,6 @@ Designer: Salah Ebrahimipour, EAMENA Researcher and Database Manager @ Oxford Un
                     data-title="EAMENA Database v5"
                     data-subtitle="Endangered Archaeology in the Middle East &amp; North Africa — Mapping, recording, and monitoring threatened cultural heritage across the region"
                     data-credit="EAMENA Database v5 · Endangered Archaeology in the Middle East &amp; North Africa"></div>
-
                 <!-- Original first image now second -->
                 <div class="carousel-slide" 
                     data-img="{% static 'img/landing/eamena/Sureza_drone_NE.jpg' %}" 
@@ -849,84 +826,72 @@ Designer: Salah Ebrahimipour, EAMENA Researcher and Database Manager @ Oxford Un
                     data-title="Tell Surezha, Iraqi Kurdistan"
                     data-subtitle="Drone survey of ancient settlement mounds in the Kurdistan Regional Government region"
                     data-credit="Tell Surezha (Kurdistan Regional Government, Iraq) © University of Chicago / Harvard University"></div>
-
                 <div class="carousel-slide" 
                     data-img="{% static 'img/landing/eamena/Sidon, Lebanon by Crystal Safadi.JPG' %}" 
                     style="background-image: url({% static 'img/landing/eamena/Sidon, Lebanon by Crystal Safadi.JPG' %});"
                     data-title="Sidon, Lebanon"
                     data-subtitle="Documenting coastal heritage across the Levant"
                     data-credit="Sidon, Lebanon © Crystal el-Safadi"></div>
-
                 <div class="carousel-slide" 
                     data-img="{% static 'img/landing/eamena/Abbasabad.jpg' %}" 
                     style="background-image: url({% static 'img/landing/eamena/Abbasabad.jpg' %});"
                     data-title="Abbas Abad, Iran"
                     data-subtitle="Historic landscapes: caravanserais, qanats and ancient settlements"
                     data-credit="Abbas Abad, near Taybad, Iran © Google Earth 2022"></div>
-
                 <div class="carousel-slide" 
                     data-img="{% static 'img/landing/eamena/Suakin Island, Sudan by Colin Breen.jpg' %}" 
                     style="background-image: url({% static 'img/landing/eamena/Suakin Island, Sudan by Colin Breen.jpg' %});"
                     data-title="Suakin Island, Sudan"
                     data-subtitle="Preserving the memory of Red Sea trading heritage"
                     data-credit="Suakin Island, Sudan © Colin Breen"></div>
-
                 <div class="carousel-slide" 
                     data-img="{% static 'img/landing/eamena/Robat-e-Khakestar_2013_Edited.jpg' %}" 
                     style="background-image: url({% static 'img/landing/eamena/Robat-e-Khakestar_2013_Edited.jpg' %});"
                     data-title="Robat Khakestar, Iran"
                     data-subtitle="Ruined caravanserai on the ancient Silk Road"
                     data-credit="Robat Khakestar, Iran © Google Earth 2013"></div>
-
                 <div class="carousel-slide" 
                     data-img="{% static 'img/landing/eamena/Fig3_StCath1951a.jpg' %}" 
                     style="background-image: url({% static 'img/landing/eamena/Fig3_StCath1951a.jpg' %});"
                     data-title="Sinai, Egypt"
                     data-subtitle="St Catherine's Monastery — one of the world's oldest Christian communities"
                     data-credit="St Catherine's Monastery, Sinai, Egypt, 1951 © John Clubb (683 Squadron RAF)"></div>
-
                 <div class="carousel-slide" 
                     data-img="{% static 'img/landing/eamena/Libya_Wadi Matkhandouch1_JN.jpg' %}" 
                     style="background-image: url({% static 'img/landing/eamena/Libya_Wadi Matkhandouch1_JN.jpg' %});"
                     data-title="Wadi Matkhandouch, Libya"
                     data-subtitle="Prehistoric rock art of the Sahara"
                     data-credit="Rock Art, Wadi Matkhandouch, Libya © Julia Nikolaus"></div>
-
                 <div class="carousel-slide" 
                     data-img="{% static 'img/landing/eamena/Shibam.jpg' %}" 
                     style="background-image: url({% static 'img/landing/eamena/Shibam.jpg' %});"
                     data-title="Shibam, Yemen"
                     data-subtitle="The Manhattan of the Desert — a World Heritage Site"
                     data-credit="Shibam, Yemen, 1929 © Nicholas Salt"></div>
-
                 <div class="carousel-slide" 
                     data-img="{% static 'img/landing/eamena/Seimare-Dam_Edited.png' %}" 
                     style="background-image: url({% static 'img/landing/eamena/Seimare-Dam_Edited.png' %});"
                     data-title="Seimare Dam, Iran"
                     data-subtitle="Submerged archaeology — racing against rising waters"
                     data-credit="Seimare Dam archaeological site, Iran © Bing Maps"></div>
-
                 <div class="carousel-slide" 
                     data-img="{% static 'img/landing/eamena/Morocco_Ksar Bounou_NS_Middle_Draa Project.jpg' %}" 
                     style="background-image: url({% static 'img/landing/eamena/Morocco_Ksar Bounou_NS_Middle_Draa Project.jpg' %});"
                     data-title="Qasr Bounou, Morocco"
                     data-subtitle="Earthen architecture of the Middle Draa Valley"
                     data-credit="Qasr Bounou, Morocco © The Middle Draa Project / Nichole Sheldrick"></div>
-
                 <div class="carousel-slide" 
                     data-img="{% static 'img/landing/eamena/Aswan, EgyptJPG.JPG' %}" 
                     style="background-image: url({% static 'img/landing/eamena/Aswan, EgyptJPG.JPG' %});"
                     data-title="Aswan, Egypt"
                     data-subtitle="Millennia of civilisation along the Nile"
                     data-credit="Aswan, Egypt © Mohamed Kenawi"></div>
-
                 <div class="carousel-slide" 
                     data-img="{% static 'img/landing/eamena/Lepcis Magna, Libya, by Julia Nikolaus.JPG' %}" 
                     style="background-image: url({% static 'img/landing/eamena/Lepcis Magna, Libya, by Julia Nikolaus.JPG' %});"
                     data-title="Lepcis Magna, Libya"
                     data-subtitle="One of the finest Roman cities of the ancient world"
                     data-credit="Lepcis Magna, Libya © Julia Nikolaus"></div>
-
                 <div class="carousel-slide" 
                     data-img="{% static 'img/landing/eamena/Petra_AZ_cropped.jpg' %}" 
                     style="background-image: url({% static 'img/landing/eamena/Petra_AZ_cropped.jpg' %});"
@@ -934,10 +899,8 @@ Designer: Salah Ebrahimipour, EAMENA Researcher and Database Manager @ Oxford Un
                     data-subtitle="The rose-red city of the Nabataeans"
                     data-credit="Petra, Jordan © Andrea Zerbini"></div>
             </div>
-
             <!-- Left-side dot indicators -->
             <div class="carousel-dots" id="carouselDots" role="tablist" aria-label="Image navigation"></div>
-
             <!-- Navbar -->
             <nav class="navbar" role="navigation" aria-label="Main navigation">
                 <div class="navbar-brand">
@@ -978,27 +941,23 @@ Designer: Salah Ebrahimipour, EAMENA Researcher and Database Manager @ Oxford Un
                     </button>
                 </div>
             </nav>
-
             <!-- Hero caption (updates per slide) -->
             <div class="hero-caption visible" id="heroCaption">
                 <!--<div class="eyebrow"><span class="dot"></span><span id="captionEyebrow">Endangered Heritage</span></div>-->
                 <h1 id="captionTitle">EAMENA Database <span class="version-badge">v5</span></h1>
                 <p id="captionSubtitle">Endangered Archaeology in the Middle East &amp; North Africa — Mapping, recording, and monitoring threatened cultural heritage across the region</p>
             </div>
-
             <!-- Slide counter -->
             <div class="slide-counter">
                 <span class="counter-num" id="slideCurrentNum">01</span>
                 <div class="counter-bar"><div class="counter-bar-fill" id="counterBarFill" style="width: 7.14%"></div></div>
                 <span class="counter-num" id="slideTotalNum">14</span>
             </div>
-
             <!-- Photo credit -->
             <div class="photo-credit" id="photoCredit">
                 EAMENA Database v5 · Endangered Archaeology in the Middle East &amp; North Africa
             </div>
         </div>
-
         <!-- ═══════════ FULL-SCREEN MENU OVERLAY ═══════════ -->
         <div class="menu-overlay" id="menuOverlay" role="dialog" aria-modal="true" aria-label="Navigation menu">
             <button class="overlay-close" id="menuClose" aria-label="Close menu">
@@ -1025,7 +984,6 @@ Designer: Salah Ebrahimipour, EAMENA Researcher and Database Manager @ Oxford Un
                     </div>
                 </div>
                 <div class="overlay-divider"></div>
-
                 <!-- Navigation items grid -->
                 <div class="overlay-nav" id="overlayNav">
                     {% if user.username != 'anonymous' %}
@@ -1122,7 +1080,6 @@ Designer: Salah Ebrahimipour, EAMENA Researcher and Database Manager @ Oxford Un
                         <i class="bi bi-arrow-right item-arrow"></i>
                     </a>
                 </div>
-
                 <!-- Bottom links -->
                 <div class="overlay-bottom">
                     <a href="https://eamena.org/copyright">Copyright</a>
@@ -1131,7 +1088,6 @@ Designer: Salah Ebrahimipour, EAMENA Researcher and Database Manager @ Oxford Un
                 </div>
             </div>
         </div>
-
         <!-- ═══════════ FOOTER ═══════════ -->
         <footer class="site-footer">
             <div class="footer-grid">
@@ -1177,11 +1133,9 @@ Designer: Salah Ebrahimipour, EAMENA Researcher and Database Manager @ Oxford Un
                 </div>
             </div>
         </footer>
-
         <script>
             (function () {
                 'use strict';
-
                 // ─── CAROUSEL WITH MOUSE PARALLAX ───
                 const slides = Array.from(document.querySelectorAll('.carousel-slide'));
                 const dotsWrap = document.getElementById('carouselDots');
@@ -1198,7 +1152,6 @@ Designer: Salah Ebrahimipour, EAMENA Researcher and Database Manager @ Oxford Un
                 const DELAY = 6500;
                 
                 totalEl.textContent = String(slides.length).padStart(2, '0');
-
                 // Build dots
                 const dots = slides.map(function (_, i) {
                     const wrap = document.createElement('div');
@@ -1221,7 +1174,6 @@ Designer: Salah Ebrahimipour, EAMENA Researcher and Database Manager @ Oxford Un
                     dotsWrap.appendChild(wrap);
                     return { dot: dot, fill: fill };
                 });
-
                 function goTo(idx, manual) {
                     if (idx === current) return;
                     slides[current].classList.remove('active');
@@ -1241,7 +1193,6 @@ Designer: Salah Ebrahimipour, EAMENA Researcher and Database Manager @ Oxford Un
                     
                     if (manual) { clearInterval(timer); startTimer(); }
                 }
-
                 function updateCaption() {
                     const s = slides[current];
                     creditEl.textContent = s.dataset.credit || '';
@@ -1256,29 +1207,24 @@ Designer: Salah Ebrahimipour, EAMENA Researcher and Database Manager @ Oxford Un
                         cap.classList.add('visible');
                     });
                 }
-
                 function updateCounterBar() {
                     const pct = ((current + 1) / slides.length) * 100;
                     counterBarFill.style.width = pct + '%';
                 }
-
                 function startTimer() {
                     timer = setInterval(function () { goTo(current + 1, false); }, DELAY);
                 }
                 startTimer();
-
                 // ─── MOUSE PARALLAX EFFECT ───
                 let mouseX = 0.5;
                 let mouseY = 0.5;
                 let targetX = 0.5;
                 let targetY = 0.5;
                 let animFrameId = null;
-
                 function resetParallax() {
                     targetX = 0.5;
                     targetY = 0.5;
                 }
-
                 hero.addEventListener('mousemove', function(e) {
                     const rect = hero.getBoundingClientRect();
                     targetX = (e.clientX - rect.left) / rect.width;
@@ -1288,12 +1234,10 @@ Designer: Salah Ebrahimipour, EAMENA Researcher and Database Manager @ Oxford Un
                         animFrameId = requestAnimationFrame(animateParallax);
                     }
                 });
-
                 hero.addEventListener('mouseleave', function() {
                     targetX = 0.5;
                     targetY = 0.5;
                 });
-
                 function animateParallax() {
                     // Smooth lerp
                     mouseX += (targetX - mouseX) * 0.08;
@@ -1321,7 +1265,6 @@ Designer: Salah Ebrahimipour, EAMENA Researcher and Database Manager @ Oxford Un
                         animFrameId = null;
                     }
                 }
-
                 // Touch support for mobile
                 hero.addEventListener('touchmove', function(e) {
                     const touch = e.touches[0];
@@ -1333,18 +1276,15 @@ Designer: Salah Ebrahimipour, EAMENA Researcher and Database Manager @ Oxford Un
                         animFrameId = requestAnimationFrame(animateParallax);
                     }
                 }, { passive: true });
-
                 hero.addEventListener('touchend', function() {
                     targetX = 0.5;
                     targetY = 0.5;
                 });
-
                 // ─── MENU OVERLAY (FIXED) ───
                 const menuBtn = document.getElementById('menuBtn');
                 const menuOverlay = document.getElementById('menuOverlay');
                 const menuClose = document.getElementById('menuClose');
                 let menuOpen = false;
-
                 function openMenu() {
                     if (menuOpen) return;
                     menuOpen = true;
@@ -1355,7 +1295,6 @@ Designer: Salah Ebrahimipour, EAMENA Researcher and Database Manager @ Oxford Un
                     // Focus trap: focus the close button
                     setTimeout(function() { menuClose.focus(); }, 100);
                 }
-
                 function closeMenu() {
                     if (!menuOpen) return;
                     menuOpen = false;
@@ -1365,7 +1304,6 @@ Designer: Salah Ebrahimipour, EAMENA Researcher and Database Manager @ Oxford Un
                     document.body.style.overflow = '';
                     menuBtn.focus();
                 }
-
                 // Toggle menu
                 menuBtn.addEventListener('click', function(e) {
                     e.stopPropagation();
@@ -1375,27 +1313,23 @@ Designer: Salah Ebrahimipour, EAMENA Researcher and Database Manager @ Oxford Un
                         openMenu();
                     }
                 });
-
                 // Close button
                 menuClose.addEventListener('click', function(e) {
                     e.stopPropagation();
                     closeMenu();
                 });
-
                 // Close on Escape
                 document.addEventListener('keydown', function(e) {
                     if (e.key === 'Escape' && menuOpen) {
                         closeMenu();
                     }
                 });
-
                 // Close if click is on the overlay backdrop (not inner content)
                 menuOverlay.addEventListener('click', function(e) {
                     if (e.target === menuOverlay) {
                         closeMenu();
                     }
                 });
-
                 // Prevent menu close when clicking inside overlay-inner
                 const overlayInner = document.querySelector('.overlay-inner');
                 if (overlayInner) {
@@ -1403,7 +1337,6 @@ Designer: Salah Ebrahimipour, EAMENA Researcher and Database Manager @ Oxford Un
                         e.stopPropagation();
                     });
                 }
-
                 // Close menu when clicking nav items
                 const navItems = document.querySelectorAll('.overlay-nav-item');
                 navItems.forEach(function(item) {
@@ -1411,10 +1344,10 @@ Designer: Salah Ebrahimipour, EAMENA Researcher and Database Manager @ Oxford Un
                         setTimeout(closeMenu, 150);
                     });
                 });
-
                 // Initialize counter bar
                 updateCounterBar();
             })();
         </script>
     </body>
 </html>
+ 
