@@ -2,1162 +2,1419 @@
 EAMENA Database v5 - Redesigned Homepage
 Redesigned by: Enhanced UI/UX version with modern navigation, carousel dot indicators,
 and full-screen animated menu overlay with flat icons.
+Designer: Salah Ebrahimipour, EAMENA Researcher and Database Manager @ Oxford University
 {% endcomment %}
-
 {% load static %}
 {% load template_tags %}
 {% load i18n %}
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{{ app_title }}</title>
-    <link rel="shortcut icon" href="{% static 'img/favicon.png' %}" />
-
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
-
-    <style>
-        /* ─── RESET & BASE ─── */
-        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
-        :root {
-            --clr-bg:        #0b0c1a;
-            --clr-ink:       #1a0632;
-            --clr-accent:    #6c5ce7;
-            --clr-accent2:   #00cec9;
-            --clr-gold:      #fdcb6e;
-            --clr-white:     #ffffff;
-            --clr-glass:     rgba(11,12,26,.55);
-            --clr-glass-hv:  rgba(11,12,26,.80);
-            --font-display:  'Playfair Display', Georgia, serif;
-            --font-body:     'Inter', system-ui, sans-serif;
-            --ease-out:      cubic-bezier(.16,1,.3,1);
-            --radius-pill:   50px;
-            --radius-card:   16px;
-        }
-
-        body {
-            font-family: var(--font-body);
-            background: var(--clr-bg);
-            color: var(--clr-white);
-            overflow-x: hidden;
-        }
-
-        /* ─── FULL-SCREEN HERO ─── */
-        .hero {
-            position: relative;
-            height: 100vh;
-            min-height: 700px;
-            overflow: hidden;
-        }
-
-        /* ─── CAROUSEL ─── */
-        .carousel-track {
-            position: absolute;
-            inset: 0;
-        }
-        .carousel-slide {
-            position: absolute;
-            inset: 0;
-            background-size: cover;
-            background-position: center;
-            opacity: 0;
-            transition: opacity 1s ease;
-            z-index: 0;
-        }
-        .carousel-slide.active {
-            opacity: 1;
-            z-index: 1;
-        }
-        .carousel-slide::after {
-            content: '';
-            position: absolute;
-            inset: 0;
-            background: linear-gradient(
-                135deg,
-                rgba(11,12,26,.75) 0%,
-                rgba(11,12,26,.35) 50%,
-                rgba(11,12,26,.55) 100%
-            );
-        }
-
-        /* ─── LEFT-SIDE DOT INDICATORS ─── */
-        .carousel-dots {
-            position: absolute;
-            left: 2rem;
-            top: 50%;
-            transform: translateY(-50%);
-            z-index: 20;
-            display: flex;
-            flex-direction: column;
-            gap: .9rem;
-            align-items: center;
-        }
-        .carousel-dot {
-            width: 10px;
-            height: 10px;
-            border-radius: 50%;
-            background: rgba(255,255,255,.3);
-            border: 2px solid rgba(255,255,255,.5);
-            cursor: pointer;
-            transition: all .35s var(--ease-out);
-            position: relative;
-        }
-        .carousel-dot::after {
-            content: '';
-            position: absolute;
-            inset: -5px;
-            border-radius: 50%;
-            border: 1.5px solid transparent;
-            transition: border-color .35s;
-        }
-        .carousel-dot:hover {
-            background: rgba(255,255,255,.6);
-            transform: scale(1.2);
-        }
-        .carousel-dot.active {
-            background: var(--clr-accent);
-            border-color: var(--clr-accent);
-            transform: scale(1.3);
-            box-shadow: 0 0 0 4px rgba(108,92,231,.3);
-        }
-        .carousel-dot.active::after {
-            border-color: rgba(108,92,231,.4);
-        }
-
-        /* Dot progress bar */
-        .carousel-dot-line {
-            width: 2px;
-            height: 24px;
-            background: rgba(255,255,255,.15);
-            border-radius: 2px;
-            overflow: hidden;
-        }
-        .carousel-dot-line:last-child { display: none; }
-        .carousel-dot-fill {
-            width: 100%;
-            height: 0%;
-            background: var(--clr-accent2);
-            transition: height .5s ease;
-        }
-
-        /* ─── HERO CAPTION ─── */
-        .hero-caption {
-            position: absolute;
-            bottom: 6rem;
-            left: 5rem;
-            z-index: 10;
-            max-width: 560px;
-        }
-        .hero-caption .eyebrow {
-            display: inline-flex;
-            align-items: center;
-            gap: .5rem;
-            font-size: .75rem;
-            font-weight: 600;
-            letter-spacing: .15em;
-            text-transform: uppercase;
-            color: var(--clr-accent2);
-            margin-bottom: .8rem;
-            opacity: 0;
-            transform: translateY(12px);
-            transition: opacity .6s .1s ease, transform .6s .1s ease;
-        }
-        .hero-caption .eyebrow .dot { width: 6px; height: 6px; border-radius: 50%; background: var(--clr-accent2); }
-        .hero-caption h1 {
-            font-family: var(--font-display);
-            font-size: clamp(2rem, 4.5vw, 3.2rem);
-            line-height: 1.15;
-            margin-bottom: .9rem;
-            opacity: 0;
-            transform: translateY(16px);
-            transition: opacity .7s .2s ease, transform .7s .2s ease;
-        }
-        .hero-caption p {
-            font-size: clamp(.9rem, 1.6vw, 1.05rem);
-            color: rgba(255,255,255,.75);
-            line-height: 1.65;
-            opacity: 0;
-            transform: translateY(16px);
-            transition: opacity .7s .35s ease, transform .7s .35s ease;
-        }
-        .carousel-slide.active ~ * .hero-caption .eyebrow,
-        .hero-caption.visible .eyebrow,
-        .hero-caption.visible h1,
-        .hero-caption.visible p {
-            opacity: 1;
-            transform: none;
-        }
-
-        /* slide-specific caption shown via JS */
-        .slide-caption { display: none; }
-        .slide-caption.active { display: block; }
-
-        /* Photo attribution */
-        .photo-credit {
-            position: absolute;
-            bottom: 1.2rem;
-            right: 1.5rem;
-            z-index: 10;
-            font-size: .72rem;
-            color: rgba(255,255,255,.55);
-            text-align: right;
-            max-width: 340px;
-            line-height: 1.4;
-            transition: color .3s;
-        }
-
-        /* Slide counter */
-        .slide-counter {
-            position: absolute;
-            bottom: 1.4rem;
-            left: 5rem;
-            z-index: 10;
-            font-size: .75rem;
-            font-weight: 600;
-            color: rgba(255,255,255,.45);
-            letter-spacing: .1em;
-        }
-        .slide-counter span { color: var(--clr-white); font-size: 1rem; font-weight: 700; }
-
-        /* ─── NAVBAR ─── */
-        .navbar {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            z-index: 50;
-            padding: 1.25rem 2.5rem;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            background: linear-gradient(to bottom, rgba(11,12,26,.8) 0%, transparent 100%);
-        }
-
-        .navbar-brand {
-            display: flex;
-            align-items: center;
-            gap: 1.5rem;
-        }
-        .navbar-brand img {
-            height: 44px;
-            width: auto;
-            filter: brightness(1.1);
-        }
-        .brand-divider {
-            width: 1px;
-            height: 30px;
-            background: rgba(255,255,255,.2);
-        }
-
-        /* Quick-access pill (desktop) */
-        .nav-actions {
-            display: flex;
-            align-items: center;
-            gap: .75rem;
-        }
-        .nav-pill {
-            display: inline-flex;
-            align-items: center;
-            gap: .45rem;
-            padding: .45rem 1rem;
-            border-radius: var(--radius-pill);
-            font-size: .8rem;
-            font-weight: 500;
-            text-decoration: none;
-            transition: all .25s;
-            white-space: nowrap;
-        }
-        .nav-pill-ghost {
-            color: rgba(255,255,255,.85);
-            border: 1px solid rgba(255,255,255,.2);
-            background: rgba(255,255,255,.05);
-        }
-        .nav-pill-ghost:hover {
-            background: rgba(255,255,255,.12);
-            color: var(--clr-white);
-            border-color: rgba(255,255,255,.4);
-        }
-        .nav-pill-primary {
-            color: var(--clr-white);
-            background: var(--clr-accent);
-            border: 1px solid transparent;
-        }
-        .nav-pill-primary:hover {
-            background: #7d6ff0;
-            color: var(--clr-white);
-            transform: translateY(-1px);
-            box-shadow: 0 4px 20px rgba(108,92,231,.4);
-        }
-
-        /* Hamburger menu button */
-        .menu-btn {
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            width: 44px;
-            height: 44px;
-            background: rgba(255,255,255,.08);
-            border: 1px solid rgba(255,255,255,.18);
-            border-radius: 12px;
-            cursor: pointer;
-            gap: 5px;
-            transition: background .25s, border-color .25s;
-            flex-shrink: 0;
-        }
-        .menu-btn:hover {
-            background: rgba(255,255,255,.15);
-            border-color: rgba(255,255,255,.35);
-        }
-        .menu-btn span {
-            display: block;
-            width: 20px;
-            height: 2px;
-            background: var(--clr-white);
-            border-radius: 2px;
-            transition: transform .4s var(--ease-out), opacity .3s, width .3s;
-            transform-origin: center;
-        }
-        .menu-btn.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
-        .menu-btn.open span:nth-child(2) { opacity: 0; width: 0; }
-        .menu-btn.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
-
-        /* ─── FULL-SCREEN MENU OVERLAY ─── */
-        .menu-overlay {
-            position: fixed;
-            inset: 0;
-            z-index: 200;
-            background: linear-gradient(135deg, var(--clr-ink) 0%, #0d1b3e 100%);
-            display: flex;
-            flex-direction: column;
-            pointer-events: none;
-            clip-path: circle(0% at calc(100% - 3.5rem) 3.5rem);
-            transition: clip-path .7s var(--ease-out);
-        }
-        .menu-overlay.open {
-            clip-path: circle(160% at calc(100% - 3.5rem) 3.5rem);
-            pointer-events: all;
-            overflow-y: auto;
-            -webkit-overflow-scrolling: touch;
-        }
-
-        /* Overlay decorative blobs */
-        .menu-overlay::before {
-            content: '';
-            position: absolute;
-            top: -200px;
-            right: -200px;
-            width: 600px;
-            height: 600px;
-            border-radius: 50%;
-            background: radial-gradient(circle, rgba(108,92,231,.18) 0%, transparent 70%);
-            pointer-events: none;
-        }
-        .menu-overlay::after {
-            content: '';
-            position: absolute;
-            bottom: -150px;
-            left: -100px;
-            width: 400px;
-            height: 400px;
-            border-radius: 50%;
-            background: radial-gradient(circle, rgba(0,206,201,.12) 0%, transparent 70%);
-            pointer-events: none;
-        }
-
-        /* Close button inside overlay */
-        .overlay-close {
-            position: absolute;
-            top: 1.5rem;
-            right: 2rem;
-            width: 44px;
-            height: 44px;
-            background: rgba(255,255,255,.08);
-            border: 1px solid rgba(255,255,255,.18);
-            border-radius: 12px;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: var(--clr-white);
-            font-size: 1.25rem;
-            transition: background .25s;
-            z-index: 10;
-        }
-        .overlay-close:hover { background: rgba(255,255,255,.15); }
-
-        /* Overlay inner layout */
-        .overlay-inner {
-            display: flex;
-            flex-direction: column;
-            height: 100%;
-            padding: 5rem 3rem 3rem;
-            position: relative;
-            z-index: 5;
-        }
-
-        /* Profile section */
-        .overlay-profile {
-            display: flex;
-            align-items: center;
-            gap: 1.25rem;
-            margin-bottom: 2.5rem;
-            opacity: 0;
-            transform: translateY(20px);
-            transition: opacity .5s .2s ease, transform .5s .2s ease;
-        }
-        .menu-overlay.open .overlay-profile {
-            opacity: 1;
-            transform: none;
-        }
-        .profile-avatar {
-            width: 60px;
-            height: 60px;
-            border-radius: 50%;
-            background: linear-gradient(135deg, var(--clr-accent), var(--clr-accent2));
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.5rem;
-            font-weight: 700;
-            flex-shrink: 0;
-            border: 2px solid rgba(255,255,255,.15);
-        }
-        .profile-info .name {
-            font-weight: 700;
-            font-size: 1.15rem;
-        }
-        .profile-info .role {
-            font-size: .8rem;
-            color: var(--clr-accent2);
-            font-weight: 500;
-            letter-spacing: .05em;
-            text-transform: uppercase;
-        }
-
-        .overlay-divider {
-            height: 1px;
-            background: rgba(255,255,255,.1);
-            margin-bottom: 2rem;
-            opacity: 0;
-            transition: opacity .4s .3s ease;
-        }
-        .menu-overlay.open .overlay-divider { opacity: 1; }
-
-        /* Nav items grid */
-        .overlay-nav {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 1rem;
-            flex: 1;
-        }
-        .overlay-nav-item {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-            padding: 1.1rem 1.4rem;
-            border-radius: var(--radius-card);
-            background: rgba(255,255,255,.04);
-            border: 1px solid rgba(255,255,255,.07);
-            text-decoration: none;
-            color: var(--clr-white);
-            transition: background .25s, border-color .25s, transform .25s;
-            opacity: 0;
-            transform: translateY(24px);
-        }
-        .menu-overlay.open .overlay-nav-item {
-            opacity: 1;
-            transform: none;
-        }
-        /* Staggered delays */
-        .overlay-nav-item:nth-child(1) { transition-delay: .15s; }
-        .overlay-nav-item:nth-child(2) { transition-delay: .2s; }
-        .overlay-nav-item:nth-child(3) { transition-delay: .25s; }
-        .overlay-nav-item:nth-child(4) { transition-delay: .3s; }
-        .overlay-nav-item:nth-child(5) { transition-delay: .35s; }
-        .overlay-nav-item:nth-child(6) { transition-delay: .4s; }
-
-        .overlay-nav-item:hover {
-            background: rgba(108,92,231,.15);
-            border-color: rgba(108,92,231,.35);
-            transform: translateY(-2px);
-        }
-        .overlay-nav-item .item-icon {
-            width: 44px;
-            height: 44px;
-            border-radius: 12px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.25rem;
-            flex-shrink: 0;
-        }
-        .overlay-nav-item .item-text .label {
-            font-weight: 600;
-            font-size: .95rem;
-            display: block;
-        }
-        .overlay-nav-item .item-text .sublabel {
-            font-size: .75rem;
-            color: rgba(255,255,255,.5);
-            display: block;
-            margin-top: .15rem;
-        }
-        .overlay-nav-item .item-arrow {
-            margin-left: auto;
-            color: rgba(255,255,255,.25);
-            font-size: .9rem;
-            transition: transform .25s, color .25s;
-        }
-        .overlay-nav-item:hover .item-arrow {
-            transform: translateX(4px);
-            color: var(--clr-accent);
-        }
-
-        /* Icon color variants */
-        .icon-purple { background: rgba(108,92,231,.18); color: #a29bfe; }
-        .icon-teal   { background: rgba(0,206,201,.15); color: #55efc4; }
-        .icon-gold   { background: rgba(253,203,110,.15); color: var(--clr-gold); }
-        .icon-red    { background: rgba(225,112,85,.15); color: #fab1a0; }
-        .icon-blue   { background: rgba(9,132,227,.15); color: #74b9ff; }
-        .icon-green  { background: rgba(0,184,148,.15); color: #00cec9; }
-
-        /* Bottom links in overlay */
-        .overlay-bottom {
-            display: flex;
-            align-items: center;
-            gap: 1.5rem;
-            margin-top: 2rem;
-            padding-top: 1.5rem;
-            border-top: 1px solid rgba(255,255,255,.1);
-            opacity: 0;
-            transition: opacity .4s .5s ease;
-        }
-        .menu-overlay.open .overlay-bottom { opacity: 1; }
-        .overlay-bottom a {
-            color: rgba(255,255,255,.45);
-            font-size: .78rem;
-            text-decoration: none;
-            transition: color .25s;
-        }
-        .overlay-bottom a:hover { color: var(--clr-white); }
-
-        /* ─── FOOTER ─── */
-        .site-footer {
-            background: #0d1b3e;
-            padding: 2rem 0 0;
-            border-top: 1px solid rgba(255,255,255,.06);
-        }
-        .footer-grid {
-            display: grid;
-            grid-template-columns: 1.5fr 1fr 1fr 1.5fr;
-            gap: 3rem;
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 1rem 2rem;
-        }
-        .footer-col h4 {
-            font-size: .7rem;
-            font-weight: 700;
-            letter-spacing: .12em;
-            text-transform: uppercase;
-            color: var(--clr-accent2);
-            margin-bottom: 1.25rem;
-        }
-        .footer-col p {
-            font-size: .85rem;
-            color: rgba(255,255,255,.45);
-            line-height: 1.7;
-        }
-        .footer-links {
-            list-style: none;
-            display: flex;
-            flex-direction: column;
-            gap: .6rem;
-        }
-        .footer-links a {
-            font-size: .85rem;
-            color: rgba(255,255,255,.5);
-            text-decoration: none;
-            display: flex;
-            align-items: center;
-            gap: .5rem;
-            transition: color .25s;
-        }
-        .footer-links a::before {
-            content: '';
-            width: 4px;
-            height: 4px;
-            border-radius: 50%;
-            background: var(--clr-accent);
-            flex-shrink: 0;
-            transition: background .25s;
-        }
-        .footer-links a:hover { color: var(--clr-white); }
-        .footer-links a:hover::before { background: var(--clr-accent2); }
-
-        .footer-bottom {
-            border-top: 1px solid rgba(255,255,255,.06);
-            padding: 1.25rem 2.5rem;
-            max-width: 1200px;
-            margin: 0 auto;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            flex-wrap: wrap;
-            gap: 1rem;
-        }
-        .footer-bottom-links {
-            display: flex;
-            gap: 1.5rem;
-        }
-        .footer-bottom-links a {
-            font-size: .75rem;
-            color: rgba(255,255,255,.3);
-            text-decoration: none;
-            transition: color .25s;
-        }
-        .footer-bottom-links a:hover { color: var(--clr-white); }
-        .footer-logos {
-            display: flex;
-            align-items: center;
-            gap: .75rem;
-        }
-        .footer-logos img {
-            height: 22px;
-            width: auto;
-            border-radius: 4px;
-            opacity: .7;
-            transition: opacity .25s;
-        }
-        .footer-logos img:hover { opacity: 1; }
-
-        /* ─── RESPONSIVE ─── */
-
-        /* Tablet */
-        @media (max-width: 1024px) {
-            .overlay-nav { grid-template-columns: 1fr 1fr; }
-            .nav-actions .nav-pill:not(.nav-pill-primary) { display: none; }
-            .footer-grid { grid-template-columns: 1fr 1fr; }
-        }
-
-        /* Large phone / small tablet */
-        @media (max-width: 768px) {
-            .navbar {
-                padding: .85rem 1rem;
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>{{ app_title }}</title>
+        <link rel="shortcut icon" href="{% static 'img/favicon.png' %}" />
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Playfair+Display:wght@400;600;700;900&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+        <style>
+            /* ─── RESET & BASE ─── */
+            *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+            :root {
+                --clr-bg: #06081a;
+                --clr-bg-alt: #0a0d24;
+                --clr-ink: #1a0632;
+                --clr-accent: #6c5ce7;
+                --clr-accent-light: #a29bfe;
+                --clr-accent2: #00cec9;
+                --clr-accent2-light: #81ecec;
+                --clr-gold: #fdcb6e;
+                --clr-gold-light: #ffeaa7;
+                --clr-white: #ffffff;
+                --clr-glass: rgba(255,255,255,.06);
+                --clr-glass-border: rgba(255,255,255,.1);
+                --clr-glass-hv: rgba(255,255,255,.12);
+                --font-display: 'Playfair Display', Georgia, serif;
+                --font-body: 'Inter', system-ui, -apple-system, sans-serif;
+                --font-mono: 'JetBrains Mono', monospace;
+                --ease-out: cubic-bezier(.16,1,.3,1);
+                --ease-spring: cubic-bezier(.34,1.56,.64,1);
+                --radius-pill: 50px;
+                --radius-card: 20px;
+                --radius-sm: 12px;
             }
-            .navbar-brand img { height: 34px; }
+            html { scroll-behavior: smooth; }
+            body {
+                font-family: var(--font-body);
+                background: var(--clr-bg);
+                color: var(--clr-white);
+                overflow-x: hidden;
+                -webkit-font-smoothing: antialiased;
+                -moz-osx-font-smoothing: grayscale;
+            }
 
-            /* Hide all nav pills on mobile — hamburger is the only control */
-            .nav-actions .nav-pill { display: none; }
-            /* Always show the hamburger */
-            .menu-btn { display: flex; }
+            /* ─── FULL-SCREEN HERO ─── */
+            .hero {
+                position: relative;
+                height: 100vh;
+                min-height: 700px;
+                overflow: hidden;
+                background: var(--clr-bg);
+            }
 
+            /* Ambient background glow */
+            .hero::before {
+                content: '';
+                position: absolute;
+                inset: 0;
+                background: 
+                    radial-gradient(ellipse 80% 60% at 20% 80%, rgba(108,92,231,.08) 0%, transparent 60%),
+                    radial-gradient(ellipse 60% 50% at 80% 20%, rgba(0,206,201,.06) 0%, transparent 60%);
+                pointer-events: none;
+                z-index: 2;
+            }
+
+            /* ─── CAROUSEL ─── */
+            .carousel-track {
+                position: absolute;
+                inset: 0;
+                perspective: 1200px;
+            }
+            .carousel-slide {
+                position: absolute;
+                inset: 0;
+                background-size: cover;
+                background-position: center;
+                opacity: 0;
+                transition: opacity 1.2s var(--ease-out);
+                z-index: 0;
+                will-change: transform, opacity;
+            }
+            .carousel-slide.active {
+                opacity: 1;
+                z-index: 1;
+            }
+            .carousel-slide::after {
+                content: '';
+                position: absolute;
+                inset: 0;
+                background: 
+                    linear-gradient(135deg, rgba(6,8,26,.82) 0%, rgba(6,8,26,.25) 45%, rgba(6,8,26,.5) 100%),
+                    linear-gradient(to top, rgba(6,8,26,.9) 0%, transparent 35%);
+                pointer-events: none;
+            }
+
+            /* ─── LEFT-SIDE DOT INDICATORS ─── */
+            .carousel-dots {
+                position: absolute;
+                left: 2.5rem;
+                top: 50%;
+                transform: translateY(-50%);
+                z-index: 20;
+                display: flex;
+                flex-direction: column;
+                gap: 0;
+                align-items: center;
+            }
+            .carousel-dot-wrap {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                gap: 0;
+            }
+            .carousel-dot {
+                width: 10px;
+                height: 10px;
+                border-radius: 50%;
+                background: rgba(255,255,255,.2);
+                border: 2px solid rgba(255,255,255,.25);
+                cursor: pointer;
+                transition: all .4s var(--ease-out);
+                position: relative;
+                padding: 0;
+            }
+            .carousel-dot:hover {
+                background: rgba(255,255,255,.5);
+                transform: scale(1.3);
+                border-color: rgba(255,255,255,.6);
+            }
+            .carousel-dot.active {
+                background: var(--clr-accent);
+                border-color: var(--clr-accent-light);
+                transform: scale(1.4);
+                box-shadow: 0 0 0 5px rgba(108,92,231,.25), 0 0 20px rgba(108,92,231,.4);
+            }
+            .carousel-dot-line {
+                width: 2px;
+                height: 28px;
+                background: rgba(255,255,255,.1);
+                border-radius: 2px;
+                overflow: hidden;
+            }
+            .carousel-dot-line:last-child { display: none; }
+            .carousel-dot-fill {
+                width: 100%;
+                height: 0%;
+                background: linear-gradient(to bottom, var(--clr-accent), var(--clr-accent2));
+                transition: height .5s var(--ease-out);
+            }
+
+            /* ─── HERO CAPTION ─── */
             .hero-caption {
-                left: 2.8rem;
-                bottom: 5rem;
-                max-width: calc(100% - 3.5rem);
+                position: absolute;
+                bottom: 7rem;
+                left: 6rem;
+                z-index: 10;
+                max-width: 620px;
             }
-            .hero-caption h1 { font-size: clamp(1.5rem, 6vw, 2rem); }
-            .hero-caption p  { font-size: .85rem; }
+            .hero-caption .eyebrow {
+                display: inline-flex;
+                align-items: center;
+                gap: .6rem;
+                font-size: .72rem;
+                font-weight: 600;
+                letter-spacing: .2em;
+                text-transform: uppercase;
+                color: var(--clr-accent2-light);
+                margin-bottom: 1rem;
+                opacity: 0;
+                transform: translateY(14px);
+                transition: opacity .7s .15s var(--ease-out), transform .7s .15s var(--ease-out);
+            }
+            .hero-caption .eyebrow .dot { 
+                width: 7px; height: 7px; border-radius: 50%; 
+                background: var(--clr-accent2);
+                box-shadow: 0 0 8px var(--clr-accent2);
+                animation: pulse-dot 2s ease-in-out infinite;
+            }
+            @keyframes pulse-dot {
+                0%, 100% { opacity: 1; transform: scale(1); }
+                50% { opacity: .6; transform: scale(.8); }
+            }
+            .hero-caption h1 {
+                font-family: var(--font-display);
+                font-size: clamp(2.2rem, 5vw, 2.2rem);
+                font-weight: 700;
+                line-height: 1.12;
+                margin-bottom: 1rem;
+                opacity: 0;
+                transform: translateY(18px);
+                transition: opacity .8s .25s var(--ease-out), transform .8s .25s var(--ease-out);
+                text-shadow: 0 2px 40px rgba(0,0,0,.3);
+            }
+            .hero-caption h1 .version-badge {
+                display: inline-block;
+                font-family: var(--font-mono);
+                font-size: .45em;
+                font-weight: 500;
+                background: linear-gradient(135deg, var(--clr-accent), var(--clr-accent2));
+                -webkit-background-clip: text;
+                -webkit-text-fill-color: transparent;
+                background-clip: text;
+                vertical-align: super;
+                margin-left: .15em;
+            }
+            .hero-caption p {
+                font-size: clamp(.92rem, 1.5vw, 1.08rem);
+                color: rgba(255,255,255,.7);
+                line-height: 1.7;
+                opacity: 0;
+                transform: translateY(18px);
+                transition: opacity .8s .4s var(--ease-out), transform .8s .4s var(--ease-out);
+                max-width: 520px;
+            }
+            .hero-caption.visible .eyebrow,
+            .hero-caption.visible h1,
+            .hero-caption.visible p {
+                opacity: 1;
+                transform: none;
+            }
 
-            .carousel-dots { left: .7rem; gap: .6rem; }
-            .carousel-dot  { width: 8px; height: 8px; }
-            .carousel-dot-line { height: 16px; }
+            /* Photo attribution */
+            .photo-credit {
+                position: absolute;
+                bottom: 1.5rem;
+                right: 2rem;
+                z-index: 10;
+                font-size: .72rem;
+                color: rgba(255,255,255,.45);
+                text-align: right;
+                max-width: 360px;
+                line-height: 1.5;
+                transition: opacity .5s;
+            }
 
-            .slide-counter { left: 2.8rem; }
+            /* Slide counter */
+            .slide-counter {
+                position: absolute;
+                bottom: 1.6rem;
+                left: 6rem;
+                z-index: 10;
+                font-family: var(--font-mono);
+                font-size: .72rem;
+                font-weight: 500;
+                color: rgba(255,255,255,.4);
+                letter-spacing: .15em;
+                display: flex;
+                align-items: center;
+                gap: .5rem;
+            }
+            .slide-counter .counter-num {
+                color: var(--clr-white);
+                font-size: .9rem;
+                font-weight: 700;
+                min-width: 1.6rem;
+            }
+            .slide-counter .counter-bar {
+                width: 40px;
+                height: 2px;
+                background: rgba(255,255,255,.15);
+                border-radius: 2px;
+                overflow: hidden;
+            }
+            .slide-counter .counter-bar-fill {
+                height: 100%;
+                background: linear-gradient(90deg, var(--clr-accent), var(--clr-accent2));
+                border-radius: 2px;
+                transition: width .6s var(--ease-out);
+            }
 
-            .footer-grid { grid-template-columns: 1fr; gap: 2rem; padding: 0 1.25rem 2rem; }
-            .footer-bottom { padding: 1rem 1.25rem; flex-direction: column; text-align: center; }
+            /* ─── NAVBAR ─── */
+            .navbar {
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 100%;
+                z-index: 50;
+                padding: 1.25rem 3rem;
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                background: linear-gradient(to bottom, rgba(6,8,26,.85) 0%, rgba(6,8,26,.3) 60%, transparent 100%);
+                backdrop-filter: blur(8px);
+                -webkit-backdrop-filter: blur(8px);
+            }
+            .navbar-brand {
+                display: flex;
+                align-items: center;
+                gap: 1.5rem;
+            }
+            .navbar-brand img {
+                height: 44px;
+                width: auto;
+                filter: brightness(1.1) drop-shadow(0 2px 8px rgba(0,0,0,.3));
+                transition: transform .3s var(--ease-out), filter .3s;
+            }
+            .navbar-brand img:hover {
+                transform: scale(1.03);
+                filter: brightness(1.2) drop-shadow(0 4px 16px rgba(108,92,231,.3));
+            }
+            .brand-divider {
+                width: 1px;
+                height: 32px;
+                background: linear-gradient(to bottom, transparent, rgba(255,255,255,.25), transparent);
+            }
 
-            /* Overlay: full-screen scroll on mobile */
-            .overlay-inner {
-                padding: 4.5rem 1.25rem 2rem;
+            /* Quick-access pill (desktop) */
+            .nav-actions {
+                display: flex;
+                align-items: center;
+                gap: .7rem;
+            }
+            .nav-pill {
+                display: inline-flex;
+                align-items: center;
+                gap: .45rem;
+                padding: .5rem 1.1rem;
+                border-radius: var(--radius-pill);
+                font-size: .78rem;
+                font-weight: 500;
+                text-decoration: none;
+                transition: all .3s var(--ease-out);
+                white-space: nowrap;
+                position: relative;
+                overflow: hidden;
+            }
+            .nav-pill::before {
+                content: '';
+                position: absolute;
+                inset: 0;
+                background: linear-gradient(135deg, rgba(255,255,255,.1), transparent);
+                opacity: 0;
+                transition: opacity .3s;
+            }
+            .nav-pill:hover::before { opacity: 1; }
+            .nav-pill-ghost {
+                color: rgba(255,255,255,.85);
+                border: 1px solid rgba(255,255,255,.15);
+                background: rgba(255,255,255,.04);
+            }
+            .nav-pill-ghost:hover {
+                background: rgba(255,255,255,.1);
+                color: var(--clr-white);
+                border-color: rgba(255,255,255,.35);
+                transform: translateY(-1px);
+            }
+            .nav-pill-primary {
+                color: var(--clr-white);
+                background: linear-gradient(135deg, var(--clr-accent), #7c6cf0);
+                border: 1px solid rgba(162,155,254,.3);
+                box-shadow: 0 4px 20px rgba(108,92,231,.3);
+            }
+            .nav-pill-primary:hover {
+                background: linear-gradient(135deg, #7c6cf0, var(--clr-accent));
+                color: var(--clr-white);
+                transform: translateY(-2px);
+                box-shadow: 0 6px 28px rgba(108,92,231,.5);
+            }
+
+            /* Hamburger menu button */
+            .menu-btn {
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                width: 46px;
+                height: 46px;
+                background: rgba(255,255,255,.06);
+                border: 1px solid rgba(255,255,255,.15);
+                border-radius: var(--radius-sm);
+                cursor: pointer;
+                gap: 5px;
+                transition: all .3s var(--ease-out);
+                flex-shrink: 0;
+                position: relative;
+                z-index: 100;
+            }
+            .menu-btn:hover {
+                background: rgba(255,255,255,.12);
+                border-color: rgba(255,255,255,.3);
+                transform: scale(1.05);
+            }
+            .menu-btn:active { transform: scale(.97); }
+            .menu-btn span {
+                display: block;
+                width: 20px;
+                height: 2px;
+                background: var(--clr-white);
+                border-radius: 2px;
+                transition: transform .4s var(--ease-out), opacity .3s, width .3s;
+                transform-origin: center;
+            }
+            .menu-btn.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+            .menu-btn.open span:nth-child(2) { opacity: 0; width: 0; }
+            .menu-btn.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+            /* ─── FULL-SCREEN MENU OVERLAY ─── */
+            .menu-overlay {
+                position: fixed;
+                inset: 0;
+                z-index: 9999;
+                background: linear-gradient(160deg, #0d0f2e 0%, #0a0d24 40%, #06081a 100%);
+                display: flex;
+                flex-direction: column;
+                pointer-events: none;
+                visibility: hidden;
+                opacity: 0;
+                transition: opacity .5s var(--ease-out), visibility 0s .5s;
                 overflow-y: auto;
                 -webkit-overflow-scrolling: touch;
             }
-            .overlay-nav { grid-template-columns: 1fr; gap: .75rem; }
-            .overlay-profile { flex-direction: row; text-align: left; margin-bottom: 1.5rem; }
-            .overlay-nav-item { padding: .9rem 1rem; }
-            .overlay-bottom { flex-wrap: wrap; gap: .75rem; margin-top: 1.5rem; }
-        }
-
-        /* small phones (≤430px) */
-        @media (max-width: 430px) {
-            .navbar { padding: .75rem .85rem; }
-            .navbar-brand { gap: .75rem; }
-            .navbar-brand img:last-child { height: 28px; }
-            .brand-divider { display: none; }
-
-            /* Keep primary pill visible as a quick sign-in shortcut */
-            .nav-actions .nav-pill-primary {
-                display: inline-flex;
-                font-size: .72rem;
-                padding: .4rem .75rem;
+            .menu-overlay::before {
+                content: '';
+                position: fixed;
+                top: -300px;
+                right: -200px;
+                width: 700px;
+                height: 700px;
+                border-radius: 50%;
+                background: radial-gradient(circle, rgba(108,92,231,.12) 0%, transparent 65%);
+                pointer-events: none;
             }
-            .menu-btn { width: 38px; height: 38px; }
-
-            .hero-caption {
-                left: 2.5rem;
-                bottom: 4.5rem;
-                max-width: calc(100% - 3rem);
-            }
-            .hero-caption h1 { font-size: 1.4rem; }
-            .hero-caption p  { font-size: .78rem; line-height: 1.5; }
-            .hero-caption .eyebrow { font-size: .65rem; }
-
-            .carousel-dots { left: .5rem; gap: .5rem; }
-            .carousel-dot  { width: 7px; height: 7px; }
-            .carousel-dot-line { height: 12px; }
-
-            .slide-counter { left: 2.5rem; font-size: .68rem; }
-            .photo-credit  { font-size: .65rem; right: .75rem; max-width: 60%; }
-
-            /* Overlay on small phone */
-            .overlay-inner { padding: 4rem 1rem 1.5rem; }
-            .overlay-close { top: 1rem; right: 1rem; }
-            .profile-avatar { width: 48px; height: 48px; font-size: 1.2rem; }
-            .profile-info .name { font-size: 1rem; }
-            .overlay-nav-item .item-icon { width: 38px; height: 38px; font-size: 1.1rem; }
-            .overlay-nav-item .item-text .label   { font-size: .85rem; }
-            .overlay-nav-item .item-text .sublabel { font-size: .7rem; }
-            .overlay-bottom { gap: .6rem; }
-            .overlay-bottom a { font-size: .72rem; }
-        }
-
-        /* Very small screens (≤375px) */
-        @media (max-width: 375px) {
-            .navbar-brand img:first-child { height: 28px; }
-            .hero-caption h1 { font-size: 1.2rem; }
-        }
-
-        /* Ensure menu overlay is always above everything on mobile */
-        @media (max-width: 768px) {
-            .menu-overlay { z-index: 9999; }
-            /* Clip origin: top-right corner where the hamburger sits */
-            .menu-overlay {
-                clip-path: circle(0% at calc(100% - 2.5rem) 2.5rem);
+            .menu-overlay::after {
+                content: '';
+                position: fixed;
+                bottom: -200px;
+                left: -150px;
+                width: 500px;
+                height: 500px;
+                border-radius: 50%;
+                background: radial-gradient(circle, rgba(0,206,201,.08) 0%, transparent 65%);
+                pointer-events: none;
             }
             .menu-overlay.open {
-                clip-path: circle(200% at calc(100% - 2.5rem) 2.5rem);
+                pointer-events: all;
+                visibility: visible;
+                opacity: 1;
+                transition: opacity .5s var(--ease-out), visibility 0s 0s;
             }
-        }
 
-        @media (prefers-reduced-motion: reduce) {
-            *, *::before, *::after { transition: none !important; animation: none !important; }
-            .menu-overlay { clip-path: none !important; opacity: 0; }
-            .menu-overlay.open { opacity: 1; }
-        }
-    </style>
-</head>
-<body>
+            /* Close button inside overlay */
+            .overlay-close {
+                position: fixed;
+                top: 1.5rem;
+                right: 2rem;
+                width: 46px;
+                height: 46px;
+                background: rgba(255,255,255,.06);
+                border: 1px solid rgba(255,255,255,.15);
+                border-radius: var(--radius-sm);
+                cursor: pointer;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                color: var(--clr-white);
+                font-size: 1.2rem;
+                transition: all .3s var(--ease-out);
+                z-index: 10;
+            }
+            .overlay-close:hover { 
+                background: rgba(255,255,255,.12); 
+                border-color: rgba(255,255,255,.3);
+                transform: rotate(90deg);
+            }
 
-<!-- ═══════════ HERO ═══════════ -->
-<div class="hero" id="hero">
+            /* Overlay inner layout */
+            .overlay-inner {
+                display: flex;
+                flex-direction: column;
+                min-height: 100vh;
+                padding: 6rem 3.5rem 3rem;
+                position: relative;
+                z-index: 5;
+                max-width: 1200px;
+                margin: 0 auto;
+                width: 100%;
+            }
 
-    <!-- Carousel slides -->
-    <div class="carousel-track" id="carouselTrack">
-        <div class="carousel-slide active" data-img="{% static 'img/landing/eamena/Sureza_drone_NE.jpg' %}" style="background-image: url({% static 'img/landing/eamena/Sureza_drone_NE.jpg' %});"
-             data-title="EAMENA Database v5"
-             data-subtitle="Endangered Archaeology in the Middle East &amp; North Africa"
-             data-credit="Tell Surezha (Kurdistan Regional Government, Iraq) © University of Chicago / Harvard University"></div>
-        <div class="carousel-slide" data-img="{% static 'img/landing/eamena/Sidon, Lebanon by Crystal Safadi.JPG' %}" style="background-image: url({% static 'img/landing/eamena/Sidon, Lebanon by Crystal Safadi.JPG' %});"
-             data-title="Sidon, Lebanon"
-             data-subtitle="Documenting coastal heritage across the Levant"
-             data-credit="Sidon, Lebanon © Crystal el-Safadi"></div>
-        <div class="carousel-slide" data-img="{% static 'img/landing/eamena/Abbasabad.jpg' %}" style="background-image: url({% static 'img/landing/eamena/Abbasabad.jpg' %});"
-             data-title="Abbas Abad, Iran"
-             data-subtitle="Historic landscapes: caravanserais, qanats and ancient settlements"
-             data-credit="Abbas Abad, near Taybad, Iran © Google Earth 2022"></div>
-        <div class="carousel-slide" data-img="{% static 'img/landing/eamena/Suakin Island, Sudan by Colin Breen.jpg' %}" style="background-image: url({% static 'img/landing/eamena/Suakin Island, Sudan by Colin Breen.jpg' %});"
-             data-title="Suakin Island, Sudan"
-             data-subtitle="Preserving the memory of Red Sea trading heritage"
-             data-credit="Suakin Island, Sudan © Colin Breen"></div>
-        <div class="carousel-slide" data-img="{% static 'img/landing/eamena/Robat-e-Khakestar_2013_Edited.jpg' %}" style="background-image: url({% static 'img/landing/eamena/Robat-e-Khakestar_2013_Edited.jpg' %});"
-             data-title="Robat Khakestar, Iran"
-             data-subtitle="Ruined caravanserai on the ancient Silk Road"
-             data-credit="Robat Khakestar, Iran © Google Earth 2013"></div>
-        <div class="carousel-slide" data-img="{% static 'img/landing/eamena/Fig3_StCath1951a.jpg' %}" style="background-image: url({% static 'img/landing/eamena/Fig3_StCath1951a.jpg' %});"
-             data-title="Sinai, Egypt"
-             data-subtitle="St Catherine's Monastery — one of the world's oldest Christian communities"
-             data-credit="St Catherine's Monastery, Sinai, Egypt, 1951 © John Clubb (683 Squadron RAF)"></div>
-        <div class="carousel-slide" data-img="{% static 'img/landing/eamena/Libya_Wadi Matkhandouch1_JN.jpg' %}" style="background-image: url({% static 'img/landing/eamena/Libya_Wadi Matkhandouch1_JN.jpg' %});"
-             data-title="Wadi Matkhandouch, Libya"
-             data-subtitle="Prehistoric rock art of the Sahara"
-             data-credit="Rock Art, Wadi Matkhandouch, Libya © Julia Nikolaus"></div>
-        <div class="carousel-slide" data-img="{% static 'img/landing/eamena/Shibam.jpg' %}" style="background-image: url({% static 'img/landing/eamena/Shibam.jpg' %});"
-             data-title="Shibam, Yemen"
-             data-subtitle="The Manhattan of the Desert — a World Heritage Site"
-             data-credit="Shibam, Yemen, 1929 © Nicholas Salt"></div>
-        <div class="carousel-slide" data-img="{% static 'img/landing/eamena/Seimare-Dam_Edited.png' %}" style="background-image: url({% static 'img/landing/eamena/Seimare-Dam_Edited.png' %});"
-             data-title="Seimare Dam, Iran"
-             data-subtitle="Submerged archaeology — racing against rising waters"
-             data-credit="Seimare Dam archaeological site, Iran © Bing Maps"></div>
-        <div class="carousel-slide" data-img="{% static 'img/landing/eamena/Morocco_Ksar Bounou_NS_Middle_Draa Project.jpg' %}" style="background-image: url({% static 'img/landing/eamena/Morocco_Ksar Bounou_NS_Middle_Draa Project.jpg' %});"
-             data-title="Qasr Bounou, Morocco"
-             data-subtitle="Earthen architecture of the Middle Draa Valley"
-             data-credit="Qasr Bounou, Morocco © The Middle Draa Project / Nichole Sheldrick"></div>
-        <div class="carousel-slide" data-img="{% static 'img/landing/eamena/Aswan, EgyptJPG.JPG' %}" style="background-image: url({% static 'img/landing/eamena/Aswan, EgyptJPG.JPG' %});"
-             data-title="Aswan, Egypt"
-             data-subtitle="Millennia of civilisation along the Nile"
-             data-credit="Aswan, Egypt © Mohamed Kenawi"></div>
-        <div class="carousel-slide" data-img="{% static 'img/landing/eamena/Lepcis Magna, Libya, by Julia Nikolaus.JPG' %}" style="background-image: url({% static 'img/landing/eamena/Lepcis Magna, Libya, by Julia Nikolaus.JPG' %});"
-             data-title="Lepcis Magna, Libya"
-             data-subtitle="One of the finest Roman cities of the ancient world"
-             data-credit="Lepcis Magna, Libya © Julia Nikolaus"></div>
-        <div class="carousel-slide" data-img="{% static 'img/landing/eamena/Petra_AZ_cropped.jpg' %}" style="background-image: url({% static 'img/landing/eamena/Petra_AZ_cropped.jpg' %});"
-             data-title="Petra, Jordan"
-             data-subtitle="The rose-red city of the Nabataeans"
-             data-credit="Petra, Jordan © Andrea Zerbini"></div>
-    </div>
+            /* Profile section */
+            .overlay-profile {
+                display: flex;
+                align-items: center;
+                gap: 1.25rem;
+                margin-bottom: 2.5rem;
+                opacity: 0;
+                transform: translateY(24px);
+                transition: opacity .6s .1s var(--ease-out), transform .6s .1s var(--ease-out);
+            }
+            .menu-overlay.open .overlay-profile {
+                opacity: 1;
+                transform: none;
+            }
+            .profile-avatar {
+                width: 64px;
+                height: 64px;
+                border-radius: 50%;
+                background: linear-gradient(135deg, var(--clr-accent), var(--clr-accent2));
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                font-size: 1.5rem;
+                font-weight: 700;
+                flex-shrink: 0;
+                border: 2px solid rgba(255,255,255,.15);
+                box-shadow: 0 4px 24px rgba(108,92,231,.3);
+            }
+            .profile-info .name {
+                font-weight: 700;
+                font-size: 1.2rem;
+                letter-spacing: -.01em;
+            }
+            .profile-info .role {
+                font-size: .78rem;
+                color: var(--clr-accent2-light);
+                font-weight: 500;
+                letter-spacing: .06em;
+                text-transform: uppercase;
+                margin-top: .15rem;
+            }
+            .overlay-divider {
+                height: 1px;
+                background: linear-gradient(90deg, transparent, rgba(255,255,255,.12), transparent);
+                margin-bottom: 2.5rem;
+                opacity: 0;
+                transition: opacity .5s .2s var(--ease-out);
+            }
+            .menu-overlay.open .overlay-divider { opacity: 1; }
 
-    <!-- Left-side dot indicators -->
-    <div class="carousel-dots" id="carouselDots" role="tablist" aria-label="Image navigation"></div>
+            /* Nav items grid */
+            .overlay-nav {
+                display: grid;
+                grid-template-columns: repeat(2, 1fr);
+                gap: .9rem;
+                flex: 1;
+            }
+            .overlay-nav-item {
+                display: flex;
+                align-items: center;
+                gap: 1rem;
+                padding: 1.15rem 1.4rem;
+                border-radius: var(--radius-card);
+                background: rgba(255,255,255,.03);
+                border: 1px solid rgba(255,255,255,.06);
+                text-decoration: none;
+                color: var(--clr-white);
+                transition: all .35s var(--ease-out);
+                opacity: 0;
+                transform: translateY(28px);
+                position: relative;
+                overflow: hidden;
+            }
+            .overlay-nav-item::before {
+                content: '';
+                position: absolute;
+                inset: 0;
+                background: linear-gradient(135deg, rgba(108,92,231,.1), rgba(0,206,201,.05));
+                opacity: 0;
+                transition: opacity .35s;
+            }
+            .overlay-nav-item:hover::before { opacity: 1; }
+            .menu-overlay.open .overlay-nav-item {
+                opacity: 1;
+                transform: none;
+            }
+            .overlay-nav-item:nth-child(1) { transition-delay: .12s; }
+            .overlay-nav-item:nth-child(2) { transition-delay: .17s; }
+            .overlay-nav-item:nth-child(3) { transition-delay: .22s; }
+            .overlay-nav-item:nth-child(4) { transition-delay: .27s; }
+            .overlay-nav-item:nth-child(5) { transition-delay: .32s; }
+            .overlay-nav-item:nth-child(6) { transition-delay: .37s; }
+            .overlay-nav-item:nth-child(7) { transition-delay: .42s; }
+            .overlay-nav-item:nth-child(8) { transition-delay: .47s; }
+            .overlay-nav-item:nth-child(9) { transition-delay: .52s; }
+            .overlay-nav-item:hover {
+                background: rgba(108,92,231,.1);
+                border-color: rgba(108,92,231,.3);
+                transform: translateY(-3px);
+                box-shadow: 0 8px 32px rgba(108,92,231,.15);
+            }
+            .overlay-nav-item .item-icon {
+                width: 46px;
+                height: 46px;
+                border-radius: 14px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                font-size: 1.2rem;
+                flex-shrink: 0;
+                transition: transform .35s var(--ease-spring);
+            }
+            .overlay-nav-item:hover .item-icon {
+                transform: scale(1.1) rotate(-3deg);
+            }
+            .overlay-nav-item .item-text {
+                flex: 1;
+                position: relative;
+                z-index: 1;
+            }
+            .overlay-nav-item .item-text .label {
+                font-weight: 600;
+                font-size: .92rem;
+                display: block;
+                letter-spacing: -.01em;
+            }
+            .overlay-nav-item .item-text .sublabel {
+                font-size: .72rem;
+                color: rgba(255,255,255,.45);
+                display: block;
+                margin-top: .2rem;
+            }
+            .overlay-nav-item .item-arrow {
+                color: rgba(255,255,255,.2);
+                font-size: .85rem;
+                transition: transform .3s var(--ease-out), color .3s;
+                position: relative;
+                z-index: 1;
+            }
+            .overlay-nav-item:hover .item-arrow {
+                transform: translateX(5px);
+                color: var(--clr-accent-light);
+            }
 
-    <!-- Navbar -->
-    <nav class="navbar" role="navigation" aria-label="Main navigation">
-        <div class="navbar-brand">
-            <a href="https://eamena.org/">
-                <img src="{% static 'img/landing/eamena/eamena_logo_nobackground_lg_update_300dpi.png' %}" alt="EAMENA" style="max-height:48px;">
-            </a>
-            <div class="brand-divider"></div>
-            <a href="https://marea.soton.ac.uk/">
-                <img src="{% static 'img/landing/eamena/marea-logo_white.png' %}" alt="MarEA" style="max-height:40px;">
-            </a>
+            /* Icon color variants */
+            .icon-purple { background: rgba(108,92,231,.15); color: #a29bfe; }
+            .icon-teal { background: rgba(0,206,201,.12); color: #55efc4; }
+            .icon-gold { background: rgba(253,203,110,.12); color: var(--clr-gold); }
+            .icon-red { background: rgba(225,112,85,.12); color: #fab1a0; }
+            .icon-blue { background: rgba(9,132,227,.12); color: #74b9ff; }
+            .icon-green { background: rgba(0,184,148,.12); color: #00cec9; }
+
+            /* Bottom links in overlay */
+            .overlay-bottom {
+                display: flex;
+                align-items: center;
+                gap: 2rem;
+                margin-top: 2.5rem;
+                padding-top: 1.5rem;
+                border-top: 1px solid rgba(255,255,255,.08);
+                opacity: 0;
+                transition: opacity .5s .55s var(--ease-out);
+            }
+            .menu-overlay.open .overlay-bottom { opacity: 1; }
+            .overlay-bottom a {
+                color: rgba(255,255,255,.4);
+                font-size: .76rem;
+                text-decoration: none;
+                transition: color .25s;
+                letter-spacing: .02em;
+            }
+            .overlay-bottom a:hover { color: var(--clr-white); }
+
+            /* ─── FOOTER ─── */
+            .site-footer {
+                background: linear-gradient(to bottom, var(--clr-bg-alt), #050714);
+                padding: 3.5rem 0 0;
+                border-top: 1px solid rgba(255,255,255,.04);
+            }
+            .footer-grid {
+                display: grid;
+                grid-template-columns: 1.5fr 1fr 1fr 1.5fr;
+                gap: 3rem;
+                max-width: 1200px;
+                margin: 0 auto;
+                padding: 0 2rem 3rem;
+            }
+            .footer-col h4 {
+                font-size: .68rem;
+                font-weight: 700;
+                letter-spacing: .15em;
+                text-transform: uppercase;
+                color: var(--clr-accent2-light);
+                margin-bottom: 1.25rem;
+            }
+            .footer-col p {
+                font-size: .84rem;
+                color: rgba(255,255,255,.4);
+                line-height: 1.75;
+            }
+            .footer-links {
+                list-style: none;
+                display: flex;
+                flex-direction: column;
+                gap: .65rem;
+            }
+            .footer-links a {
+                font-size: .84rem;
+                color: rgba(255,255,255,.45);
+                text-decoration: none;
+                display: flex;
+                align-items: center;
+                gap: .6rem;
+                transition: all .25s;
+            }
+            .footer-links a::before {
+                content: '';
+                width: 4px;
+                height: 4px;
+                border-radius: 50%;
+                background: var(--clr-accent);
+                flex-shrink: 0;
+                transition: all .25s;
+            }
+            .footer-links a:hover { 
+                color: var(--clr-white); 
+                transform: translateX(3px);
+            }
+            .footer-links a:hover::before { 
+                background: var(--clr-accent2); 
+                box-shadow: 0 0 6px var(--clr-accent2);
+            }
+            .footer-bottom {
+                border-top: 1px solid rgba(255,255,255,.05);
+                padding: 1.5rem 2rem;
+                max-width: 1200px;
+                margin: 0 auto;
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                flex-wrap: wrap;
+                gap: 1rem;
+            }
+            .footer-bottom-links {
+                display: flex;
+                gap: 1.5rem;
+            }
+            .footer-bottom-links a {
+                font-size: .74rem;
+                color: rgba(255,255,255,.25);
+                text-decoration: none;
+                transition: color .25s;
+            }
+            .footer-bottom-links a:hover { color: var(--clr-white); }
+            .footer-logos {
+                display: flex;
+                align-items: center;
+                gap: .85rem;
+            }
+            .footer-logos img {
+                height: 22px;
+                width: auto;
+                border-radius: 4px;
+                opacity: .6;
+                transition: opacity .25s, transform .25s;
+            }
+            .footer-logos img:hover { 
+                opacity: 1; 
+                transform: scale(1.05);
+            }
+
+            /* ─── RESPONSIVE ─── */
+            @media (max-width: 1024px) {
+                .overlay-nav { grid-template-columns: repeat(2, 1fr); }
+                .nav-actions .nav-pill:not(.nav-pill-primary) { display: none; }
+                .footer-grid { grid-template-columns: 1fr 1fr; }
+            }
+            @media (max-width: 768px) {
+                .navbar { padding: .85rem 1.25rem; }
+                .navbar-brand img { height: 36px; }
+                .nav-actions .nav-pill { display: none; }
+                .menu-btn { display: flex; }
+                .hero-caption {
+                    left: 3rem;
+                    bottom: 5.5rem;
+                    max-width: calc(100% - 4rem);
+                }
+                .hero-caption h1 { font-size: clamp(1.6rem, 6vw, 2.2rem); }
+                .hero-caption p { font-size: .88rem; }
+                .carousel-dots { left: .9rem; }
+                .carousel-dot { width: 8px; height: 8px; }
+                .carousel-dot-line { height: 18px; }
+                .slide-counter { left: 3rem; }
+                .footer-grid { grid-template-columns: 1fr; gap: 2rem; padding: 0 1.5rem 2.5rem; }
+                .footer-bottom { padding: 1.25rem 1.5rem; flex-direction: column; text-align: center; }
+                .overlay-inner { padding: 5rem 1.5rem 2rem; }
+                .overlay-nav { grid-template-columns: 1fr; gap: .75rem; }
+                .overlay-profile { flex-direction: row; text-align: left; margin-bottom: 1.5rem; }
+                .overlay-nav-item { padding: 1rem 1.1rem; }
+                .overlay-bottom { flex-wrap: wrap; gap: .85rem; margin-top: 1.5rem; }
+                .overlay-close { top: 1rem; right: 1.25rem; }
+            }
+            @media (max-width: 430px) {
+                .navbar { padding: .75rem 1rem; }
+                .navbar-brand { gap: .75rem; }
+                .navbar-brand img:last-child { height: 30px; }
+                .brand-divider { display: none; }
+                .nav-actions .nav-pill-primary {
+                    display: inline-flex;
+                    font-size: .72rem;
+                    padding: .4rem .8rem;
+                }
+                .menu-btn { width: 40px; height: 40px; }
+                .hero-caption { left: 2.5rem; bottom: 5rem; max-width: calc(100% - 3.5rem); }
+                .hero-caption h1 { font-size: 1.5rem; }
+                .hero-caption p { font-size: .8rem; line-height: 1.55; }
+                .hero-caption .eyebrow { font-size: .65rem; }
+                .carousel-dots { left: .6rem; }
+                .carousel-dot { width: 7px; height: 7px; }
+                .carousel-dot-line { height: 14px; }
+                .slide-counter { left: 2.5rem; font-size: .65rem; }
+                .photo-credit { font-size: .62rem; right: .85rem; max-width: 55%; }
+                .overlay-inner { padding: 4.5rem 1rem 1.5rem; }
+                .profile-avatar { width: 52px; height: 52px; font-size: 1.2rem; }
+                .profile-info .name { font-size: 1.05rem; }
+                .overlay-nav-item .item-icon { width: 40px; height: 40px; font-size: 1.1rem; }
+                .overlay-nav-item .item-text .label { font-size: .88rem; }
+                .overlay-nav-item .item-text .sublabel { font-size: .7rem; }
+                .overlay-bottom { gap: .7rem; }
+                .overlay-bottom a { font-size: .7rem; }
+            }
+            @media (max-width: 375px) {
+                .navbar-brand img:first-child { height: 30px; }
+                .hero-caption h1 { font-size: 1.3rem; }
+            }
+
+            @media (prefers-reduced-motion: reduce) {
+                *, *::before, *::after { transition: none !important; animation: none !important; }
+            }
+        </style>
+    </head>
+    <body>
+        <!-- ═══════════ HERO ═══════════ -->
+        <div class="hero" id="hero">
+            <!-- Carousel slides -->
+            <div class="carousel-track" id="carouselTrack">
+                <!-- NEW FIRST SLIDE: EAMENA 5 Hero Image -->
+                <div class="carousel-slide active" 
+                    data-img="{% static 'img/landing/eamena/Home-Slider.jpg' %}" 
+                    style="background-image: url('{% static 'img/landing/eamena/Home-Slider.jpg' %}');"
+                    data-title="EAMENA Database v5"
+                    data-subtitle="Endangered Archaeology in the Middle East &amp; North Africa — Mapping, recording, and monitoring threatened cultural heritage across the region"
+                    data-credit="EAMENA Database v5 · Endangered Archaeology in the Middle East &amp; North Africa"></div>
+
+                <!-- Original first image now second -->
+                <div class="carousel-slide" 
+                    data-img="{% static 'img/landing/eamena/Sureza_drone_NE.jpg' %}" 
+                    style="background-image: url({% static 'img/landing/eamena/Sureza_drone_NE.jpg' %});"
+                    data-title="Tell Surezha, Iraqi Kurdistan"
+                    data-subtitle="Drone survey of ancient settlement mounds in the Kurdistan Regional Government region"
+                    data-credit="Tell Surezha (Kurdistan Regional Government, Iraq) © University of Chicago / Harvard University"></div>
+
+                <div class="carousel-slide" 
+                    data-img="{% static 'img/landing/eamena/Sidon, Lebanon by Crystal Safadi.JPG' %}" 
+                    style="background-image: url({% static 'img/landing/eamena/Sidon, Lebanon by Crystal Safadi.JPG' %});"
+                    data-title="Sidon, Lebanon"
+                    data-subtitle="Documenting coastal heritage across the Levant"
+                    data-credit="Sidon, Lebanon © Crystal el-Safadi"></div>
+
+                <div class="carousel-slide" 
+                    data-img="{% static 'img/landing/eamena/Abbasabad.jpg' %}" 
+                    style="background-image: url({% static 'img/landing/eamena/Abbasabad.jpg' %});"
+                    data-title="Abbas Abad, Iran"
+                    data-subtitle="Historic landscapes: caravanserais, qanats and ancient settlements"
+                    data-credit="Abbas Abad, near Taybad, Iran © Google Earth 2022"></div>
+
+                <div class="carousel-slide" 
+                    data-img="{% static 'img/landing/eamena/Suakin Island, Sudan by Colin Breen.jpg' %}" 
+                    style="background-image: url({% static 'img/landing/eamena/Suakin Island, Sudan by Colin Breen.jpg' %});"
+                    data-title="Suakin Island, Sudan"
+                    data-subtitle="Preserving the memory of Red Sea trading heritage"
+                    data-credit="Suakin Island, Sudan © Colin Breen"></div>
+
+                <div class="carousel-slide" 
+                    data-img="{% static 'img/landing/eamena/Robat-e-Khakestar_2013_Edited.jpg' %}" 
+                    style="background-image: url({% static 'img/landing/eamena/Robat-e-Khakestar_2013_Edited.jpg' %});"
+                    data-title="Robat Khakestar, Iran"
+                    data-subtitle="Ruined caravanserai on the ancient Silk Road"
+                    data-credit="Robat Khakestar, Iran © Google Earth 2013"></div>
+
+                <div class="carousel-slide" 
+                    data-img="{% static 'img/landing/eamena/Fig3_StCath1951a.jpg' %}" 
+                    style="background-image: url({% static 'img/landing/eamena/Fig3_StCath1951a.jpg' %});"
+                    data-title="Sinai, Egypt"
+                    data-subtitle="St Catherine's Monastery — one of the world's oldest Christian communities"
+                    data-credit="St Catherine's Monastery, Sinai, Egypt, 1951 © John Clubb (683 Squadron RAF)"></div>
+
+                <div class="carousel-slide" 
+                    data-img="{% static 'img/landing/eamena/Libya_Wadi Matkhandouch1_JN.jpg' %}" 
+                    style="background-image: url({% static 'img/landing/eamena/Libya_Wadi Matkhandouch1_JN.jpg' %});"
+                    data-title="Wadi Matkhandouch, Libya"
+                    data-subtitle="Prehistoric rock art of the Sahara"
+                    data-credit="Rock Art, Wadi Matkhandouch, Libya © Julia Nikolaus"></div>
+
+                <div class="carousel-slide" 
+                    data-img="{% static 'img/landing/eamena/Shibam.jpg' %}" 
+                    style="background-image: url({% static 'img/landing/eamena/Shibam.jpg' %});"
+                    data-title="Shibam, Yemen"
+                    data-subtitle="The Manhattan of the Desert — a World Heritage Site"
+                    data-credit="Shibam, Yemen, 1929 © Nicholas Salt"></div>
+
+                <div class="carousel-slide" 
+                    data-img="{% static 'img/landing/eamena/Seimare-Dam_Edited.png' %}" 
+                    style="background-image: url({% static 'img/landing/eamena/Seimare-Dam_Edited.png' %});"
+                    data-title="Seimare Dam, Iran"
+                    data-subtitle="Submerged archaeology — racing against rising waters"
+                    data-credit="Seimare Dam archaeological site, Iran © Bing Maps"></div>
+
+                <div class="carousel-slide" 
+                    data-img="{% static 'img/landing/eamena/Morocco_Ksar Bounou_NS_Middle_Draa Project.jpg' %}" 
+                    style="background-image: url({% static 'img/landing/eamena/Morocco_Ksar Bounou_NS_Middle_Draa Project.jpg' %});"
+                    data-title="Qasr Bounou, Morocco"
+                    data-subtitle="Earthen architecture of the Middle Draa Valley"
+                    data-credit="Qasr Bounou, Morocco © The Middle Draa Project / Nichole Sheldrick"></div>
+
+                <div class="carousel-slide" 
+                    data-img="{% static 'img/landing/eamena/Aswan, EgyptJPG.JPG' %}" 
+                    style="background-image: url({% static 'img/landing/eamena/Aswan, EgyptJPG.JPG' %});"
+                    data-title="Aswan, Egypt"
+                    data-subtitle="Millennia of civilisation along the Nile"
+                    data-credit="Aswan, Egypt © Mohamed Kenawi"></div>
+
+                <div class="carousel-slide" 
+                    data-img="{% static 'img/landing/eamena/Lepcis Magna, Libya, by Julia Nikolaus.JPG' %}" 
+                    style="background-image: url({% static 'img/landing/eamena/Lepcis Magna, Libya, by Julia Nikolaus.JPG' %});"
+                    data-title="Lepcis Magna, Libya"
+                    data-subtitle="One of the finest Roman cities of the ancient world"
+                    data-credit="Lepcis Magna, Libya © Julia Nikolaus"></div>
+
+                <div class="carousel-slide" 
+                    data-img="{% static 'img/landing/eamena/Petra_AZ_cropped.jpg' %}" 
+                    style="background-image: url({% static 'img/landing/eamena/Petra_AZ_cropped.jpg' %});"
+                    data-title="Petra, Jordan"
+                    data-subtitle="The rose-red city of the Nabataeans"
+                    data-credit="Petra, Jordan © Andrea Zerbini"></div>
+            </div>
+
+            <!-- Left-side dot indicators -->
+            <div class="carousel-dots" id="carouselDots" role="tablist" aria-label="Image navigation"></div>
+
+            <!-- Navbar -->
+            <nav class="navbar" role="navigation" aria-label="Main navigation">
+                <div class="navbar-brand">
+                    <a href="https://eamena.org/">
+                        <img src="{% static 'img/landing/eamena/eamena_logo_nobackground_lg_update_300dpi.png' %}" alt="EAMENA">
+                    </a>
+                    <div class="brand-divider"></div>
+                    <a href="https://marea.soton.ac.uk/">
+                        <img src="{% static 'img/landing/eamena/marea-logo_white.png' %}" alt="MarEA">
+                    </a>
+                </div>
+                <div class="nav-actions">
+                    {% if user.username == 'anonymous' %}
+                    <a class="nav-pill nav-pill-ghost" href="{% url 'signup' %}">
+                        <i class="bi bi-globe"></i> Public Access
+                    </a>
+                    <a class="nav-pill nav-pill-ghost" href="http://eamena.web.ox.ac.uk/database-registration-form/">
+                        <i class="bi bi-person-plus"></i> Register
+                    </a>
+                    <a class="nav-pill nav-pill-primary" href="{% url 'auth' %}?next={% url 'home' %}">
+                        <i class="bi bi-box-arrow-in-right"></i> Sign In
+                    </a>
+                    {% else %}
+                    <a class="nav-pill nav-pill-ghost" href="{% url 'search_home' %}" target="_blank">
+                        <i class="bi bi-search"></i> Search Database
+                    </a>
+                    {% if user|can_create_resource_instance %}
+                    <a class="nav-pill nav-pill-ghost" href="{% url 'resource' %}" target="_blank">
+                        <i class="bi bi-plus-circle"></i> New Resource
+                    </a>
+                    {% endif %}
+                    <a class="nav-pill nav-pill-primary" href="{% url 'user_profile_manager' %}">
+                        <i class="bi bi-person-circle"></i> {{ user.first_name|default:user.username }}
+                    </a>
+                    {% endif %}
+                    <button class="menu-btn" id="menuBtn" aria-label="Open navigation menu" aria-expanded="false">
+                        <span></span><span></span><span></span>
+                    </button>
+                </div>
+            </nav>
+
+            <!-- Hero caption (updates per slide) -->
+            <div class="hero-caption visible" id="heroCaption">
+                <!--<div class="eyebrow"><span class="dot"></span><span id="captionEyebrow">Endangered Heritage</span></div>-->
+                <h1 id="captionTitle">EAMENA Database <span class="version-badge">v5</span></h1>
+                <p id="captionSubtitle">Endangered Archaeology in the Middle East &amp; North Africa — Mapping, recording, and monitoring threatened cultural heritage across the region</p>
+            </div>
+
+            <!-- Slide counter -->
+            <div class="slide-counter">
+                <span class="counter-num" id="slideCurrentNum">01</span>
+                <div class="counter-bar"><div class="counter-bar-fill" id="counterBarFill" style="width: 7.14%"></div></div>
+                <span class="counter-num" id="slideTotalNum">14</span>
+            </div>
+
+            <!-- Photo credit -->
+            <div class="photo-credit" id="photoCredit">
+                EAMENA Database v5 · Endangered Archaeology in the Middle East &amp; North Africa
+            </div>
         </div>
 
-        <div class="nav-actions">
-            {% if user.username == 'anonymous' %}
-                <a class="nav-pill nav-pill-ghost" href="{% url 'signup' %}">
-                    <i class="bi bi-globe"></i> Public Access
-                </a>
-                <a class="nav-pill nav-pill-ghost" href="http://eamena.web.ox.ac.uk/database-registration-form/">
-                    <i class="bi bi-person-plus"></i> Register
-                </a>
-                <a class="nav-pill nav-pill-primary" href="{% url 'auth' %}?next={% url 'home' %}">
-                    <i class="bi bi-box-arrow-in-right"></i> Sign In
-                </a>
-            {% else %}
-                <a class="nav-pill nav-pill-ghost" href="{% url 'search_home' %}" target="_blank">
-                    <i class="bi bi-search"></i> Search Database
-                </a>
-                {% if user|can_create_resource_instance %}
-                <a class="nav-pill nav-pill-ghost" href="{% url 'resource' %}" target="_blank">
-                    <i class="bi bi-plus-circle"></i> New Resource
-                </a>
-                {% endif %}
-                <a class="nav-pill nav-pill-primary" href="{% url 'user_profile_manager' %}">
-                    <i class="bi bi-person-circle"></i> {{ user.first_name|default:user.username }}
-                </a>
-            {% endif %}
-            <button class="menu-btn" id="menuBtn" aria-label="Open navigation menu" aria-expanded="false">
-                <span></span><span></span><span></span>
+        <!-- ═══════════ FULL-SCREEN MENU OVERLAY ═══════════ -->
+        <div class="menu-overlay" id="menuOverlay" role="dialog" aria-modal="true" aria-label="Navigation menu">
+            <button class="overlay-close" id="menuClose" aria-label="Close menu">
+                <i class="bi bi-x-lg"></i>
             </button>
-        </div>
-    </nav>
+            <div class="overlay-inner">
+                <!-- Profile -->
+                <div class="overlay-profile">
+                    <div class="profile-avatar" id="overlayAvatar">
+                        {% if user.username == 'anonymous' %}
+                        <i class="bi bi-person" style="font-size:1.4rem;"></i>
+                        {% else %}
+                        {{ user.first_name|default:user.username|slice:":1"|upper }}
+                        {% endif %}
+                    </div>
+                    <div class="profile-info">
+                        {% if user.username == 'anonymous' %}
+                        <div class="name">Welcome to EAMENA</div>
+                        <div class="role">Guest · Sign in to explore</div>
+                        {% else %}
+                        <div class="name">{{ user.first_name|default:user.username }}</div>
+                        <div class="role">Researcher · EAMENA Database</div>
+                        {% endif %}
+                    </div>
+                </div>
+                <div class="overlay-divider"></div>
 
-    <!-- Hero caption (updates per slide) -->
-    <div class="hero-caption visible" id="heroCaption">
-        <div class="eyebrow"><span class="dot"></span><span id="captionEyebrow">Endangered Heritage</span></div>
-        <h1 id="captionTitle">EAMENA Database v5</h1>
-        <p id="captionSubtitle">Endangered Archaeology in the Middle East &amp; North Africa</p>
-    </div>
+                <!-- Navigation items grid -->
+                <div class="overlay-nav" id="overlayNav">
+                    {% if user.username != 'anonymous' %}
+                    <a class="overlay-nav-item" href="{% url 'search_home' %}" target="_blank">
+                        <div class="item-icon icon-purple"><i class="bi bi-search-heart"></i></div>
+                        <div class="item-text">
+                            <span class="label">Search Database</span>
+                            <span class="sublabel">Query heritage records</span>
+                        </div>
+                        <i class="bi bi-arrow-right item-arrow"></i>
+                    </a>
+                    {% if user|can_create_resource_instance %}
+                    <a class="overlay-nav-item" href="{% url 'resource' %}" target="_blank">
+                        <div class="item-icon icon-teal"><i class="bi bi-plus-square"></i></div>
+                        <div class="item-text">
+                            <span class="label">New Heritage Resource</span>
+                            <span class="sublabel">Add a site or monument</span>
+                        </div>
+                        <i class="bi bi-arrow-right item-arrow"></i>
+                    </a>
+                    {% endif %}
+                    <a class="overlay-nav-item" href="{% url 'user_profile_manager' %}">
+                        <div class="item-icon icon-blue"><i class="bi bi-person-badge"></i></div>
+                        <div class="item-text">
+                            <span class="label">My Profile</span>
+                            <span class="sublabel">Manage your account</span>
+                        </div>
+                        <i class="bi bi-arrow-right item-arrow"></i>
+                    </a>
+                    <a class="overlay-nav-item" href="https://database.eamena.org/bulk-upload" target="_blank">
+                        <div class="item-icon icon-gold"><i class="bi bi-cloud-upload"></i></div>
+                        <div class="item-text">
+                            <span class="label">Bulk Uploader</span>
+                            <span class="sublabel">Upload records in bulk</span>
+                        </div>
+                        <i class="bi bi-arrow-right item-arrow"></i>
+                    </a>
+                    <a class="overlay-nav-item" href="{% url 'auth' %}?next={% url 'home' %}&logout=true">
+                        <div class="item-icon icon-red"><i class="bi bi-box-arrow-left"></i></div>
+                        <div class="item-text">
+                            <span class="label">Sign Out</span>
+                            <span class="sublabel">End your session</span>
+                        </div>
+                        <i class="bi bi-arrow-right item-arrow"></i>
+                    </a>
+                    {% else %}
+                    <a class="overlay-nav-item" href="{% url 'auth' %}?next={% url 'home' %}">
+                        <div class="item-icon icon-purple"><i class="bi bi-box-arrow-in-right"></i></div>
+                        <div class="item-text">
+                            <span class="label">Sign In</span>
+                            <span class="sublabel">Access your account</span>
+                        </div>
+                        <i class="bi bi-arrow-right item-arrow"></i>
+                    </a>
+                    <a class="overlay-nav-item" href="{% url 'signup' %}">
+                        <div class="item-icon icon-teal"><i class="bi bi-globe2"></i></div>
+                        <div class="item-text">
+                            <span class="label">Public Access</span>
+                            <span class="sublabel">Explore open data</span>
+                        </div>
+                        <i class="bi bi-arrow-right item-arrow"></i>
+                    </a>
+                    <a class="overlay-nav-item" href="http://eamena.web.ox.ac.uk/database-registration-form/">
+                        <div class="item-icon icon-blue"><i class="bi bi-person-plus"></i></div>
+                        <div class="item-text">
+                            <span class="label">Register for Access</span>
+                            <span class="sublabel">Researcher credentials</span>
+                        </div>
+                        <i class="bi bi-arrow-right item-arrow"></i>
+                    </a>
+                    {% endif %}
+                    <a class="overlay-nav-item" href="https://eamena.org/database#data-use" target="_blank">
+                        <div class="item-icon icon-gold"><i class="bi bi-shield-check"></i></div>
+                        <div class="item-text">
+                            <span class="label">License &amp; Open Access</span>
+                            <span class="sublabel">Data use policy</span>
+                        </div>
+                        <i class="bi bi-arrow-right item-arrow"></i>
+                    </a>
+                    <a class="overlay-nav-item" href="https://eamena.org/" target="_blank">
+                        <div class="item-icon icon-green"><i class="bi bi-house-door"></i></div>
+                        <div class="item-text">
+                            <span class="label">EAMENA Website</span>
+                            <span class="sublabel">Project homepage</span>
+                        </div>
+                        <i class="bi bi-arrow-right item-arrow"></i>
+                    </a>
+                    <a class="overlay-nav-item" href="https://marea.soton.ac.uk/" target="_blank">
+                        <div class="item-icon icon-teal"><i class="bi bi-water"></i></div>
+                        <div class="item-text">
+                            <span class="label">MarEA Project</span>
+                            <span class="sublabel">Maritime archaeology</span>
+                        </div>
+                        <i class="bi bi-arrow-right item-arrow"></i>
+                    </a>
+                </div>
 
-    <!-- Slide counter -->
-    <div class="slide-counter">
-        <span id="slideCurrentNum">01</span> / <span id="slideTotalNum">13</span>
-    </div>
-
-    <!-- Photo credit -->
-    <div class="photo-credit" id="photoCredit">
-        Tell Surezha (Kurdistan Regional Government, Iraq) © University of Chicago / Harvard University
-    </div>
-</div>
-
-<!-- ═══════════ FULL-SCREEN MENU OVERLAY ═══════════ -->
-<div class="menu-overlay" id="menuOverlay" role="dialog" aria-modal="true" aria-label="Navigation menu">
-    <button class="overlay-close" id="menuClose" aria-label="Close menu">
-        <i class="bi bi-x-lg"></i>
-    </button>
-
-    <div class="overlay-inner">
-        <!-- Profile -->
-        <div class="overlay-profile">
-            <div class="profile-avatar" id="overlayAvatar">
-                {% if user.username == 'anonymous' %}
-                    <i class="bi bi-person" style="font-size:1.4rem;"></i>
-                {% else %}
-                    {{ user.first_name|default:user.username|slice:":1"|upper }}
-                {% endif %}
+                <!-- Bottom links -->
+                <div class="overlay-bottom">
+                    <a href="https://eamena.org/copyright">Copyright</a>
+                    <a href="https://eamena.org/privacy">Privacy Policy</a>
+                    <a href="https://www.archesproject.org" target="_blank">Powered by Arches</a>
+                </div>
             </div>
-            <div class="profile-info">
-                {% if user.username == 'anonymous' %}
-                    <div class="name">Welcome to EAMENA</div>
-                    <div class="role">Guest · Sign in to explore</div>
-                {% else %}
-                    <div class="name">{{ user.first_name|default:user.username }}</div>
-                    <div class="role">Researcher · EAMENA Database</div>
-                {% endif %}
+        </div>
+
+        <!-- ═══════════ FOOTER ═══════════ -->
+        <footer class="site-footer">
+            <div class="footer-grid">
+                <div class="footer-col">
+                    <h4>About EAMENA</h4>
+                    <p>Endangered Archaeology in the Middle East and North Africa. Mapping, recording, and monitoring threatened cultural heritage across the region.</p>
+                </div>
+                <div class="footer-col">
+                    <h4>EAMENA Project</h4>
+                    <ul class="footer-links">
+                        <li><a href="https://www.arch.ox.ac.uk/" target="_blank">University of Oxford</a></li>
+                        <li><a href="https://le.ac.uk/archaeology/" target="_blank">University of Leicester</a></li>
+                        <li><a href="https://www.dur.ac.uk/archaeology/" target="_blank">Durham University</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>MarEA Project</h4>
+                    <ul class="footer-links">
+                        <li><a href="https://www.southampton.ac.uk/archaeology/index.page" target="_blank">University of Southampton</a></li>
+                        <li><a href="https://www.ulster.ac.uk/" target="_blank">Ulster University</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>Supported By</h4>
+                    <ul class="footer-links">
+                        <li><a href="https://www.arcadiafund.org.uk/" target="_blank">Arcadia Fund</a></li>
+                        <li><a href="https://www.britishcouncil.org/arts/culture-development/cultural-protection-fund/" target="_blank">British Council Cultural Protection Fund</a></li>
+                    </ul>
+                </div>
             </div>
-        </div>
-
-        <div class="overlay-divider"></div>
-
-        <!-- Navigation items grid -->
-        <div class="overlay-nav" id="overlayNav">
-            {% if user.username != 'anonymous' %}
-                <a class="overlay-nav-item" href="{% url 'search_home' %}" target="_blank">
-                    <div class="item-icon icon-purple"><i class="bi bi-search-heart"></i></div>
-                    <div class="item-text">
-                        <span class="label">Search Database</span>
-                        <span class="sublabel">Query heritage records</span>
-                    </div>
-                    <i class="bi bi-arrow-right item-arrow"></i>
-                </a>
-                {% if user|can_create_resource_instance %}
-                <a class="overlay-nav-item" href="{% url 'resource' %}" target="_blank">
-                    <div class="item-icon icon-teal"><i class="bi bi-plus-square"></i></div>
-                    <div class="item-text">
-                        <span class="label">New Heritage Resource</span>
-                        <span class="sublabel">Add a site or monument</span>
-                    </div>
-                    <i class="bi bi-arrow-right item-arrow"></i>
-                </a>
-                {% endif %}
-                <a class="overlay-nav-item" href="{% url 'user_profile_manager' %}">
-                    <div class="item-icon icon-blue"><i class="bi bi-person-badge"></i></div>
-                    <div class="item-text">
-                        <span class="label">My Profile</span>
-                        <span class="sublabel">Manage your account</span>
-                    </div>
-                    <i class="bi bi-arrow-right item-arrow"></i>
-                </a>
-                <a class="overlay-nav-item" href="{% url 'auth' %}?next={% url 'home' %}&logout=true">
-                    <div class="item-icon icon-red"><i class="bi bi-box-arrow-left"></i></div>
-                    <div class="item-text">
-                        <span class="label">Sign Out</span>
-                        <span class="sublabel">End your session</span>
-                    </div>
-                    <i class="bi bi-arrow-right item-arrow"></i>
-                </a>
-            {% else %}
-                <a class="overlay-nav-item" href="{% url 'auth' %}?next={% url 'home' %}">
-                    <div class="item-icon icon-purple"><i class="bi bi-box-arrow-in-right"></i></div>
-                    <div class="item-text">
-                        <span class="label">Sign In</span>
-                        <span class="sublabel">Access your account</span>
-                    </div>
-                    <i class="bi bi-arrow-right item-arrow"></i>
-                </a>
-                <a class="overlay-nav-item" href="{% url 'signup' %}">
-                    <div class="item-icon icon-teal"><i class="bi bi-globe2"></i></div>
-                    <div class="item-text">
-                        <span class="label">Public Access</span>
-                        <span class="sublabel">Explore open data</span>
-                    </div>
-                    <i class="bi bi-arrow-right item-arrow"></i>
-                </a>
-                <a class="overlay-nav-item" href="http://eamena.web.ox.ac.uk/database-registration-form/">
-                    <div class="item-icon icon-blue"><i class="bi bi-person-plus"></i></div>
-                    <div class="item-text">
-                        <span class="label">Register for Access</span>
-                        <span class="sublabel">Researcher credentials</span>
-                    </div>
-                    <i class="bi bi-arrow-right item-arrow"></i>
-                </a>
-            {% endif %}
-
-            <a class="overlay-nav-item" href="https://eamena.org/database#data-use" target="_blank">
-                <div class="item-icon icon-gold"><i class="bi bi-shield-check"></i></div>
-                <div class="item-text">
-                    <span class="label">License &amp; Open Access</span>
-                    <span class="sublabel">Data use policy</span>
+            <div class="footer-bottom">
+                <div class="footer-bottom-links">
+                    <a href="https://eamena.org/copyright">Copyright</a>
+                    <a href="https://eamena.org/privacy">Privacy Policy</a>
                 </div>
-                <i class="bi bi-arrow-right item-arrow"></i>
-            </a>
-            <a class="overlay-nav-item" href="https://eamena.org/" target="_blank">
-                <div class="item-icon icon-green"><i class="bi bi-house-door"></i></div>
-                <div class="item-text">
-                    <span class="label">EAMENA Website</span>
-                    <span class="sublabel">Project homepage</span>
+                <div class="footer-logos">
+                    <a href="https://eamena.org/database#data-use">
+                        <img src="{% static 'img/landing/eamena/license-cc-by.png' %}" alt="CC-BY License">
+                    </a>
+                    <a href="http://www.archesproject.org" target="_blank">
+                        <img src="{% static 'img/PoweredByArches.png' %}" alt="Powered by Arches">
+                    </a>
                 </div>
-                <i class="bi bi-arrow-right item-arrow"></i>
-            </a>
-            <a class="overlay-nav-item" href="https://marea.soton.ac.uk/" target="_blank">
-                <div class="item-icon icon-teal"><i class="bi bi-water"></i></div>
-                <div class="item-text">
-                    <span class="label">MarEA Project</span>
-                    <span class="sublabel">Maritime archaeology</span>
-                </div>
-                <i class="bi bi-arrow-right item-arrow"></i>
-            </a>
-        </div>
+            </div>
+        </footer>
 
-        <!-- Bottom links -->
-        <div class="overlay-bottom">
-            <a href="https://eamena.org/copyright">Copyright</a>
-            <a href="https://eamena.org/privacy">Privacy Policy</a>
-            <a href="https://www.archesproject.org" target="_blank">Powered by Arches</a>
-        </div>
-    </div>
-</div>
+        <script>
+            (function () {
+                'use strict';
 
-<!-- ═══════════ FOOTER ═══════════ -->
-<footer class="site-footer">
-    <div class="footer-grid">
-        <div class="footer-col">
-            <h4>About EAMENA</h4>
-            <p>Endangered Archaeology in the Middle East and North Africa. Mapping, recording, and monitoring threatened cultural heritage across the region.</p>
-        </div>
-        <div class="footer-col">
-            <h4>EAMENA Project</h4>
-            <ul class="footer-links">
-                <li><a href="https://www.arch.ox.ac.uk/" target="_blank">University of Oxford</a></li>
-                <li><a href="https://le.ac.uk/archaeology/" target="_blank">University of Leicester</a></li>
-                <li><a href="https://www.dur.ac.uk/archaeology/" target="_blank">Durham University</a></li>
-            </ul>
-        </div>
-        <div class="footer-col">
-            <h4>MarEA Project</h4>
-            <ul class="footer-links">
-                <li><a href="https://www.southampton.ac.uk/archaeology/index.page" target="_blank">University of Southampton</a></li>
-                <li><a href="https://www.ulster.ac.uk/" target="_blank">Ulster University</a></li>
-            </ul>
-        </div>
-        <div class="footer-col">
-            <h4>Supported By</h4>
-            <ul class="footer-links">
-                <li><a href="https://www.arcadiafund.org.uk/" target="_blank">Arcadia Fund</a></li>
-                <li><a href="https://www.britishcouncil.org/arts/culture-development/cultural-protection-fund/" target="_blank">British Council Cultural Protection Fund</a></li>
-            </ul>
-        </div>
-    </div>
-    <div class="footer-bottom">
-        <div class="footer-bottom-links">
-            <a href="https://eamena.org/copyright">Copyright</a>
-            <a href="https://eamena.org/privacy">Privacy Policy</a>
-        </div>
-        <div class="footer-logos">
-            <a href="https://eamena.org/database#data-use">
-                <img src="{% static 'img/landing/eamena/license-cc-by.png' %}" alt="CC-BY License">
-            </a>
-            <a href="http://www.archesproject.org" target="_blank">
-                <img src="{% static 'img/PoweredByArches.png' %}" alt="Powered by Arches">
-            </a>
-        </div>
-    </div>
-</footer>
+                // ─── CAROUSEL WITH MOUSE PARALLAX ───
+                const slides = Array.from(document.querySelectorAll('.carousel-slide'));
+                const dotsWrap = document.getElementById('carouselDots');
+                const creditEl = document.getElementById('photoCredit');
+                const titleEl = document.getElementById('captionTitle');
+                const subEl = document.getElementById('captionSubtitle');
+                const currEl = document.getElementById('slideCurrentNum');
+                const totalEl = document.getElementById('slideTotalNum');
+                const counterBarFill = document.getElementById('counterBarFill');
+                const hero = document.getElementById('hero');
+                
+                let current = 0;
+                let timer = null;
+                const DELAY = 6500;
+                
+                totalEl.textContent = String(slides.length).padStart(2, '0');
 
-<script>
-(function () {
-    'use strict';
+                // Build dots
+                const dots = slides.map(function (_, i) {
+                    const wrap = document.createElement('div');
+                    wrap.className = 'carousel-dot-wrap';
+                    
+                    const dot = document.createElement('button');
+                    dot.className = 'carousel-dot' + (i === 0 ? ' active' : '');
+                    dot.setAttribute('role', 'tab');
+                    dot.setAttribute('aria-label', 'Go to image ' + (i + 1));
+                    dot.addEventListener('click', function () { goTo(i, true); });
+                    wrap.appendChild(dot);
+                    
+                    const line = document.createElement('div');
+                    line.className = 'carousel-dot-line';
+                    const fill = document.createElement('div');
+                    fill.className = 'carousel-dot-fill';
+                    line.appendChild(fill);
+                    wrap.appendChild(line);
+                    
+                    dotsWrap.appendChild(wrap);
+                    return { dot: dot, fill: fill };
+                });
 
-    // ─── CAROUSEL ───
-    const slides    = Array.from(document.querySelectorAll('.carousel-slide'));
-    const dotsWrap  = document.getElementById('carouselDots');
-    const creditEl  = document.getElementById('photoCredit');
-    const titleEl   = document.getElementById('captionTitle');
-    const subEl     = document.getElementById('captionSubtitle');
-    const currEl    = document.getElementById('slideCurrentNum');
-    const totalEl   = document.getElementById('slideTotalNum');
+                function goTo(idx, manual) {
+                    if (idx === current) return;
+                    slides[current].classList.remove('active');
+                    dots[current].dot.classList.remove('active');
+                    dots[current].fill.style.height = '0%';
+                    
+                    current = (idx + slides.length) % slides.length;
+                    
+                    slides[current].classList.add('active');
+                    dots[current].dot.classList.add('active');
+                    
+                    // Reset parallax
+                    resetParallax();
+                    
+                    updateCaption();
+                    updateCounterBar();
+                    
+                    if (manual) { clearInterval(timer); startTimer(); }
+                }
 
-    let current  = 0;
-    let timer    = null;
-    const DELAY  = 6000;
+                function updateCaption() {
+                    const s = slides[current];
+                    creditEl.textContent = s.dataset.credit || '';
+                    titleEl.textContent = s.dataset.title || '';
+                    subEl.textContent = s.dataset.subtitle || '';
+                    currEl.textContent = String(current + 1).padStart(2, '0');
+                    
+                    const cap = document.getElementById('heroCaption');
+                    cap.classList.remove('visible');
+                    void cap.offsetWidth;
+                    requestAnimationFrame(function() {
+                        cap.classList.add('visible');
+                    });
+                }
 
-    totalEl.textContent = String(slides.length).padStart(2, '0');
+                function updateCounterBar() {
+                    const pct = ((current + 1) / slides.length) * 100;
+                    counterBarFill.style.width = pct + '%';
+                }
 
-    // Build dots
-    const dots = slides.map(function (_, i) {
-        const wrap = document.createElement('div');
+                function startTimer() {
+                    timer = setInterval(function () { goTo(current + 1, false); }, DELAY);
+                }
+                startTimer();
 
-        const dot = document.createElement('button');
-        dot.className = 'carousel-dot' + (i === 0 ? ' active' : '');
-        dot.setAttribute('role', 'tab');
-        dot.setAttribute('aria-label', 'Go to image ' + (i + 1));
-        dot.addEventListener('click', function () { goTo(i, true); });
-        wrap.appendChild(dot);
+                // ─── MOUSE PARALLAX EFFECT ───
+                let mouseX = 0.5;
+                let mouseY = 0.5;
+                let targetX = 0.5;
+                let targetY = 0.5;
+                let animFrameId = null;
 
-        // connector line between dots
-        const line = document.createElement('div');
-        line.className = 'carousel-dot-line';
-        const fill = document.createElement('div');
-        fill.className = 'carousel-dot-fill';
-        line.appendChild(fill);
-        wrap.appendChild(line);
+                function resetParallax() {
+                    targetX = 0.5;
+                    targetY = 0.5;
+                }
 
-        dotsWrap.appendChild(wrap);
-        return dot;
-    });
+                hero.addEventListener('mousemove', function(e) {
+                    const rect = hero.getBoundingClientRect();
+                    targetX = (e.clientX - rect.left) / rect.width;
+                    targetY = (e.clientY - rect.top) / rect.height;
+                    
+                    if (!animFrameId) {
+                        animFrameId = requestAnimationFrame(animateParallax);
+                    }
+                });
 
-    function goTo(idx, manual) {
-        if (idx === current) return;
-        slides[current].classList.remove('active');
-        dots[current].classList.remove('active');
-        current = (idx + slides.length) % slides.length;
-        slides[current].classList.add('active');
-        dots[current].classList.add('active');
-        updateCaption();
-        if (manual) { clearInterval(timer); startTimer(); }
-    }
+                hero.addEventListener('mouseleave', function() {
+                    targetX = 0.5;
+                    targetY = 0.5;
+                });
 
-    function updateCaption() {
-        const s = slides[current];
-        creditEl.textContent = s.dataset.credit   || '';
-        titleEl.textContent  = s.dataset.title    || '';
-        subEl.textContent    = s.dataset.subtitle || '';
-        currEl.textContent   = String(current + 1).padStart(2, '0');
+                function animateParallax() {
+                    // Smooth lerp
+                    mouseX += (targetX - mouseX) * 0.08;
+                    mouseY += (targetY - mouseY) * 0.08;
+                    
+                    const activeSlide = slides[current];
+                    if (activeSlide) {
+                        const moveX = (mouseX - 0.5) * 20;
+                        const moveY = (mouseY - 0.5) * 20;
+                        const rotateX = (mouseY - 0.5) * -3;
+                        const rotateY = (mouseX - 0.5) * 3;
+                        
+                        activeSlide.style.transform = 
+                            'translate3d(' + moveX + 'px, ' + moveY + 'px, 0) scale(1.05)';
+                        activeSlide.style.backgroundPosition = 
+                            'calc(50% + ' + (moveX * 0.5) + 'px) calc(50% + ' + (moveY * 0.5) + 'px)';
+                    }
+                    
+                    // Check if we need to continue animating
+                    const dx = Math.abs(targetX - mouseX);
+                    const dy = Math.abs(targetY - mouseY);
+                    if (dx > 0.001 || dy > 0.001) {
+                        animFrameId = requestAnimationFrame(animateParallax);
+                    } else {
+                        animFrameId = null;
+                    }
+                }
 
-        const cap = document.getElementById('heroCaption');
-        cap.classList.remove('visible');
-        void cap.offsetWidth;
-        cap.classList.add('visible');
-    }
+                // Touch support for mobile
+                hero.addEventListener('touchmove', function(e) {
+                    const touch = e.touches[0];
+                    const rect = hero.getBoundingClientRect();
+                    targetX = (touch.clientX - rect.left) / rect.width;
+                    targetY = (touch.clientY - rect.top) / rect.height;
+                    
+                    if (!animFrameId) {
+                        animFrameId = requestAnimationFrame(animateParallax);
+                    }
+                }, { passive: true });
 
-    function startTimer() {
-        timer = setInterval(function () { goTo(current + 1, false); }, DELAY);
-    }
-    startTimer();
+                hero.addEventListener('touchend', function() {
+                    targetX = 0.5;
+                    targetY = 0.5;
+                });
 
-    // ─── MENU OVERLAY ───
-    const menuBtn     = document.getElementById('menuBtn');
-    const menuOverlay = document.getElementById('menuOverlay');
-    const menuClose   = document.getElementById('menuClose');
+                // ─── MENU OVERLAY (FIXED) ───
+                const menuBtn = document.getElementById('menuBtn');
+                const menuOverlay = document.getElementById('menuOverlay');
+                const menuClose = document.getElementById('menuClose');
+                let menuOpen = false;
 
-    function openMenu() {
-        menuOverlay.classList.add('open');
-        menuBtn.classList.add('open');
-        menuBtn.setAttribute('aria-expanded', 'true');
-        document.body.style.overflow = 'hidden';
-    }
-    function closeMenu() {
-        menuOverlay.classList.remove('open');
-        menuBtn.classList.remove('open');
-        menuBtn.setAttribute('aria-expanded', 'false');
-        document.body.style.overflow = '';
-    }
+                function openMenu() {
+                    if (menuOpen) return;
+                    menuOpen = true;
+                    menuOverlay.classList.add('open');
+                    menuBtn.classList.add('open');
+                    menuBtn.setAttribute('aria-expanded', 'true');
+                    document.body.style.overflow = 'hidden';
+                    // Focus trap: focus the close button
+                    setTimeout(function() { menuClose.focus(); }, 100);
+                }
 
-    menuBtn.addEventListener('click', function () {
-        menuOverlay.classList.contains('open') ? closeMenu() : openMenu();
-    });
-    menuClose.addEventListener('click', closeMenu);
+                function closeMenu() {
+                    if (!menuOpen) return;
+                    menuOpen = false;
+                    menuOverlay.classList.remove('open');
+                    menuBtn.classList.remove('open');
+                    menuBtn.setAttribute('aria-expanded', 'false');
+                    document.body.style.overflow = '';
+                    menuBtn.focus();
+                }
 
-    // Close on Escape
-    document.addEventListener('keydown', function (e) {
-        if (e.key === 'Escape' && menuOverlay.classList.contains('open')) closeMenu();
-    });
+                // Toggle menu
+                menuBtn.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                    if (menuOpen) {
+                        closeMenu();
+                    } else {
+                        openMenu();
+                    }
+                });
 
-    // Close if click is on the overlay backdrop (not inner content)
-    menuOverlay.addEventListener('click', function (e) {
-        if (e.target === menuOverlay) closeMenu();
-    });
-})();
-</script>
+                // Close button
+                menuClose.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                    closeMenu();
+                });
 
-</body>
+                // Close on Escape
+                document.addEventListener('keydown', function(e) {
+                    if (e.key === 'Escape' && menuOpen) {
+                        closeMenu();
+                    }
+                });
+
+                // Close if click is on the overlay backdrop (not inner content)
+                menuOverlay.addEventListener('click', function(e) {
+                    if (e.target === menuOverlay) {
+                        closeMenu();
+                    }
+                });
+
+                // Prevent menu close when clicking inside overlay-inner
+                const overlayInner = document.querySelector('.overlay-inner');
+                if (overlayInner) {
+                    overlayInner.addEventListener('click', function(e) {
+                        e.stopPropagation();
+                    });
+                }
+
+                // Close menu when clicking nav items
+                const navItems = document.querySelectorAll('.overlay-nav-item');
+                navItems.forEach(function(item) {
+                    item.addEventListener('click', function() {
+                        setTimeout(closeMenu, 150);
+                    });
+                });
+
+                // Initialize counter bar
+                updateCounterBar();
+            })();
+        </script>
+    </body>
 </html>
