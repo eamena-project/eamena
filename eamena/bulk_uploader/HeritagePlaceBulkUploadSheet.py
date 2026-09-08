@@ -376,7 +376,13 @@ class HeritagePlaceBulkUploadSheet(BulkUploadSheet):
 						dist["DISTURBANCE_CAUSE_ASSIGNMENT"]["DISTURBANCE_CAUSE_ASSIGNMENT_ASSESSOR_NAME"] = dd_name
 
 					for i in range(0, len(eff_types)):
-						effect = {"EFFECT_TYPE": eff_types[i], "EFFECT_CERTAINTY": eff_certs[i]}
+						eff_type_item = eff_types[i].strip()
+						eff_cert_item = eff_certs[i].strip()
+						if ((len(eff_type_item) > 0) & (len(eff_cert_item) == 0)):
+							self.error(uniqueid, "Invalid Damage Observation", "Must contain both an Effect Type and an Effect Certainty")
+						if ((len(eff_type_item) == 0) & (len(eff_cert_item) > 0)):
+							self.error(uniqueid, "Invalid Damage Observation", "Must contain both an Effect Type and an Effect Certainty")
+						effect = {"EFFECT_TYPE": eff_type_item, "EFFECT_CERTAINTY": eff_cert_item}
 						dist["DISTURBANCE_CAUSE_ASSIGNMENT"]["DAMAGE_OBSERVATION"].append(effect)
 
 					disturbances.append(dist)
