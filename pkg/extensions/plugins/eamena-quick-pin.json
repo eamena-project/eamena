@@ -1,0 +1,17 @@
+{
+    "name": "EAMENA Quick Pin",
+    "pluginid": "f8a9b2c3-d4e5-4f6a-7b8c-9d0e1f2a3b4c",
+    "icon": "fa fa-map-pin",
+    "component": "views/components/plugins/quick-pin",
+    "componentname": "quick-pin-plugin",
+    "config": {
+        "show": true
+    },
+    "slug": "quick-pin",
+    "sortorder": 1,
+    "show_in_system_settings": false,
+    "description": "Instantly pin and generate draft Heritage Places on a Leaflet basemap.",
+    "author": "EAMENA Project",
+    "defaultpage": "",
+    "defaultroute": ""
+}

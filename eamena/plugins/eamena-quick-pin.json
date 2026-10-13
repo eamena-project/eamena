@@ -1,0 +1,12 @@
+{
+    "pluginid": "032d5d3d-0ec5-422f-ba48-8feefda72fbd",
+    "name": "EAMENA Quick Pin",
+    "icon": "fa fa-map-pin",
+    "component": "views/components/plugins/eamena-quick-pin",
+    "componentname": "eamena-quick-pin",
+    "config": {
+        "show": true
+    },
+    "slug": "eamena-quick-pin",
+    "sortorder": 1
+}
