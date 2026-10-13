@@ -4,3 +4,8 @@
 //
 // eg:
 // $link-color: red;
+@supports (-moz-appearance: none) {
+    body .sidenav-sm .sidenav-menu li:hover .menu-title {
+        margin: -28px 30px;
+    }
+}
