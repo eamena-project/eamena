@@ -57,6 +57,9 @@ class Command(BaseCommand):
 		self.__idcache = {}
 		self.__graphcache = {}
 		self.prepend_records = []
+		self.unique_nodegroups = [
+			'34cfe98f-c2c0-11ea-9026-02e7594ce0a0', 
+			'34cfe9b3-c2c0-11ea-9026-02e7594ce0a0']
 
 	def __create_res(self, graphid, legacy_id=''):
 
@@ -77,6 +80,10 @@ class Command(BaseCommand):
 		ret['provisionaledits'] = None
 		ret['sortorder'] = 0
 		ret['tileid'] = str(uuid.uuid4())
+		if nodegroupid in self.unique_nodegroups:
+			existing_tile = TileModel.objects.filter(nodegroup_id=nodegroupid, resourceinstance_id=resid).first()
+			if existing_tile is not None:
+				ret['tileid'] = str(existing_tile.tileid)
 		ret['nodegroup_id'] = nodegroupid
 		ret['resourceinstance_id'] = resid
 		ret['data'] = {}
