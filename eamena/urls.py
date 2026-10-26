@@ -6,7 +6,7 @@ from citations.urls import urlpatterns as citation_urlpatterns
 
 urlpatterns = [
     # project-level urls
-    path("bulk-upload/", include("eamena.bulk_uploader.urls"))
+    #path("bulk-upload/", include("eamena.bulk_uploader.urls"))
 ]
 
 # Ensure Arches core urls are superseded by project-level urls
@@ -25,3 +25,5 @@ if settings.ROOT_URLCONF == __name__:
         urlpatterns = i18n_patterns(*urlpatterns)
 
     urlpatterns.append(path("i18n/", include("django.conf.urls.i18n")))
+
+urlpatterns.append(path("bulk-upload/", include("eamena.bulk_uploader.urls"))) # Moved to the end so the i18n doesn't interfere with it
