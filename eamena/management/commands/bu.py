@@ -95,6 +95,27 @@ class Command(BaseCommand):
 			ret['parenttile_id'] = parent
 		return ret
 
+	def __export_tile(self, tileid):
+
+		try:
+			tile = TileModel.objects.get(tileid=tileid)
+		except:
+			return None
+
+		ret = {}
+		ret['parenttile_id'] = str(tile.tileid)
+		ret['provisionaledits'] = tile.provisionaledits
+		ret['sortorder'] = tile.sortorder
+		ret['tileid'] = str(tile.tileid)
+		ret['nodegroup_id'] = str(tile.nodegroup_id)
+		ret['resourceinstance_id'] = str(tile.resourceinstance_id)
+		ret['data'] = tile.data
+		return ret
+
+	def __get_all_existing_tiles(self, resourceinstanceid):
+
+		return [self.__export_tile(str(x.tileid)) for x in TileModel.objects.filter(resourceinstance_id=resourceinstanceid)]
+
 	def __error(self, ref, text, info=''):
 
 		self.errors.append([ref, text, info])
@@ -676,6 +697,7 @@ class Command(BaseCommand):
 
 			res = self.__create_res(rm.graphid, legacyid)
 			resid = res['resourceinstance']['resourceinstanceid']
+
 			if '_' in item:
 				res['resourceinstance']['_'] = item['_']
 			for nodegroupidkey in item.keys():
