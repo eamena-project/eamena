@@ -685,10 +685,13 @@ class Command(BaseCommand):
 			legacyid = ''
 			if append_mode == 'append':
 				if '_' in item:
-					uid = item['_']
+					uid = item['_'].strip()
 					resid = self.__resourceinstance_from_eamenaid(uid, rm.graphid, quick=True)
 					if resid is None:
-						self.__error(uid, 'Cannot resolve existing EAMENA ID', 'In append mode, the UNIQUEID column must contain a valid EAMENA ID, so the system knows which resource should be appended.')
+						msg = 'Cannot resolve existing EAMENA ID'
+						if len(uid) > 0:
+							msg = msg + ': ' + uid
+						self.__error(uid, msg, 'In append mode, the UNIQUEID column must contain a valid EAMENA ID, so the system knows which resource should be appended.')
 						continue
 					legacyid = str(resid.resourceinstanceid)
 				else:
